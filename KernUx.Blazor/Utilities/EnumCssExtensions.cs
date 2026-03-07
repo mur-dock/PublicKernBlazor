@@ -10,7 +10,7 @@ internal static class EnumCssExtensions
         return ToKebabCase(value.ToString());
     }
 
-    public static string ToKebabCase(string value)
+    public static string ToKebabCase(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {

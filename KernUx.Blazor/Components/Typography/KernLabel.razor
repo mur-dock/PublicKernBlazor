@@ -8,7 +8,7 @@
         @ChildContent
         @if (Optional)
         {
-            <span class="kern-label__optional">@OptionalText</span>
+            <span class="kern-label__optional">@ResolvedOptionalText</span>
         }
     </label>
 }
@@ -18,7 +18,7 @@ else
         @ChildContent
         @if (Optional)
         {
-            <span class="kern-label__optional">@OptionalText</span>
+            <span class="kern-label__optional">@ResolvedOptionalText</span>
         }
     </p>
 }
@@ -37,10 +37,12 @@ else
     public bool Optional { get; set; }
 
     [Parameter]
-    public string OptionalText { get; set; } = "- Optional";
+    public string? OptionalText { get; set; } = "- Optional";
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string ResolvedOptionalText => string.IsNullOrWhiteSpace(OptionalText) ? "- Optional" : OptionalText;
 
     private string CssClass => new CssBuilder("kern-label")
         .AddClass("kern-label--small", Size == Size.Small)

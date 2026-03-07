@@ -5,7 +5,7 @@
 /// </summary>
 public sealed class IdGeneratorService
 {
-    public string Create(string prefix)
+    public string Create(string? prefix)
     {
         var safePrefix = string.IsNullOrWhiteSpace(prefix) ? "kern" : prefix.Trim();
         return $"{safePrefix}-{Guid.NewGuid():N}";

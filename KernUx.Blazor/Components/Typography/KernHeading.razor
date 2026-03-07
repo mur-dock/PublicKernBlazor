@@ -30,7 +30,7 @@
     public HeadingLevel Level { get; set; } = HeadingLevel.Medium;
 
     [Parameter]
-    public string Element { get; set; } = "h2";
+    public string? Element { get; set; } = "h2";
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
@@ -43,7 +43,7 @@
     {
         get
         {
-            var normalized = Element.Trim().ToLowerInvariant();
+            var normalized = (Element ?? "h2").Trim().ToLowerInvariant();
             return normalized is "h1" or "h2" or "h3" or "h4" or "h5" or "h6" ? normalized : "h2";
         }
     }

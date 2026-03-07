@@ -6,10 +6,18 @@
 
 @code {
     [Parameter]
-    public string BasePath { get; set; } = "_content/KernUx.Blazor";
+    public string? BasePath { get; set; } = "_content/KernUx.Blazor";
 
     [Parameter]
-    public string ThemeName { get; set; } = "kern";
+    public string? ThemeName { get; set; } = "kern";
 
-    private string ThemeStylesheetPath => $"{BasePath.TrimEnd('/')}/css/themes/{ThemeName}/index.css";
+    private string ThemeStylesheetPath
+    {
+        get
+        {
+            var basePath = string.IsNullOrWhiteSpace(BasePath) ? "_content/KernUx.Blazor" : BasePath;
+            var themeName = string.IsNullOrWhiteSpace(ThemeName) ? "kern" : ThemeName;
+            return $"{basePath.TrimEnd('/')}/css/themes/{themeName}/index.css";
+        }
+    }
 }

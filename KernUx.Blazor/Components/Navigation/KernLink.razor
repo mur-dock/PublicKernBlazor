@@ -1,7 +1,6 @@
 ﻿@namespace KernUx.Blazor.Components.Navigation
-@using KernUx.Blazor.Utilities
 
-<a href="@Href"
+<a href="@ResolvedHref"
    target="@Target"
    rel="@ResolvedRel"
    class="@CssClass"
@@ -14,7 +13,7 @@
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public string Href { get; set; } = "#";
+    public string? Href { get; set; } = "#";
 
     [Parameter]
     public string? Target { get; set; }
@@ -27,6 +26,8 @@
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string ResolvedHref => string.IsNullOrWhiteSpace(Href) ? "#" : Href;
 
     private string CssClass => new CssBuilder("kern-link")
         .AddClass("kern-link--stretched", Stretched)
