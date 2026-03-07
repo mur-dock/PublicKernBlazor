@@ -1,0 +1,36 @@
+﻿@namespace KernUx.Blazor.Components.Shared
+@using KernUx.Blazor.Enums
+@using KernUx.Blazor.Utilities
+
+<span class="@CssClass"
+      aria-hidden="@AriaHidden.ToString().ToLowerInvariant()"
+      aria-label="@ResolvedAriaLabel"
+      role="@ResolvedRole"
+      @attributes="AdditionalAttributes"></span>
+
+@code {
+    [Parameter]
+    public KernIconGlyph Glyph { get; set; }
+
+    [Parameter]
+    public IconSize Size { get; set; } = IconSize.Default;
+
+    [Parameter]
+    public bool AriaHidden { get; set; } = true;
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-icon")
+        .AddClass($"kern-icon--{Glyph.ToKebabCase()}")
+        .AddClass($"kern-icon--{Size.ToKebabCase()}")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    private string? ResolvedAriaLabel => AriaHidden ? null : AriaLabel;
+
+    private string? ResolvedRole => AriaHidden ? null : "img";
+}

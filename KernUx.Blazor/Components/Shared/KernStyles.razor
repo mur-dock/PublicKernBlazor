@@ -1,0 +1,15 @@
+﻿@namespace KernUx.Blazor.Components.Shared
+
+<HeadContent>
+    <link rel="stylesheet" href="@ThemeStylesheetPath" />
+</HeadContent>
+
+@code {
+    [Parameter]
+    public string BasePath { get; set; } = "_content/KernUx.Blazor";
+
+    [Parameter]
+    public string ThemeName { get; set; } = "kern";
+
+    private string ThemeStylesheetPath => $"{BasePath.TrimEnd('/')}/css/themes/{ThemeName}/index.css";
+}

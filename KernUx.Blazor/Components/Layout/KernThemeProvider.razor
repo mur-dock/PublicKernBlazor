@@ -1,0 +1,41 @@
+﻿@namespace KernUx.Blazor.Components.Layout
+@using KernUx.Blazor.Enums
+@using KernUx.Blazor.Services
+@implements IDisposable
+@inject ThemeService ThemeService
+
+<div data-kern-theme="@ThemeService.AttributeValue"
+     @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public KernTheme Theme { get; set; } = KernTheme.Light;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ThemeService.ThemeChanged += HandleThemeChanged;
+    }
+
+    protected override void OnParametersSet()
+    {
+        ThemeService.Set(Theme);
+    }
+
+    private void HandleThemeChanged(KernTheme _)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        ThemeService.ThemeChanged -= HandleThemeChanged;
+    }
+}
