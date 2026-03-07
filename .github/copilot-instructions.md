@@ -311,6 +311,96 @@ public void KernIcon_RendertKorrekteCssKlassen()
 - ARIA-Attribute gemäß KERN-Dokumentation
 - KERN-Utility-Klassen und Token verwenden
 
+---
+
+## XML-Dokumentation
+
+### Pflicht für öffentliche APIs
+
+Alle öffentlichen Member in der Library **müssen** XML-Dokumentation haben:
+
+```csharp
+/// <summary>Beschriftung des Formularfeldes, wird als <c>&lt;label&gt;</c> gerendert.</summary>
+[Parameter]
+public string Label { get; set; } = string.Empty;
+
+/// <summary>Aktueller Wert des Eingabefeldes (Two-Way-Binding mit <see cref="ValueChanged"/>).</summary>
+[Parameter]
+public string? Value { get; set; }
+```
+
+### Dokumentations-Checkliste
+
+| Element | Pflicht-Dokumentation |
+|---|---|
+| `[Parameter]`-Properties | Ja – was macht der Parameter, welche Werte sind gültig? |
+| `EventCallback`-Properties | Ja – wann wird das Event ausgelöst? |
+| `record`-Typen | Ja – wofür wird der Typ verwendet? |
+| Private Felder/Methoden | Nur bei komplexer Logik (z.B. State-Synchronisation) |
+
+---
+
+## Performance-Patterns für Blazor-Komponenten
+
+### IEnumerable-Parameter materialisieren
+
+Wenn eine Komponente über einen `IEnumerable<T>`-Parameter iteriert, muss dieser in `OnParametersSet` 
+einmalig materialisiert werden – **nicht** bei jedem Property-Zugriff:
+
+```csharp
+// ❌ Schlecht: Neuallokation bei jedem Zugriff
+private List<MyItem> ResolvedItems => [.. Items];
+
+// ✅ Gut: Einmalige Materialisierung pro Render-Zyklus
+private List<MyItem> _materializedItems = [];
+private IReadOnlyList<MyItem> ResolvedItems => _materializedItems;
+
+protected override void OnParametersSet()
+{
+    _materializedItems = [.. Items];
+}
+```
+
+**Begründung:** Bei großen Listen führt die wiederholte Neuallokation zu erheblichem GC-Druck 
+und Performance-Einbußen. Das Pattern ist besonders wichtig in `@for`-Schleifen, die mehrfach 
+auf die Liste zugreifen.
+
+### Kommentar-Pflicht bei nicht-offensichtlichem Code
+
+Wenn Performance-Optimierungen oder State-Synchronisations-Logik verwendet wird, 
+muss ein erklärender Kommentar hinzugefügt werden:
+
+```csharp
+// _materializedItems wird einmalig pro Render-Zyklus in OnParametersSet befüllt.
+// Das vermeidet die Neuallokation bei jedem Property-Zugriff auf ResolvedItems.
+private List<MyItem> _materializedItems = [];
+```
+
+---
+
+## Namespace-Konventionen
+
+### Imports in Razor-Komponenten
+
+- **Bevorzuge explizite `@using`-Direktiven** am Anfang der Datei statt vollqualifizierter Namespaces im Code
+- **Vermeide redundante Qualifizierung** wenn der Namespace bereits importiert ist
+
+```razor
+@* ✅ Gut: Import am Anfang, kurze Verwendung im Code *@
+@using System.Globalization
+
+@code {
+    await ValueChanged.InvokeAsync(Convert.ToString(args.Value, CultureInfo.InvariantCulture));
+}
+
+@* ❌ Schlecht: Vollqualifizierter Namespace im Code *@
+@code {
+    await ValueChanged.InvokeAsync(Convert.ToString(args.Value, System.Globalization.CultureInfo.InvariantCulture));
+}
+```
+
+---
+
 ## Weitere Ressourcen
 
 - KERN-UX Website: https://www.kern-ux.de
