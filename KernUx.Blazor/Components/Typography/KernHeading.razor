@@ -1,0 +1,50 @@
+﻿@namespace KernUx.Blazor.Components.Typography
+
+@switch (ResolvedElement)
+{
+    case "h1":
+        <h1 class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</h1>
+        break;
+    case "h2":
+        <h2 class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</h2>
+        break;
+    case "h3":
+        <h3 class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</h3>
+        break;
+    case "h4":
+        <h4 class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</h4>
+        break;
+    case "h5":
+        <h5 class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</h5>
+        break;
+    default:
+        <h6 class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</h6>
+        break;
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public HeadingLevel Level { get; set; } = HeadingLevel.Medium;
+
+    [Parameter]
+    public string Element { get; set; } = "h2";
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder($"kern-heading-{Level.ToKebabCase()}")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    private string ResolvedElement
+    {
+        get
+        {
+            var normalized = Element.Trim().ToLowerInvariant();
+            return normalized is "h1" or "h2" or "h3" or "h4" or "h5" or "h6" ? normalized : "h2";
+        }
+    }
+}

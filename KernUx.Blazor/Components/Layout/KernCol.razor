@@ -1,0 +1,65 @@
+﻿@namespace KernUx.Blazor.Components.Layout
+
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public int? Span { get; set; }
+    [Parameter] public int? SpanSm { get; set; }
+    [Parameter] public int? SpanMd { get; set; }
+    [Parameter] public int? SpanLg { get; set; }
+    [Parameter] public int? SpanXl { get; set; }
+    [Parameter] public int? SpanXxl { get; set; }
+
+    [Parameter] public int? Offset { get; set; }
+    [Parameter] public int? OffsetSm { get; set; }
+    [Parameter] public int? OffsetMd { get; set; }
+    [Parameter] public int? OffsetLg { get; set; }
+    [Parameter] public int? OffsetXl { get; set; }
+    [Parameter] public int? OffsetXxl { get; set; }
+
+    [Parameter]
+    public AlignSelf? AlignSelf { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass
+    {
+        get
+        {
+            var hasSpan = Span.HasValue || SpanSm.HasValue || SpanMd.HasValue || SpanLg.HasValue || SpanXl.HasValue || SpanXxl.HasValue;
+
+            return new CssBuilder(hasSpan ? null : "kern-col")
+                .AddClass(GetSpanClass("kern-col", Span))
+                .AddClass(GetSpanClass("kern-col-sm", SpanSm))
+                .AddClass(GetSpanClass("kern-col-md", SpanMd))
+                .AddClass(GetSpanClass("kern-col-lg", SpanLg))
+                .AddClass(GetSpanClass("kern-col-xl", SpanXl))
+                .AddClass(GetSpanClass("kern-col-xxl", SpanXxl))
+                .AddClass(GetOffsetClass("kern-col-offset", Offset))
+                .AddClass(GetOffsetClass("kern-col-sm-offset", OffsetSm))
+                .AddClass(GetOffsetClass("kern-col-md-offset", OffsetMd))
+                .AddClass(GetOffsetClass("kern-col-lg-offset", OffsetLg))
+                .AddClass(GetOffsetClass("kern-col-xl-offset", OffsetXl))
+                .AddClass(GetOffsetClass("kern-col-xxl-offset", OffsetXxl))
+                .AddClass(AlignSelf is null ? null : $"kern-align-self-{AlignSelf.Value.ToKebabCase()}")
+                .AddClassFromAttributes(AdditionalAttributes)
+                .Build();
+        }
+    }
+
+    private static string? GetSpanClass(string prefix, int? span)
+    {
+        return span is >= 1 and <= 12 ? $"{prefix}-{span.Value}" : null;
+    }
+
+    private static string? GetOffsetClass(string prefix, int? offset)
+    {
+        return offset is >= 0 and <= 12 ? $"{prefix}-{offset.Value}" : null;
+    }
+}

@@ -1,0 +1,51 @@
+﻿@namespace KernUx.Blazor.Components.Typography
+@using KernUx.Blazor.Enums
+@using KernUx.Blazor.Utilities
+
+@if (!string.IsNullOrWhiteSpace(For))
+{
+    <label for="@For" class="@CssClass" @attributes="AdditionalAttributes">
+        @ChildContent
+        @if (Optional)
+        {
+            <span class="kern-label__optional">@OptionalText</span>
+        }
+    </label>
+}
+else
+{
+    <p class="@CssClass" @attributes="AdditionalAttributes">
+        @ChildContent
+        @if (Optional)
+        {
+            <span class="kern-label__optional">@OptionalText</span>
+        }
+    </p>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? For { get; set; }
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Default;
+
+    [Parameter]
+    public bool Optional { get; set; }
+
+    [Parameter]
+    public string OptionalText { get; set; } = "- Optional";
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-label")
+        .AddClass("kern-label--small", Size == Size.Small)
+        .AddClass("kern-label--large", Size == Size.Large)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+
