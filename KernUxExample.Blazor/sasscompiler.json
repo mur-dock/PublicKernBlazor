@@ -1,7 +1,7 @@
 ﻿{
   "SourceFolder": "Styles",
   "TargetFolder": "wwwroot/css",
-  "Arguments": "--style=compressed",
+  "Arguments": "--style=compressed --silence-deprecation=if-function",
   "GenerateScopedCss": false,
   "ScopedCssFolders": []
 }
