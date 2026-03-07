@@ -1,0 +1,82 @@
+@use "../utilities/mixins";
+
+/**
+ * @file _fieldset.scss
+ * @author Darko Pervan, darko.pervan@dataport.de / KERN-Team
+ * @author Tom Marienfeld, tom.marienfeld@dataport.de / KERN-Team
+ * @date 16.12.2024
+ * @modified 17.07.2025
+ * @@VERSION@@
+ * @brief Styles für die Fieldset Komponenten.
+ *
+ * Diese Datei enthält die CSS-Regeln, um die Fieldset Komponente
+ * visuell darzustellen. Sie definiert das Grundaussehen,
+ * Zuständ (kann Fehlermaeldung für mehrere Komponenten darstellen).
+ */
+
+.kern-fieldset {
+    @include mixins.normalize;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--kern-metric-space-none, 0px);
+
+    &--error {
+        border-left: var(--kern-metric-border-width-bold, 4px) solid var(--kern-color-feedback-danger, #BD0F09);
+        padding-left: var(--kern-metric-space-default, 16px);
+    }
+
+    legend {
+        float: left;
+
+        &.kern-label {
+            margin-bottom: var(--kern-metric-space-small, 8px);
+            padding: var(--kern-metric-baseline-body-default-padding-top, 6px) var(--kern-metric-space-none, 0px) var(--kern-metric-baseline-body-default-padding-bottom, 2px) var(--kern-metric-space-none, 0px);
+        }
+    }
+
+    &:has(.kern-hint) {
+        legend {
+            &.kern-label {
+                margin-bottom: var(--kern-metric-space-none, 0px);
+            }
+        }
+    }
+
+    .kern-label {
+        &:has(.kern-label__optional) {
+            @include mixins.optional;
+        }
+
+        &__optional {
+            color: var(--kern-color-layout-text-muted, #404565);
+            font-weight: var(--kern-typography-font-weight-regular, 400);
+        }
+    }
+
+    .kern-hint {
+        margin-bottom: var(--kern-metric-space-small, 8px);
+    }
+
+    &__body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--kern-metric-space-default, 16px);
+
+        &--horizontal {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    }
+
+    .kern-error {
+        margin-top: var(--kern-metric-space-small, 8px);
+        .kern-icon {
+            width: var(--kern-metric-dimension-default, 24px);
+            height: var(--kern-metric-dimension-default, 24px);
+            min-width: var(--kern-metric-dimension-default, 24px);
+            min-height: var(--kern-metric-dimension-default, 24px);
+        }
+    }
+}
