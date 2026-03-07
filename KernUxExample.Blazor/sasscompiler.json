@@ -1,0 +1,8 @@
+﻿{
+  "SourceFolder": "Styles",
+  "TargetFolder": "wwwroot/css",
+  "Arguments": "--style=compressed",
+  "GenerateScopedCss": false,
+  "ScopedCssFolders": []
+}
+
