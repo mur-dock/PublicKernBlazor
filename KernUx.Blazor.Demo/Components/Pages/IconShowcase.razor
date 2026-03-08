@@ -1,0 +1,34 @@
+﻿@page "/components/icons"
+@using KernUx.Blazor.Demo.Components.Shared
+
+<PageTitle>Icons - KernUx.Blazor Showcase</PageTitle>
+
+<KernContainer>
+    <KernHeading Level="HeadingLevel.Large" Element="h1">Icon-Galerie</KernHeading>
+    <KernBody Muted="true">Alle verfügbaren Glyphen aus dem <code>KernIconGlyph</code>-Enum.</KernBody>
+
+    <ComponentSection Title="Größenvergleich" Description="Ein Icon in allen Größenstufen.">
+        <VariantRow>
+            <KernCol Span="3"><KernIcon Glyph="KernIconGlyph.Info" Size="IconSize.Small" /><KernBody Size="Size.Small">Small</KernBody></KernCol>
+            <KernCol Span="3"><KernIcon Glyph="KernIconGlyph.Info" Size="IconSize.Default" /><KernBody Size="Size.Small">Default</KernBody></KernCol>
+            <KernCol Span="3"><KernIcon Glyph="KernIconGlyph.Info" Size="IconSize.Large" /><KernBody Size="Size.Small">Large</KernBody></KernCol>
+            <KernCol Span="3"><KernIcon Glyph="KernIconGlyph.Info" Size="IconSize.XLarge" /><KernBody Size="Size.Small">XLarge</KernBody></KernCol>
+        </VariantRow>
+    </ComponentSection>
+
+    <ComponentSection Title="Alle Glyphen" Description="Automatisch aus dem Enum generiert.">
+        <KernRow>
+            @foreach (var glyph in Glyphs)
+            {
+                <KernCol Span="6" SpanMd="4" SpanLg="3" class="demo-icon-item">
+                    <KernIcon Glyph="@glyph" Size="IconSize.Default" />
+                    <KernBody Size="Size.Small">@glyph</KernBody>
+                </KernCol>
+            }
+        </KernRow>
+    </ComponentSection>
+</KernContainer>
+
+@code {
+    private static readonly IReadOnlyList<KernIconGlyph> Glyphs = Enum.GetValues<KernIconGlyph>();
+}

@@ -1,0 +1,11 @@
+﻿.demo-component-section {
+    display: grid;
+    gap: var(--kern-metric-space-small);
+    margin-block: var(--kern-metric-space-large);
+}
+
+.demo-component-section__content {
+    display: grid;
+    gap: var(--kern-metric-space-default);
+}
+

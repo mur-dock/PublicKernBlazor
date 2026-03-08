@@ -1,0 +1,9 @@
+﻿.demo-nav-header-sample {
+    border: 1px solid var(--kern-color-neutral-300);
+    margin-bottom: var(--kern-metric-space-small);
+}
+
+.demo-stretched-card {
+    margin-top: var(--kern-metric-space-default);
+}
+

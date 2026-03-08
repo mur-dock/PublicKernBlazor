@@ -1,0 +1,158 @@
+﻿@page "/components/content"
+@rendermode InteractiveServer
+
+<PageTitle>Content - KernUx.Blazor Showcase</PageTitle>
+
+<KernContainer>
+    <KernHeading Level="HeadingLevel.Large" Element="h1">Content-Komponenten</KernHeading>
+    <KernBody Muted="true">Akkordeon, Karten, Dialog, Tabellen sowie Summary- und Task-Patterns.</KernBody>
+
+    <ComponentSection Title="Accordion" Description="Einzelnes Accordion und gruppierte Darstellung.">
+        <KernAccordion Title="Welche Unterlagen werden benötigt?" Open="true">
+            Personalausweis, Meldebescheinigung und je nach Antrag weitere Nachweise.
+        </KernAccordion>
+
+        <KernAccordionGroup>
+            <KernAccordion Title="Wie lange dauert die Bearbeitung?">In der Regel 2 bis 4 Wochen.</KernAccordion>
+            <KernAccordion Title="Wie erhalte ich Rückfragen?">Rückfragen erfolgen über das hinterlegte Kontaktmedium.</KernAccordion>
+        </KernAccordionGroup>
+    </ComponentSection>
+
+    <ComponentSection Title="Card" Description="Größenvarianten mit Container, Footer und Medienbereich.">
+        <KernRow>
+            <KernCol Span="4">
+                <KernCard Size="CardSize.Small">
+                    <KernCardContainer Title="Kompakt" Preline="Card Small">
+                        <KernBody Size="Size.Small">Kompakte Darstellung für dichte Übersichten.</KernBody>
+                    </KernCardContainer>
+                </KernCard>
+            </KernCol>
+            <KernCol Span="4">
+                <KernCard>
+                    <KernCardContainer Title="Standard" Preline="Card Default" Subline="Mit Footer"
+                                       FooterContent="@DefaultCardFooter">
+                        <KernBody>Standardkarte für Inhalte mit Aktionen.</KernBody>
+                    </KernCardContainer>
+                </KernCard>
+            </KernCol>
+            <KernCol Span="4">
+                <KernCard Size="CardSize.Large" Active="true">
+                    <KernCardMedia>
+                        <div class="demo-card-media">Medienbereich</div>
+                    </KernCardMedia>
+                    <KernCardContainer Title="Interaktiv" Preline="Card Large">
+                        <KernBody>Active-Karten eignen sich für klickbare Teaserflächen.</KernBody>
+                    </KernCardContainer>
+                </KernCard>
+            </KernCol>
+        </KernRow>
+    </ComponentSection>
+
+    <ComponentSection Title="Dialog" Description="Steuerung über Open-Parameter und OnClose-Callback.">
+        <KernButton OnClick="OpenDialog">Dialog öffnen</KernButton>
+
+        <KernDialog Title="Rückfrage senden" Open="_dialogOpen" OnClose="CloseDialog">
+            <ChildContent>
+                <KernBody>Ihre Rückfrage wird an die zuständige Stelle weitergeleitet.</KernBody>
+                <KernTextarea Label="Nachricht" Value="@_dialogMessage" ValueChanged="@(value => _dialogMessage = value)" Rows="4" />
+            </ChildContent>
+            <FooterContent>
+                <KernButton Variant="ButtonVariant.Secondary" OnClick="@(_ => CloseDialog())">Abbrechen</KernButton>
+                <KernButton OnClick="SubmitDialog">Senden</KernButton>
+            </FooterContent>
+        </KernDialog>
+
+        @if (_dialogSubmitted)
+        {
+            <KernAlert Type="AlertType.Success" Title="Nachricht gesendet">Die Rueckfrage wurde gespeichert.</KernAlert>
+        }
+    </ComponentSection>
+
+    <ComponentSection Title="Table" Description="Responsive Tabelle mit Caption, Striped und Small.">
+        <KernTable Caption="Antragsstand" Small="true" Striped="true" Responsive="true">
+            <thead>
+                <tr>
+                    <th scope="col">Vorgang</th>
+                    <th scope="col">Datum</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Wohngeld</td>
+                    <td>07.03.2026</td>
+                    <td>In Bearbeitung</td>
+                </tr>
+                <tr>
+                    <td>Elterngeld</td>
+                    <td>05.03.2026</td>
+                    <td>Rueckfrage offen</td>
+                </tr>
+                <tr>
+                    <td>Reisepass</td>
+                    <td>28.02.2026</td>
+                    <td>Abgeschlossen</td>
+                </tr>
+            </tbody>
+        </KernTable>
+    </ComponentSection>
+
+    <ComponentSection Title="Summary und DescriptionList" Description="Zusammenfassung eines Schritts mit Edit-Link.">
+        <KernSummaryGroup>
+            <KernSummary Number="1" Title="Persönliche Daten" EditHref="#" EditLabel="Bearbeiten">
+                <KernDescriptionList Layout="DescriptionListLayout.Row">
+                    <KernDescriptionItem Key="Name" Value="Max Mustermann" />
+                    <KernDescriptionItem Key="Geburtsdatum" Value="01.01.1990" />
+                    <KernDescriptionItem Key="E-Mail" Value="max@example.org" />
+                </KernDescriptionList>
+            </KernSummary>
+            <KernSummary Number="2" Title="Adresse" EditHref="#" EditLabel="Bearbeiten">
+                <KernDescriptionList Layout="DescriptionListLayout.Column">
+                    <KernDescriptionItem Key="Straße" Value="Musterweg 12" />
+                    <KernDescriptionItem Key="Ort" Value="10115 Berlin" />
+                </KernDescriptionList>
+            </KernSummary>
+        </KernSummaryGroup>
+    </ComponentSection>
+
+    <ComponentSection Title="TaskList" Description="Aufgabenliste mit Gruppen und Status-Badges.">
+        <KernTaskListGroup Title="Nächste Schritte">
+            <KernTaskList Title="Offene Aufgaben">
+                <KernTaskListItem Number="1" Title="Nachweis hochladen" Href="#" StatusContent="TaskStatusOpen" />
+                <KernTaskListItem Number="2" Title="Rückfrage beantworten" Href="#" StatusContent="TaskStatusReview" />
+                <KernTaskListItem Number="3" Title="Bestätigung abwarten" Href="#" StatusContent="TaskStatusDone" />
+            </KernTaskList>
+        </KernTaskListGroup>
+    </ComponentSection>
+</KernContainer>
+
+@code {
+    private bool _dialogOpen;
+    private bool _dialogSubmitted;
+    private string? _dialogMessage;
+
+    private RenderFragment DefaultCardFooter => @<KernLink Href="#">Details anzeigen</KernLink>;
+    private RenderFragment TaskStatusOpen => @<KernBadge Variant="BadgeVariant.Warning">Offen</KernBadge>;
+    private RenderFragment TaskStatusReview => @<KernBadge Variant="BadgeVariant.Info">In Pruefung</KernBadge>;
+    private RenderFragment TaskStatusDone => @<KernBadge Variant="BadgeVariant.Success">Erledigt</KernBadge>;
+
+    private Task OpenDialog(MouseEventArgs _)
+    {
+        _dialogSubmitted = false;
+        _dialogOpen = true;
+        return Task.CompletedTask;
+    }
+
+    private Task CloseDialog()
+    {
+        _dialogOpen = false;
+        return Task.CompletedTask;
+    }
+
+    private Task SubmitDialog(MouseEventArgs _)
+    {
+        _dialogOpen = false;
+        _dialogSubmitted = !string.IsNullOrWhiteSpace(_dialogMessage);
+        return Task.CompletedTask;
+    }
+}
