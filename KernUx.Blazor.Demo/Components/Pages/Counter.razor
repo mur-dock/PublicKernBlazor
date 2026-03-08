@@ -1,19 +1,8 @@
 ﻿@page "/counter"
-@rendermode InteractiveServer
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
-
-<p role="status">Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-}
+<KernHeading Level="HeadingLevel.Large" Element="h1">Counter</KernHeading>
+<KernAlert Type="AlertType.Info" Title="Platzhalterseite">
+    Diese Seite wird in Phase B durch den Button-Showcase ersetzt.
+</KernAlert>

@@ -7,4 +7,8 @@
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KernUx.Blazor\KernUx.Blazor.csproj" />
+  </ItemGroup>
+
 </Project>

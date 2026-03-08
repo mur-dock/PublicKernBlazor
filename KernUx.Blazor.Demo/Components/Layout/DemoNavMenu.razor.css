@@ -1,0 +1,4 @@
+﻿.demo-nav {
+    position: sticky;
+    top: var(--kern-metric-space-default);
+}

@@ -1,7 +1,53 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>KernUx.Blazor Showcase</PageTitle>
 
-<h1>Hello, world!</h1>
+<KernContainer>
+    <KernRow>
+        <KernCol>
+            <KernHeading Level="HeadingLevel.Display" Element="h1">KernUx.Blazor Showcase</KernHeading>
+            <KernBody Modifier="BodyModifier.Large">
+                Die Demo-App zeigt die KernUx.Blazor Komponentenbibliothek als praxisnahes, barrierefreies Referenzprojekt.
+            </KernBody>
 
-Welcome to your new app.
+            <KernAlert Type="AlertType.Info" Title="Phase A gestartet">
+                Das Grundgerüst ist nun auf KERN-UX umgestellt. In den folgenden Phasen werden alle Komponenten als Showcase ausgebaut.
+            </KernAlert>
+
+            <KernDivider />
+
+            <KernRow>
+                <KernCol Span="4">
+                    <KernCard>
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Barrierefreiheit</KernTitle>
+                            <KernBody>Semantisches HTML, ARIA und Tastaturbedienung sind zentraler Bestandteil jeder Komponente.</KernBody>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+                <KernCol Span="4">
+                    <KernCard>
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Typsicherheit</KernTitle>
+                            <KernBody>Varianten und Optionen werden über C#-Enums statt magischer Strings gesteuert.</KernBody>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+                <KernCol Span="4">
+                    <KernCard>
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Theming</KernTitle>
+                            <KernBody>Light und Dark Theme sind im KERN-System verankert und per Service steuerbar.</KernBody>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+            </KernRow>
+
+            <KernDivider />
+
+            <KernTitle Size="TitleSize.Default">Schnellstart</KernTitle>
+            <KernBody Modifier="BodyModifier.Muted">Navigiere links zu den Showcase-Seiten und prüfe die Varianten direkt in der Demo.</KernBody>
+            <KernLink Href="https://www.kern-ux.de" Target="_blank">Mehr zu KERN-UX</KernLink>
+        </KernCol>
+    </KernRow>
+</KernContainer>

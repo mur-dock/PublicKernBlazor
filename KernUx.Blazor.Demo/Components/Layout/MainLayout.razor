@@ -1,23 +1,54 @@
 ﻿@inherits LayoutComponentBase
+@inject ThemeService ThemeService
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<KernThemeProvider Theme="KernTheme.Light">
+    <KernKopfzeile />
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+    <header class="demo-header">
+        <KernContainer>
+            <KernRow JustifyContent="JustifyContent.Between" AlignItems="AlignItems.Center">
+                <KernCol Span="9">
+                    <KernPreline>KERN Design System</KernPreline>
+                    <KernTitle Size="TitleSize.Large">KernUx.Blazor Showcase</KernTitle>
+                </KernCol>
+                <KernCol Span="3" class="demo-header__actions">
+                    <KernButton Variant="ButtonVariant.Tertiary"
+                                Icon="KernIconGlyph.BrightnessMedium"
+                                IconOnly="true"
+                                Title="Theme wechseln"
+                                AriaLabel="Theme wechseln"
+                                OnClick="ToggleTheme">
+                        Theme wechseln
+                    </KernButton>
+                </KernCol>
+            </KernRow>
+        </KernContainer>
+    </header>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    <KernContainer>
+        <KernRow>
+            <KernCol Span="3">
+                <DemoNavMenu />
+            </KernCol>
+            <KernCol Span="9">
+                <main>
+                    @Body
+                </main>
+            </KernCol>
+        </KernRow>
+    </KernContainer>
+</KernThemeProvider>
 
 <div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
+    Ein unbehandelter Fehler ist aufgetreten.
+    <a href="." class="reload">Neu laden</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    private Task ToggleTheme()
+    {
+        ThemeService.Toggle();
+        return Task.CompletedTask;
+    }
+}

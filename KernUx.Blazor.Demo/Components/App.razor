@@ -1,13 +1,23 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
+    <title>KernUx.Blazor Showcase</title>
+    @* Anti-FOUC: Theme vor dem ersten Paint setzen (Cookie -> prefers-color-scheme Fallback). *@
+    <script>
+        (() => {
+            const match = document.cookie.match(/(?:^|;\s*)kern-theme=(light|dark)/);
+            const theme = match
+                ? match[1]
+                : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-kern-theme", theme);
+        })();
+    </script>
     <ResourcePreloader />
-    <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
-    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <KernStyles />
     <link rel="stylesheet" href="@Assets["KernUx.Blazor.Demo.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />
@@ -17,6 +27,7 @@
 <body>
     <Routes />
     <ReconnectModal />
+    <script src="@Assets["_content/KernUx.Blazor/js/kern-dialog.js"]"></script>
     <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 
