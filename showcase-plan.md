@@ -594,21 +594,21 @@ Komponente für nebeneinander dargestellte Varianten (z.B. 3 Button-Varianten in
 
 ### Neu zu erstellende Dateien
 
-| Datei                                       | Beschreibung                          |
-|---------------------------------------------|---------------------------------------|
-| `Components/Layout/DemoNavMenu.razor`       | KERN-basierte Seitennavigation        |
-| `Components/Shared/ComponentSection.razor`  | Wiederverwendbarer Showcase-Abschnitt |
-| `Components/Shared/VariantRow.razor`        | Varianten-Darstellung                 |
-| `Components/Pages/TypographyShowcase.razor` | Typografie-Showcase                   |
-| `Components/Pages/LayoutShowcase.razor`     | Grid-/Layout-Showcase                 |
-| `Components/Pages/ButtonShowcase.razor`     | Button-Showcase                       |
-| `Components/Pages/FormsShowcase.razor`      | Formular-Showcase                     |
-| `Components/Pages/FeedbackShowcase.razor`   | Feedback-Showcase                     |
-| `Components/Pages/ContentShowcase.razor`    | Content-Showcase                      |
-| `Components/Pages/NavigationShowcase.razor` | Navigation-Showcase                   |
-| `Components/Pages/IconShowcase.razor`       | Icon-Galerie                          |
-| `Components/Pages/AntragExample.razor`      | Praxisbeispiel Antrag                 |
-| `Components/Pages/DashboardExample.razor`   | Praxisbeispiel Dashboard              |
+| Datei                                       | Beschreibung                                      |
+|---------------------------------------------|---------------------------------------------------|
+| `Components/Layout/DemoNavMenu.razor`       | KERN-basierte Seitennavigation                    |
+| `Components/Shared/ComponentSection.razor`  | Wiederverwendbarer Showcase-Abschnitt             |
+| `Components/Shared/VariantRow.razor`        | Varianten-Darstellung                             |
+| `Components/Pages/TypographyShowcase.razor` | Typografie-Showcase                               |
+| `Components/Pages/LayoutShowcase.razor`     | Grid-/Layout-Showcase                             |
+| `Components/Pages/ButtonShowcase.razor`     | Button-Showcase                                   |
+| `Components/Pages/FormsShowcase.razor`      | Formular-Showcase                                 |
+| `Components/Pages/FeedbackShowcase.razor`   | Feedback-Showcase                                 |
+| `Components/Pages/ContentShowcase.razor`    | Accordion, Card, Dialog, Table, Summary, TaskList | 
+| `Components/Pages/NavigationShowcase.razor` | Navigation-Showcase                               |
+| `Components/Pages/IconShowcase.razor`       | Icon-Galerie                                      |
+| `Components/Pages/AntragExample.razor`      | Praxisbeispiel Antrag                             |
+| `Components/Pages/DashboardExample.razor`   | Praxisbeispiel Dashboard                          |
 
 ---
 
@@ -655,6 +655,17 @@ Komponente für nebeneinander dargestellte Varianten (z.B. 3 Button-Varianten in
 22. **PageTitle** auf jeder Seite setzen
 23. **Smoke-Test**: Alle Seiten durchklicken, Theme-Toggle, Responsive-Test
 
+→ **Ergebnis:** Abgerundete, produktionsnahe Showcase-App
+
+### Phase E (optional) – Erweiterte Praxisbeispiele
+
+24. **`FormWizardExample.razor`**: Formular-Wizard mit Schritt-Navigation, Fortschrittsanzeige und Zwischenspeicherung
+25. **`DataTableFilterExample.razor`**: Datentabelle mit Filterung, Sortierung und leerem Zustand
+26. **Navigation erweitern**: Links auf die optionalen Beispiele in `DemoNavMenu.razor`
+27. **Dokumentation ergänzen**: README um die neuen Beispielseiten und Anwendungsfälle erweitern
+
+→ **Ergebnis:** Vertiefte Praxisabdeckung für komplexe Interaktionsmuster
+
 ---
 
 ## 9. Interaktivitäts-Konzept
@@ -690,4 +701,3 @@ Da alle interaktiven Demos `@rendermode InteractiveServer` benötigen, wird dies
 | **Interaktion**           | Events (Click, Change, Toggle) live demonstriert |
 | **Keine JS-Abhängigkeit** | Einziges JS: `kern-dialog.js` + Anti-FOUC        |
 | **Kompiliert fehlerfrei** | `dotnet build` ohne Errors/Warnings              |
-
