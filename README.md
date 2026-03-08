@@ -45,10 +45,10 @@ direkt als Blazor-Komponenten verwenden – ohne KERN-CSS-Klassen manuell kennen
 
 ## Voraussetzungen
 
-| Anforderung | Version |
-|-------------|---------|
-| .NET | 10.0 |
-| Blazor Server oder WebAssembly | 10.0 |
+| Anforderung                    | Version |
+|--------------------------------|---------|
+| .NET                           | 10.0    |
+| Blazor Server oder WebAssembly | 10.0    |
 
 ---
 
@@ -67,6 +67,7 @@ builder.Services.AddKernUx();
 ```
 
 `AddKernUx()` registriert:
+
 - `ThemeService` (Scoped) – Theme-Verwaltung (Light/Dark)
 - `IdGeneratorService` (Scoped) – eindeutige IDs für `aria-describedby`
 
@@ -100,12 +101,14 @@ Die Komponente rendert automatisch alle notwendigen `<link>`-Elemente.
 ### Option B – manuell in `App.razor`
 
 ```html
-<link rel="stylesheet" href="_content/KernUx.Blazor/css/themes/kern/index.css" />
+
+<link rel="stylesheet" href="_content/KernUx.Blazor/css/themes/kern/index.css"/>
 ```
 
 ### JS-Asset für Dialog
 
 ```html
+
 <script src="_content/KernUx.Blazor/js/kern-dialog.js"></script>
 ```
 
@@ -142,87 +145,87 @@ und im Cookie `kern-theme` persistiert.
 
 ### Layout
 
-| Komponente | Beschreibung | Wichtigste Parameter |
-|---|---|---|
-| `KernContainer` | Inhalts-Container mit optionalem Fluid-Modus | `Fluid` |
-| `KernRow` | Grid-Zeile | `AlignItems`, `JustifyContent` |
-| `KernCol` | Grid-Spalte | `Span`, `SpanSm`–`SpanXxl`, `Offset` |
-| `KernThemeProvider` | Theme-Root-Wrapper | `Theme` |
+| Komponente          | Beschreibung                                 | Wichtigste Parameter                 |
+|---------------------|----------------------------------------------|--------------------------------------|
+| `KernContainer`     | Inhalts-Container mit optionalem Fluid-Modus | `Fluid`                              |
+| `KernRow`           | Grid-Zeile                                   | `AlignItems`, `JustifyContent`       |
+| `KernCol`           | Grid-Spalte                                  | `Span`, `SpanSm`–`SpanXxl`, `Offset` |
+| `KernThemeProvider` | Theme-Root-Wrapper                           | `Theme`                              |
 
 ### Typografie
 
-| Komponente | Beschreibung | Wichtigste Parameter |
-|---|---|---|
-| `KernHeading` | Überschrift (Display–Small) | `Level`, `Element` |
-| `KernTitle` | Seiten-/Abschnittstitel | `Size` |
-| `KernBody` | Fließtext | `Bold`, `Muted`, `Size` |
-| `KernLabel` | Formular-Label | `For`, `Optional` |
-| `KernSubline` | Unterzeile | `Size` |
-| `KernPreline` | Vortext | `Size` |
+| Komponente    | Beschreibung                | Wichtigste Parameter    |
+|---------------|-----------------------------|-------------------------|
+| `KernHeading` | Überschrift (Display–Small) | `Level`, `Element`      |
+| `KernTitle`   | Seiten-/Abschnittstitel     | `Size`                  |
+| `KernBody`    | Fließtext                   | `Bold`, `Muted`, `Size` |
+| `KernLabel`   | Formular-Label              | `For`, `Optional`       |
+| `KernSubline` | Unterzeile                  | `Size`                  |
+| `KernPreline` | Vortext                     | `Size`                  |
 
 ### Shared
 
-| Komponente | Beschreibung | Wichtigste Parameter |
-|---|---|---|
-| `KernIcon` | Symbolschrift-Icon | `Glyph`, `Size`, `AriaHidden`, `AriaLabel` |
-| `KernDivider` | Horizontale Trennlinie | `AriaHidden` |
-| `KernStyles` | CSS-Link-Einbindung | – |
-| `KernLink` | Anker-Link | `Href`, `Stretched`, `Target` |
-| `KernList` | Listen (Bullet/Nummeriert) | `Variant`, `Size` |
+| Komponente    | Beschreibung               | Wichtigste Parameter                       |
+|---------------|----------------------------|--------------------------------------------|
+| `KernIcon`    | Symbolschrift-Icon         | `Glyph`, `Size`, `AriaHidden`, `AriaLabel` |
+| `KernDivider` | Horizontale Trennlinie     | `AriaHidden`                               |
+| `KernStyles`  | CSS-Link-Einbindung        | –                                          |
+| `KernLink`    | Anker-Link                 | `Href`, `Stretched`, `Target`              |
+| `KernList`    | Listen (Bullet/Nummeriert) | `Variant`, `Size`                          |
 
 ### Navigation
 
-| Komponente | Beschreibung | Wichtigste Parameter |
-|---|---|---|
-| `KernKopfzeile` | Bundesbehörden-Kopfzeile | `Label`, `Fluid` |
+| Komponente      | Beschreibung             | Wichtigste Parameter |
+|-----------------|--------------------------|----------------------|
+| `KernKopfzeile` | Bundesbehörden-Kopfzeile | `Label`, `Fluid`     |
 
 ### Formular-Elemente
 
-| Komponente | Beschreibung | Wichtigste Parameter |
-|---|---|---|
-| `KernButton` | Aktions-Schaltfläche | `Variant`, `Icon`, `IconOnly`, `Block`, `Disabled` |
-| `KernInputText` | Text-Eingabe | `Label`, `Value`, `Hint`, `Error`, `Optional` |
-| `KernInputEmail` | E-Mail-Eingabe | `Label`, `Value`, `Autocomplete` |
-| `KernInputPassword` | Passwort-Eingabe | `Label`, `Value` |
-| `KernInputTel` | Telefon-Eingabe | `Label`, `Value`, `Autocomplete` |
-| `KernInputUrl` | URL-Eingabe | `Label`, `Value` |
-| `KernInputNumber` | Numerische Eingabe | `Label`, `Value` |
-| `KernInputDate` | Datum (TT/MM/JJJJ) | `Label`, `Day`, `Month`, `Year` |
-| `KernInputFile` | Datei-Upload | `Label`, `Accept`, `OnFileSelected` |
-| `KernInputCurrency` | Währungsbetrag (DACH) | `Label`, `Value`, `CurrencySymbol`, `CultureName` |
-| `KernTextarea` | Mehrzeiliger Text | `Label`, `Value`, `Rows` |
-| `KernSelect` | Auswahlmenü | `Label`, `Value`, `Options` |
-| `KernCheckbox` | Einzelne Checkbox | `Label`, `Checked` |
-| `KernCheckboxList` | Checkbox-Gruppe | `Legend`, `Items`, `SelectedValues` |
-| `KernRadioGroup` | Radio-Button-Gruppe | `Legend`, `Items`, `Value` |
-| `KernFieldset` | Formular-Gruppe | `Legend`, `Hint`, `Error`, `Horizontal` |
+| Komponente          | Beschreibung          | Wichtigste Parameter                               |
+|---------------------|-----------------------|----------------------------------------------------|
+| `KernButton`        | Aktions-Schaltfläche  | `Variant`, `Icon`, `IconOnly`, `Block`, `Disabled` |
+| `KernInputText`     | Text-Eingabe          | `Label`, `Value`, `Hint`, `Error`, `Optional`      |
+| `KernInputEmail`    | E-Mail-Eingabe        | `Label`, `Value`, `Autocomplete`                   |
+| `KernInputPassword` | Passwort-Eingabe      | `Label`, `Value`                                   |
+| `KernInputTel`      | Telefon-Eingabe       | `Label`, `Value`, `Autocomplete`                   |
+| `KernInputUrl`      | URL-Eingabe           | `Label`, `Value`                                   |
+| `KernInputNumber`   | Numerische Eingabe    | `Label`, `Value`                                   |
+| `KernInputDate`     | Datum (TT/MM/JJJJ)    | `Label`, `Day`, `Month`, `Year`                    |
+| `KernInputFile`     | Datei-Upload          | `Label`, `Accept`, `OnFileSelected`                |
+| `KernInputCurrency` | Währungsbetrag (DACH) | `Label`, `Value`, `CurrencySymbol`, `CultureName`  |
+| `KernTextarea`      | Mehrzeiliger Text     | `Label`, `Value`, `Rows`                           |
+| `KernSelect`        | Auswahlmenü           | `Label`, `Value`, `Options`                        |
+| `KernCheckbox`      | Einzelne Checkbox     | `Label`, `Checked`                                 |
+| `KernCheckboxList`  | Checkbox-Gruppe       | `Legend`, `Items`, `SelectedValues`                |
+| `KernRadioGroup`    | Radio-Button-Gruppe   | `Legend`, `Items`, `Value`                         |
+| `KernFieldset`      | Formular-Gruppe       | `Legend`, `Hint`, `Error`, `Horizontal`            |
 
 ### Feedback & Status
 
-| Komponente | Beschreibung | Wichtigste Parameter |
-|---|---|---|
-| `KernAlert` | Hinweis-/Fehlermeldung | `Type`, `Title` |
-| `KernBadge` | Status-Kennzeichnung | `Variant` |
-| `KernLoader` | Ladeindikator | `Visible`, `ScreenReaderText` |
-| `KernProgress` | Fortschrittsanzeige | `Value`, `Max`, `Label` |
+| Komponente     | Beschreibung           | Wichtigste Parameter          |
+|----------------|------------------------|-------------------------------|
+| `KernAlert`    | Hinweis-/Fehlermeldung | `Type`, `Title`               |
+| `KernBadge`    | Status-Kennzeichnung   | `Variant`                     |
+| `KernLoader`   | Ladeindikator          | `Visible`, `ScreenReaderText` |
+| `KernProgress` | Fortschrittsanzeige    | `Value`, `Max`, `Label`       |
 
 ### Content & Darstellung
 
-| Komponente | Beschreibung | Wichtigste Parameter |
-|---|---|---|
-| `KernAccordion` | Auf-/Zuklappbarer Bereich | `Title`, `Open`, `OnToggle` |
-| `KernAccordionGroup` | Accordion-Container | – |
-| `KernCard` | Inhalts-Karte | `Size`, `Active` |
-| `KernCardMedia` | Karten-Bild | – |
-| `KernCardContainer` | Karten-Inhalt-Wrapper | – |
-| `KernDialog` | Modaler Dialog | `Title`, `Open`, `OnClose` |
-| `KernTable` | Datentabelle | `Caption`, `Small`, `Striped`, `Responsive` |
-| `KernDescriptionList` | Beschreibungsliste | `Column`, `Items` |
-| `KernSummary` | Zusammenfassungs-Block | `Title`, `EditHref`, `Number` |
-| `KernSummaryGroup` | Summary-Gruppen-Container | – |
-| `KernTaskList` | Aufgaben-/Schritt-Liste | – |
-| `KernTaskListItem` | Einzelner Aufgaben-Schritt | `Title`, `Number`, `Href`, `StatusContent` |
-| `KernTaskListGroup` | Aufgaben-Gruppen-Container | `Title` |
+| Komponente            | Beschreibung               | Wichtigste Parameter                        |
+|-----------------------|----------------------------|---------------------------------------------|
+| `KernAccordion`       | Auf-/Zuklappbarer Bereich  | `Title`, `Open`, `OnToggle`                 |
+| `KernAccordionGroup`  | Accordion-Container        | –                                           |
+| `KernCard`            | Inhalts-Karte              | `Size`, `Active`                            |
+| `KernCardMedia`       | Karten-Bild                | –                                           |
+| `KernCardContainer`   | Karten-Inhalt-Wrapper      | –                                           |
+| `KernDialog`          | Modaler Dialog             | `Title`, `Open`, `OnClose`                  |
+| `KernTable`           | Datentabelle               | `Caption`, `Small`, `Striped`, `Responsive` |
+| `KernDescriptionList` | Beschreibungsliste         | `Column`, `Items`                           |
+| `KernSummary`         | Zusammenfassungs-Block     | `Title`, `EditHref`, `Number`               |
+| `KernSummaryGroup`    | Summary-Gruppen-Container  | –                                           |
+| `KernTaskList`        | Aufgaben-/Schritt-Liste    | –                                           |
+| `KernTaskListItem`    | Einzelner Aufgaben-Schritt | `Title`, `Number`, `Href`, `StatusContent`  |
+| `KernTaskListGroup`   | Aufgaben-Gruppen-Container | `Title`                                     |
 
 ---
 
@@ -230,14 +233,14 @@ und im Cookie `kern-theme` persistiert.
 
 `KernUx.Blazor` implementiert **WCAG 2.1 AA**:
 
-| Anforderung | Umsetzung |
-|---|---|
-| Semantisches HTML | `<button>`, `<fieldset>`, `<legend>`, `<dialog>`, `<caption>` |
-| ARIA-Attribute | `aria-describedby`, `aria-expanded`, `aria-hidden`, `aria-label`, `role="alert"` |
-| Eindeutige IDs | `IdGeneratorService` generiert kollisionsfreie IDs pro Instanz |
-| Fokus-Management | KERN-Fokus-Styles werden nie unterdrückt |
-| Tastatur-Navigation | Alle interaktiven Elemente sind per Tastatur bedienbar |
-| Kontrast | KERN-Theme erfüllt WCAG 2.1 AA Kontrastanforderungen |
+| Anforderung         | Umsetzung                                                                        |
+|---------------------|----------------------------------------------------------------------------------|
+| Semantisches HTML   | `<button>`, `<fieldset>`, `<legend>`, `<dialog>`, `<caption>`                    |
+| ARIA-Attribute      | `aria-describedby`, `aria-expanded`, `aria-hidden`, `aria-label`, `role="alert"` |
+| Eindeutige IDs      | `IdGeneratorService` generiert kollisionsfreie IDs pro Instanz                   |
+| Fokus-Management    | KERN-Fokus-Styles werden nie unterdrückt                                         |
+| Tastatur-Navigation | Alle interaktiven Elemente sind per Tastatur bedienbar                           |
+| Kontrast            | KERN-Theme erfüllt WCAG 2.1 AA Kontrastanforderungen                             |
 
 ---
 
@@ -245,8 +248,8 @@ und im Cookie `kern-theme` persistiert.
 
 Folgende Komponenten sind **Blazor-Library-Erweiterungen** und nicht Teil des offiziellen KERN-UX-Standards:
 
-| Komponente | Beschreibung |
-|---|---|
+| Komponente          | Beschreibung                                                             |
+|---------------------|--------------------------------------------------------------------------|
 | `KernInputCurrency` | Währungseingabe optimiert für DACH (de-DE/de-CH), mit `decimal?`-Binding |
 
 Die zugehörigen SCSS-Erweiterungen liegen in `Styles/extensions/` und werden bei KERN-UX-Updates
@@ -290,6 +293,7 @@ dotnet test KernUx.Blazor.Tests/KernUx.Blazor.Tests.csproj
 ```
 
 Das Testprojekt enthält:
+
 - **Rendering-Tests** – alle Komponenten werden auf korrekte HTML-Ausgabe geprüft
 - **Interaktions-Tests** – EventCallbacks, State-Änderungen
 - **Accessibility-Audit-Tests** – ARIA-Attribute, semantisches HTML
