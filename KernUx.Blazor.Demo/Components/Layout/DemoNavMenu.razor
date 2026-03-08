@@ -1,22 +1,77 @@
 ﻿<nav aria-label="Showcase Navigation" class="demo-nav">
     <KernTitle Size="TitleSize.Small">Showcase</KernTitle>
-    <KernList Variant="KernListVariant.Bullet">
-        <li><KernLink Href="/">Startseite</KernLink></li>
-        <li><KernLink Href="/components/typography">Typografie</KernLink></li>
-        <li><KernLink Href="/components/layout">Layout und Grid</KernLink></li>
-        <li><KernLink Href="/components/buttons">Buttons</KernLink></li>
-        <li><KernLink Href="/components/forms">Formulare</KernLink></li>
-        <li><KernLink Href="/components/feedback">Feedback</KernLink></li>
-        <li><KernLink Href="/components/content">Content</KernLink></li>
-        <li><KernLink Href="/components/navigation">Navigation</KernLink></li>
-        <li><KernLink Href="/components/icons">Icons</KernLink></li>
-    </KernList>
+    <ul class="demo-nav__list" role="list">
+        <li>
+            <NavLink href="/" Match="NavLinkMatch.All" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.Home" Size="IconSize.Small" />
+                <span>Startseite</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/typography" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.Draft" Size="IconSize.Small" />
+                <span>Typografie</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/layout" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.Checklist" Size="IconSize.Small" />
+                <span>Layout und Grid</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/buttons" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.Check" Size="IconSize.Small" />
+                <span>Buttons</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/forms" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.Edit" Size="IconSize.Small" />
+                <span>Formulare</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/feedback" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.Info" Size="IconSize.Small" />
+                <span>Feedback</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/content" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.ContentCopy" Size="IconSize.Small" />
+                <span>Content</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/navigation" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.ArrowForward" Size="IconSize.Small" />
+                <span>Navigation</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/components/icons" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.QuestionMark" Size="IconSize.Small" />
+                <span>Icons</span>
+            </NavLink>
+        </li>
+    </ul>
 
     <KernDivider />
 
     <KernTitle Size="TitleSize.Small">Praxisbeispiele</KernTitle>
-    <KernList Variant="KernListVariant.Bullet">
-        <li><KernLink Href="/examples/antrag">Antragsstrecke</KernLink></li>
-        <li><KernLink Href="/examples/dashboard">Dashboard</KernLink></li>
-    </KernList>
+    <ul class="demo-nav__list" role="list">
+        <li>
+            <NavLink href="/examples/antrag" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.CalendarToday" Size="IconSize.Small" />
+                <span>Antragsstrecke</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink href="/examples/dashboard" class="kern-link demo-nav__link">
+                <KernIcon Glyph="KernIconGlyph.Success" Size="IconSize.Small" />
+                <span>Dashboard</span>
+            </NavLink>
+        </li>
+    </ul>
 </nav>

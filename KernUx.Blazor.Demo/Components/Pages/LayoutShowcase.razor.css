@@ -1,6 +1,6 @@
 ﻿.demo-grid-box {
-    background: var(--kern-color-neutral-100);
-    border: 1px solid var(--kern-color-neutral-400);
+    background: var(--kern-color-layout-background-hued);
+    border: 1px solid var(--kern-color-layout-border);
     border-radius: 4px;
     min-height: 48px;
     display: flex;
@@ -10,7 +10,6 @@
 }
 
 .demo-nested-container {
-    border: 1px dashed var(--kern-color-neutral-400);
+    border: 1px dashed var(--kern-color-layout-border);
     padding: var(--kern-metric-space-small);
 }
-

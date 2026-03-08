@@ -1,9 +1,8 @@
 ﻿.demo-nav-header-sample {
-    border: 1px solid var(--kern-color-neutral-300);
+    border: 1px solid var(--kern-color-layout-border);
     margin-bottom: var(--kern-metric-space-small);
 }
 
 .demo-stretched-card {
     margin-top: var(--kern-metric-space-default);
 }
-

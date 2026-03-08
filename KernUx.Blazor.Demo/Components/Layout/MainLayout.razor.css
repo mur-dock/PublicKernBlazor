@@ -19,6 +19,14 @@
     top: 0.5rem;
 }
 
+.demo-shell__top {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--kern-color-layout-background-hued);
+    border-bottom: 1px solid var(--kern-color-layout-border);
+}
+
 .demo-header {
     padding-block: var(--kern-metric-space-default);
 }
@@ -26,6 +34,10 @@
 .demo-header__actions {
     display: flex;
     justify-content: flex-end;
+}
+
+.demo-shell__content {
+    padding-top: var(--kern-metric-space-default);
 }
 
 main {

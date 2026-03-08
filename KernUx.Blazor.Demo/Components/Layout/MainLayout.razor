@@ -3,31 +3,33 @@
 @inject IJSRuntime Js
 @implements IDisposable
 
-<div data-kern-theme="@ThemeService.AttributeValue">
-    <KernKopfzeile />
+<div data-kern-theme="@ThemeService.AttributeValue" class="demo-shell">
+    <div class="demo-shell__top">
+        <KernKopfzeile />
 
-    <header class="demo-header">
-        <KernContainer>
-            <KernRow JustifyContent="JustifyContent.Between" AlignItems="AlignItems.Center">
-                <KernCol Span="9">
-                    <KernPreline>KERN Design System</KernPreline>
-                    <KernTitle Size="TitleSize.Large">KernUx.Blazor Showcase</KernTitle>
-                </KernCol>
-                <KernCol Span="3" class="demo-header__actions">
-                    <button type="button"
-                            class="kern-btn kern-btn--tertiary"
-                            title="Theme wechseln"
-                            aria-label="Theme wechseln"
-                            aria-pressed="@(ThemeService.Current == KernTheme.Dark ? "true" : "false")"
-                            @onclick="ToggleTheme">
-                        <span class="kern-icon kern-icon--brightness-medium" aria-hidden="true"></span>
-                    </button>
-                </KernCol>
-            </KernRow>
-        </KernContainer>
-    </header>
+        <header class="demo-header">
+            <KernContainer>
+                <KernRow JustifyContent="JustifyContent.Between" AlignItems="AlignItems.Center">
+                    <KernCol Span="9">
+                        <KernPreline>KERN Design System</KernPreline>
+                        <KernTitle Size="TitleSize.Large">KernUx.Blazor Showcase</KernTitle>
+                    </KernCol>
+                    <KernCol Span="3" class="demo-header__actions">
+                        @* Toggle bleibt über aria-pressed als Schalterzustand für Assistive Technologien erkennbar. *@
+                        <KernButton Variant="ButtonVariant.Tertiary"
+                                    Title="Theme wechseln"
+                                    AriaLabel="Theme wechseln"
+                                    Icon="KernIconGlyph.BrightnessMedium"
+                                    IconOnly="true"
+                                    aria-pressed="@(ThemeService.Current == KernTheme.Dark ? "true" : "false")"
+                                    OnClick="ToggleTheme" />
+                    </KernCol>
+                </KernRow>
+            </KernContainer>
+        </header>
+    </div>
 
-    <KernContainer>
+    <KernContainer class="demo-shell__content">
         <KernRow>
             <KernCol Span="12" SpanMd="3">
                 <DemoNavMenu />

@@ -1,4 +1,34 @@
 ﻿.demo-nav {
     position: sticky;
-    top: var(--kern-metric-space-default);
+    top: 8.5rem;
+}
+
+.demo-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.demo-nav__list li + li {
+    margin-top: var(--kern-metric-space-small);
+}
+
+.demo-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kern-metric-space-small);
+    padding: var(--kern-metric-space-small) var(--kern-metric-space-default);
+    border-radius: 0.375rem;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ::deep durchdringt die Komponentengrenze, damit Blazors NavLink-generiertes
+   <a class="... active"> auch aus dem Scoped-CSS heraus gestylt werden kann. */
+.demo-nav__list ::deep .demo-nav__link.active {
+    background: rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 0 0 1px currentColor;
+    color: inherit;
+    font-weight: 600;
 }

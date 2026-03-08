@@ -1,9 +1,8 @@
 ﻿.demo-card-media {
     min-height: 96px;
-    background: var(--kern-color-neutral-100);
+    background: var(--kern-color-layout-background-hued);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--kern-color-neutral-700);
+    color: var(--kern-color-layout-text-muted);
 }
-
