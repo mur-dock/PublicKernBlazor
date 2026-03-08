@@ -6,8 +6,8 @@ namespace KernUx.Blazor.Tests.Components.Shared;
 
 public sealed class KernStylesTests
 {
-    [Fact(DisplayName = "Theme-Stylesheet wird korrekt in den Head eingebunden")]
-    public void KernStyles_BindetStylesheetInDenHeadEin()
+    [Fact(DisplayName = "Theme- und Extensions-Stylesheet werden korrekt eingebunden")]
+    public void KernStyles_BindetBeideStylesheetsEin()
     {
         // BunitContext stellt einen virtuellen Browser bereit.
         using var context = new BunitContext();
@@ -20,11 +20,12 @@ public sealed class KernStylesTests
             .Setup<string>("Blazor._internal.PageTitle.getAndRemoveExistingTitle")
             .SetResult(string.Empty);
 
-        // HeadOutlet zuerst rendern – er nimmt später den <link>-Tag entgegen
+        // HeadOutlet zuerst rendern – er nimmt später die <link>-Tags entgegen
         var headOutlet = context.Render<HeadOutlet>();
 
-        // When – KernStyles rendert einen <link>-Tag via <HeadContent>,
-        // der automatisch in den bereits gerenderten HeadOutlet projiziert wird
+        // When – KernStyles rendert standardmäßig zwei <link>-Tags via <HeadContent>:
+        // 1. Theme-CSS (aus KERN-UX Core)
+        // 2. Extensions-CSS (projektspezifisch, separat kompiliert)
         context.Render<KernStyles>(parameters => parameters
             .Add(p => p.BasePath, "_content/KernUx.Blazor")
             .Add(p => p.ThemeName, "kern"));
@@ -32,6 +33,34 @@ public sealed class KernStylesTests
         // MarkupMatches führt einen semantischen HTML-Vergleich durch:
         // Leerzeichen und Attribut-Reihenfolge spielen keine Rolle.
         headOutlet.MarkupMatches(
-            "<link rel=\"stylesheet\" href=\"_content/KernUx.Blazor/css/themes/kern/index.css\">");
+            """
+            <link rel="stylesheet" href="_content/KernUx.Blazor/css/themes/kern/index.css">
+            <link rel="stylesheet" href="_content/KernUx.Blazor/css/extensions/index.css">
+            """);
+    }
+
+    [Fact(DisplayName = "Extensions-Stylesheet wird bei IncludeExtensions=false ausgeblendet")]
+    public void KernStyles_OhneExtensions_RendertNurThemeStylesheet()
+    {
+        // BunitContext stellt einen virtuellen Browser bereit.
+        using var context = new BunitContext();
+
+        // HeadOutlet-JS-Interop stubben (siehe erster Test).
+        context.JSInterop
+            .Setup<string>("Blazor._internal.PageTitle.getAndRemoveExistingTitle")
+            .SetResult(string.Empty);
+
+        var headOutlet = context.Render<HeadOutlet>();
+
+        // When – IncludeExtensions=false deaktiviert den zweiten <link>-Tag.
+        // Sinnvoll, wenn ein Consumer-Projekt keine eigenen Extensions hat.
+        context.Render<KernStyles>(parameters => parameters
+            .Add(p => p.BasePath, "_content/KernUx.Blazor")
+            .Add(p => p.ThemeName, "kern")
+            .Add(p => p.IncludeExtensions, false));
+
+        // Then – nur das Theme-Stylesheet, kein Extensions-Link
+        headOutlet.MarkupMatches(
+            """<link rel="stylesheet" href="_content/KernUx.Blazor/css/themes/kern/index.css">""");
     }
 }
