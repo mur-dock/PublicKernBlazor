@@ -146,6 +146,9 @@ public sealed class AccessibilityAuditTests
         // Das native Muster ist semantisch äquivalent zu aria-expanded und benötigt kein
         // manuelles ARIA-Attribut (WCAG 4.1.2: native Semantik bevorzugen).
         using var context = new BunitContext();
+        // KernAccordion setzt open via JS – Aufrufe müssen gestubbt werden.
+        context.JSInterop.SetupVoid("kernAccordion.open",  _ => true).SetVoidResult();
+        context.JSInterop.SetupVoid("kernAccordion.close", _ => true).SetVoidResult();
 
         // When
         var cut = context.Render<KernAccordion>(parameters => parameters
