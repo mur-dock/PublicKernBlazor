@@ -167,6 +167,101 @@ Barrierefreiheit ist ein **Kernprinzip** von KERN-UX:
 - **Variablen**: Nutze KERN-Token (`var(--kern-color-*)`)
 - **Keine eigenen Präfixe**: Halte dich an `kern-` Namensraum
 
+## Unit-Tests
+
+### Struktur: Given / When / Then
+
+Jeder Test folgt dem **GWT-Muster** und wird durch Inline-Kommentare klar in drei Abschnitte unterteilt:
+
+- **Given** – Testkontext aufbauen: Eingaben, Zustände, Mocks und Stubs vorbereiten
+- **When** – die zu testende Aktion ausführen (genau eine pro Test)
+- **Then** – das erwartete Ergebnis prüfen
+
+```csharp
+[Fact(DisplayName = "Theme wechselt von Hell auf Dunkel")]
+public void Toggle_WechseltVonLightAufDark()
+{
+    // Given – Ausgangszustand ist immer Light (Default-Konstruktor)
+    var service = new ThemeService();
+
+    // When – Toggle einmalig aufrufen
+    service.Toggle();
+
+    // Then – Theme muss jetzt Dark sein
+    Assert.Equal(KernTheme.Dark, service.Current);
+}
+```
+
+Abweichungen (z. B. keine separaten Abschnitte bei trivialen Ein-Zeilen-Tests) sind erlaubt,
+wenn die Lesbarkeit dadurch steigt. In solchen Fällen **muss** der Testname den Kontext erklären.
+
+---
+
+### Code-Kommentare für Framework-Einstieg
+
+Tests im Projekt werden auch als **Lerndokument** für Framework-Neulinge verwendet.
+Kommentiere deshalb jede technische Implementierung, die nicht offensichtlich ist:
+
+| Situation | Pflicht-Kommentar |
+|---|---|
+| `BunitContext` anlegen | Kurze Erklärung, was bUnit ist und warum kein Browser nötig ist |
+| `context.Services.Add*(...)` | Hinweis, dass dies den DI-Container für den Test befüllt |
+| `context.JSInterop.Setup<T>(...)` | Erklärung, warum JS-Interop im Test gestubbt werden muss |
+| `context.Render<TComponent>(...)` | Hinweis, dass die Komponente in einem virtuellen DOM gerendert wird |
+| `cut.Find(...)` / `cut.FindAll(...)` | Erklärung: `cut` = *Component Under Test*, Selektor wie in CSS |
+| `MarkupMatches(...)` | Hinweis auf semantischen HTML-Vergleich (ignoriert Leerzeichen/Reihenfolge) |
+| `EventCallback` / `InvokeAsync` | Erklärung des Blazor-Event-Mechanismus |
+
+Beispiel mit vollständiger Kommentierung:
+
+```csharp
+[Fact(DisplayName = "Icon rendert korrekte CSS-Klassen")]
+public void KernIcon_RendertKorrekteCssKlassen()
+{
+    // BunitContext ersetzt den Browser: Blazor-Komponenten können so ohne
+    // echten Webserver gerendert und geprüft werden.
+    using var context = new BunitContext();
+
+    // Render<T> rendert die Komponente in ein virtuelles DOM.
+    // Der Rückgabewert ist das "Component Under Test" (cut).
+    var cut = context.Render<KernIcon>(parameters => parameters
+        .Add(p => p.Glyph, KernIconGlyph.Info)   // Parameter wie in Razor: <KernIcon Glyph="Info" />
+        .Add(p => p.Size, IconSize.Large));
+
+    // cut.Find(...) sucht im gerenderten HTML nach einem Element – wie document.querySelector().
+    var icon = cut.Find("span");
+
+    // Assert.Contains prüft, ob die CSS-Klasse im ClassList-Array vorhanden ist.
+    Assert.Contains("kern-icon--info", icon.ClassList);
+    Assert.Contains("kern-icon--large", icon.ClassList);
+}
+```
+
+---
+
+### DisplayNames – kurz, prägnant, deutsch
+
+- Jeder Test erhält einen **`DisplayName`** als deutschen Freitext.
+- Der Name beschreibt **was** getestet wird, **nicht wie**.
+- Format: `[Fact(DisplayName = "...")]` / `[Theory(DisplayName = "...")]`
+
+**Regeln:**
+
+| ✅ Gut | ❌ Schlecht |
+|---|---|
+| `"Theme wechselt von Hell auf Dunkel"` | `"Toggle_SwitchesBetweenLightAndDark"` |
+| `"Deaktivierter Button akzeptiert keinen Klick"` | `"Button_Disabled_NoClick_Test"` |
+| `"Pflichtfeld zeigt Fehlermeldung bei leerem Wert"` | `"TestInputValidationEmpty"` |
+| `"Icon rendert korrekte CSS-Klassen"` | `"RendersExpectedKernIconClasses"` |
+
+- Der Methodenname bleibt englisch (C#-Konvention) und spiegelt DisplayName kompakt wider:
+  `Toggle_WechseltVonLightAufDark`, `Button_DeaktiviertAkzeptiertKeinenKlick`
+- Keine Abkürzungen im DisplayName – Lesbarkeit hat Vorrang.
+- Bei parametrisierten Tests (`[Theory]`) beschreibt der DisplayName den **allgemeinen Fall**;
+  die einzelnen `[InlineData]`-Werte dokumentieren sich durch sprechende Eingabewerte selbst.
+
+---
+
 ## Typische Aufgaben
 
 ### Neue KERN-Komponente hinzufügen
