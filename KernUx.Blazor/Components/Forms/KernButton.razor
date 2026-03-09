@@ -1,0 +1,117 @@
+﻿@namespace KernUx.Blazor.Components.Forms
+
+<button type="@ResolvedType"
+        class="@CssClass"
+        disabled="@Disabled"
+        title="@Title"
+        aria-label="@(IconOnly ? ResolvedAriaLabel : null)"
+        @attributes="AdditionalAttributes"
+        @onclick="HandleClick">
+    @if (Icon.HasValue && IconPosition == IconPosition.Left)
+    {
+        <KernIcon Glyph="@Icon.Value" AriaHidden="true" />
+    }
+
+    @if (ChildContent is not null)
+    {
+        if (IconOnly)
+        {
+            <span class="kern-label kern-sr-only">@ChildContent</span>
+        }
+        else
+        {
+            <span class="kern-label">@ChildContent</span>
+        }
+    }
+
+    @if (Icon.HasValue && IconPosition == IconPosition.Right)
+    {
+        <KernIcon Glyph="@Icon.Value" AriaHidden="true" />
+    }
+</button>
+
+@code {
+    /// <summary>Beschriftung des Buttons als Razor-Inhalt.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Visuelle Variante des Buttons (<c>Primary</c>, <c>Secondary</c>, <c>Tertiary</c>).</summary>
+    [Parameter]
+    public ButtonVariant Variant { get; set; } = ButtonVariant.Primary;
+
+    /// <summary>Optionales Icon-Glyph; wird links oder rechts des Labels platziert (siehe <see cref="IconPosition"/>).</summary>
+    [Parameter]
+    public KernIconGlyph? Icon { get; set; }
+
+    /// <summary>Position des Icons relativ zum Label (<c>Left</c> oder <c>Right</c>).</summary>
+    [Parameter]
+    public IconPosition IconPosition { get; set; } = IconPosition.Left;
+
+    /// <summary>
+    /// Icon-Only-Modus: Das Label wird visuell versteckt (<c>kern-sr-only</c>), bleibt aber
+    /// für Screenreader sichtbar. Zusätzlich wird <see cref="AriaLabel"/> als
+    /// <c>aria-label</c> am Button gesetzt, um einen zugänglichen Namen sicherzustellen,
+    /// falls kein <see cref="ChildContent"/> vorhanden ist.
+    /// </summary>
+    [Parameter]
+    public bool IconOnly { get; set; }
+
+    /// <summary>Macht den Button auf volle Containerbreite (<c>kern-btn--block</c>).</summary>
+    [Parameter]
+    public bool Block { get; set; }
+
+    /// <summary>Deaktiviert den Button visuell und funktional.</summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>HTML-<c>type</c>-Attribut des Buttons. Standardwert: <c>"button"</c>.</summary>
+    [Parameter]
+    public string? Type { get; set; } = "button";
+
+    /// <summary>Optionaler Tooltip-Text (<c>title</c>-Attribut). Im <see cref="IconOnly"/>-Modus
+    /// dient er als Fallback für <see cref="AriaLabel"/>.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>
+    /// Explizites <c>aria-label</c> für den Icon-Only-Modus. Ist dieses nicht gesetzt,
+    /// wird <see cref="Title"/> als Fallback verwendet; ist auch dieser leer,
+    /// greift der generische Fallback <c>"Aktion"</c>.
+    /// </summary>
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    /// <summary>Wird ausgelöst, wenn der Nutzer auf den Button klickt (außer <see cref="Disabled"/>).</summary>
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das <c>&lt;button&gt;</c>-Element weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string ResolvedType => string.IsNullOrWhiteSpace(Type) ? "button" : Type;
+
+    // Zugänglicher Name für IconOnly: AriaLabel > Title > generischer Fallback.
+    // Der Fallback "Aktion" ist bewusst gewählt – er vermeidet leere aria-label-Attribute,
+    // die Screenreader vollständig verstummen lassen würden.
+    private string ResolvedAriaLabel =>
+        !string.IsNullOrWhiteSpace(AriaLabel) ? AriaLabel :
+        !string.IsNullOrWhiteSpace(Title)     ? Title     :
+        "Aktion";
+
+    private string CssClass => new CssBuilder("kern-btn")
+        .AddClass($"kern-btn--{Variant.ToKebabCase()}")
+        .AddClass("kern-btn--block", Block)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    private async Task HandleClick(MouseEventArgs args)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        await OnClick.InvokeAsync(args);
+    }
+}

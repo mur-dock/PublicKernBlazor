@@ -1,0 +1,19 @@
+﻿@namespace KernUx.Blazor.Components.Content
+
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Enthaltene <see cref="KernAccordion"/>-Elemente oder beliebiger Razor-Inhalt.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das Wrapper-<c>&lt;div&gt;</c> weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-accordion-group")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}

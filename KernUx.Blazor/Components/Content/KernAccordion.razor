@@ -1,0 +1,80 @@
+﻿@namespace KernUx.Blazor.Components.Content
+
+<details class="@CssClass"
+         open="@_isOpen"
+         @ontoggle="HandleToggle"
+         @attributes="AdditionalAttributes">
+    <summary class="kern-accordion__header">
+        @if (HeaderContent is not null)
+        {
+            @HeaderContent
+        }
+        else if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <span class="kern-title">@Title</span>
+        }
+    </summary>
+    <section class="kern-accordion__body">
+        @ChildContent
+    </section>
+</details>
+
+@code {
+    // _isOpen hält den aktuellen Sichtbarkeitszustand der Akkordeon-Sektion.
+    // Er wird NICHT bei jedem Rendern blind auf den Open-Parameter zurückgesetzt,
+    // weil das einen lokalen Toggle sofort wieder überschreiben würde.
+    // Stattdessen synchronisiert _lastOpenParameter, ob sich der Parameter von
+    // außen geändert hat – nur dann wird _isOpen aktualisiert.
+    private bool _isOpen;
+    private bool _lastOpenParameter;
+
+    /// <summary>Optionaler Titeltext im Akkordeon-Header (Fallback wenn <see cref="HeaderContent"/> nicht gesetzt).</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Benutzerdefinierter Renderinhalt für den Akkordeon-Header (überschreibt <see cref="Title"/>).</summary>
+    [Parameter]
+    public RenderFragment? HeaderContent { get; set; }
+
+    /// <summary>Inhalt des Akkordeon-Körpers.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Steuert den initialen Öffnungszustand. Externe Änderungen dieses Parameters
+    /// werden erkannt und übernommen; lokale Toggles bleiben davon unberührt.</summary>
+    [Parameter]
+    public bool Open { get; set; }
+
+    /// <summary>Wird ausgelöst, wenn der Nutzer das Akkordeon öffnet oder schließt.
+    /// Der Wert gibt den neuen Zustand an (<c>true</c> = geöffnet).</summary>
+    [Parameter]
+    public EventCallback<bool> OnToggle { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das <c>&lt;details&gt;</c>-Element weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-accordion")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    protected override void OnParametersSet()
+    {
+        // Nur synchronisieren wenn sich der Parameter von außen geändert hat.
+        // Dadurch wird ein lokaler Toggle nicht sofort überschrieben.
+        if (Open != _lastOpenParameter)
+        {
+            _isOpen = Open;
+            _lastOpenParameter = Open;
+        }
+    }
+
+    private async Task HandleToggle(EventArgs _)
+    {
+        _isOpen = !_isOpen;
+        // _lastOpenParameter mitführen, damit OnParametersSet den lokalen
+        // Zustandswechsel beim nächsten Rendern nicht rückgängig macht.
+        _lastOpenParameter = _isOpen;
+        await OnToggle.InvokeAsync(_isOpen);
+    }
+}

@@ -1,0 +1,75 @@
+﻿@namespace KernUx.Blazor.Components.Feedback
+
+<div class="@CssClass"
+     role="@ResolvedRole"
+     @attributes="AdditionalAttributes">
+    <div class="kern-alert__header">
+        @if (ShowIcon)
+        {
+            <KernIcon Glyph="@ResolvedIcon" AriaHidden="true" />
+        }
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <span class="kern-title">@Title</span>
+        }
+    </div>
+
+    @if (ChildContent is not null)
+    {
+        <div class="kern-alert__body">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>Semantischer Typ des Alerts; bestimmt Farbe, Icon-Standard und CSS-Modifier.</summary>
+    [Parameter]
+    public AlertType Type { get; set; } = AlertType.Info;
+
+    /// <summary>Titeltext im Alert-Header.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Optionaler Inhaltsbereich unterhalb des Headers (<c>kern-alert__body</c>).</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Steuert, ob das Standard-Icon im Header gerendert wird. Standard: <c>true</c>.</summary>
+    [Parameter]
+    public bool ShowIcon { get; set; } = true;
+
+    /// <summary>Explizites Icon-Glyph; überschreibt das automatisch aus <see cref="Type"/> abgeleitete Icon.</summary>
+    [Parameter]
+    public KernIconGlyph? Icon { get; set; }
+
+    /// <summary>
+    /// ARIA-<c>role</c>-Attribut des Alert-Elements. Standard: <c>"alert"</c> (assertive Live-Region).
+    /// Kann auf <c>"status"</c> geändert werden, wenn die Meldung nicht unterbrechend sein soll.
+    /// Leere oder <c>null</c>-Werte werden auf <c>"alert"</c> zurückgesetzt, damit die
+    /// semantische Mindestanforderung immer erfüllt ist.
+    /// </summary>
+    [Parameter]
+    public string? Role { get; set; } = "alert";
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das Alert-<c>&lt;div&gt;</c> weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    // Null oder leer wird auf "alert" zurückgesetzt, damit die ARIA-Semantik
+    // auch dann gewahrt bleibt, wenn der Parameter explizit auf null gesetzt wird.
+    private string ResolvedRole => string.IsNullOrWhiteSpace(Role) ? "alert" : Role;
+
+    private string CssClass => new CssBuilder("kern-alert")
+        .AddClass($"kern-alert--{Type.ToKebabCase()}")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    private KernIconGlyph ResolvedIcon => Icon ?? Type switch
+    {
+        AlertType.Success => KernIconGlyph.Success,
+        AlertType.Warning => KernIconGlyph.Warning,
+        AlertType.Danger  => KernIconGlyph.Danger,
+        _                 => KernIconGlyph.Info
+    };
+}
