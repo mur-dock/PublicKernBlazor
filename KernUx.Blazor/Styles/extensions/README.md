@@ -23,18 +23,35 @@ extensions/
 
 ## Einbindung
 
-Die Extensions werden im Theme-Entry eingebunden:
+Die Extensions werden **separat** zu einer eigenen CSS-Datei kompiliert:
 
-- `Styles/themes/kern/index.scss`
+- SCSS-Quelle: `Styles/extensions/index.scss`
+- Kompiliertes CSS: `wwwroot/css/extensions/index.css`
 
-Aktuell:
+Die Einbindung im Browser erfolgt automatisch über die `KernStyles`-Komponente:
 
-```scss
-@use "../../core/index.scss";
-@use "../../extensions/index.scss" as kernext;
+```razor
+@* App.razor – im <head> *@
+<KernStyles />
 ```
 
-Der Alias (`as kernext`) verhindert Namespace-Konflikte bei Sass-Modulen.
+`KernStyles` rendert zwei `<link>`-Tags:
+
+1. **Theme-CSS**: `css/themes/kern/index.css` (aus KERN-UX Core)
+2. **Extensions-CSS**: `css/extensions/index.css` (projektspezifisch)
+
+Falls die Extensions nicht benötigt werden:
+
+```razor
+<KernStyles IncludeExtensions="false" />
+```
+
+### Warum nicht per `@use` in `themes/kern/index.scss`?
+
+Die Dateien unter `Styles/core/` und `Styles/themes/` sind **Kopien aus dem KERN-UX Repository**
+und können bei Updates jederzeit überschrieben werden. Die Extensions dürfen daher **nicht** dort
+referenziert werden. Stattdessen wird die separate CSS-Datei über `KernStyles` eingebunden –
+das ist update-sicher und erfordert keine Änderung an den KERN-UX-Quelldateien.
 
 ## Konventionen für neue Erweiterungen
 
