@@ -401,10 +401,10 @@ Die folgende Checkliste beschreibt die empfohlene Reihenfolge der Umsetzung:
 
 ### Phase 1 – Pflicht-Dateien (sofort)
 
-- [ ] `LICENSE` im Root erstellen (MIT)
-- [ ] `CODE_OF_CONDUCT.md` erstellen (Contributor Covenant 2.1)
-- [ ] `SECURITY.md` erstellen
-- [ ] `CONTRIBUTING.md` erstellen
+- [x] `LICENSE` im Root erstellen (MIT)
+- [x] `CODE_OF_CONDUCT.md` erstellen (Contributor Covenant 2.1)
+- [x] `SECURITY.md` erstellen
+- [x] `CONTRIBUTING.md` erstellen
 
 ### Phase 2 – Verzeichnisstruktur
 
