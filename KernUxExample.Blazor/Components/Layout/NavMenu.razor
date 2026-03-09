@@ -1,29 +1,42 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">KernUxExample.Blazor</a>
+﻿<div class="nav-shell kern-card kern-card--hug">
+    <div class="nav-brand">
+        <p class="kern-preline">Navigation</p>
+        <a class="kern-link nav-brand__link" href="">
+            <span class="kern-icon kern-icon--home" aria-hidden="true"></span>
+            <span class="kern-title kern-title--small">KernUxExample.Blazor</span>
+        </a>
     </div>
-</div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
+    <input id="nav-toggle" type="checkbox" title="Navigation menu" class="nav-toggle"/>
+    <label for="nav-toggle" class="nav-toggle-button">
+        <span class="kern-label kern-label--small">Menü</span>
+        <span class="kern-icon kern-icon--more-vert" aria-hidden="true"></span>
+    </label>
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+    <div class="nav-scrollable">
+        <nav aria-label="Hauptnavigation">
+            <ul class="kern-list nav-list">
+                <li class="nav-item">
+                    <NavLink class="kern-link nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="kern-icon kern-icon--home" aria-hidden="true"></span>
+                        <span class="kern-body kern-body--bold">Home</span>
+                    </NavLink>
+                </li>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
+                <li class="nav-item">
+                    <NavLink class="kern-link nav-link" href="counter">
+                        <span class="kern-icon kern-icon--add" aria-hidden="true"></span>
+                        <span class="kern-body kern-body--bold">Counter</span>
+                    </NavLink>
+                </li>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
+                <li class="nav-item">
+                    <NavLink class="kern-link nav-link" href="weather">
+                        <span class="kern-icon kern-icon--calendar-today" aria-hidden="true"></span>
+                        <span class="kern-body kern-body--bold">Weather</span>
+                    </NavLink>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

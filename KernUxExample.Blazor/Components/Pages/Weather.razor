@@ -1,62 +1,51 @@
 ﻿@page "/weather"
 @attribute [StreamRendering]
+@inherits WeatherBase
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<section class="kern-card kern-card--hug">
+    <div class="kern-card__container">
+        <header class="kern-card__header">
+            <p class="kern-preline">Beispieldaten</p>
+            <h1 class="kern-heading-large">Weather</h1>
+            <p class="kern-subline">This component demonstrates showing data.</p>
+        </header>
 
-<p>This component demonstrates showing data.</p>
-
-@if (forecasts == null) {
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else {
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th aria-label="Temperature in Celsius">Temp. (C)</th>
-            <th aria-label="Temperature in Fahrenheit">Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var forecast in forecasts) {
-            <tr>
-                <td>@forecast.Date.ToShortDateString()</td>
-                <td>@forecast.TemperatureC</td>
-                <td>@forecast.TemperatureF</td>
-                <td>@forecast.Summary</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-
-@code {
-    private WeatherForecast[]? forecasts;
-
-    protected override async Task OnInitializedAsync() {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
-    }
-
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
-
-}
+        <section class="kern-card__body">
+            @if (_forecasts is null)
+            {
+                <p class="kern-body">
+                    <em>Loading...</em>
+                </p>
+            }
+            else
+            {
+                <div class="kern-table-responsive" tabindex="0">
+                    <table class="kern-table kern-table--striped">
+                        <caption class="kern-title">Forecast</caption>
+                        <thead class="kern-table__head">
+                            <tr class="kern-table__row">
+                                <th scope="col" class="kern-table__header">Date</th>
+                                <th scope="col" class="kern-table__header kern-table__header--numeric" aria-label="Temperature in Celsius">Temp. (C)</th>
+                                <th scope="col" class="kern-table__header kern-table__header--numeric" aria-label="Temperature in Fahrenheit">Temp. (F)</th>
+                                <th scope="col" class="kern-table__header">Summary</th>
+                            </tr>
+                        </thead>
+                        <tbody class="kern-table__body">
+                            @foreach (var forecast in _forecasts)
+                            {
+                                <tr class="kern-table__row">
+                                    <th scope="row" class="kern-table__header">@forecast.Date.ToShortDateString()</th>
+                                    <td class="kern-table__cell kern-table__cell--numeric">@forecast.TemperatureC</td>
+                                    <td class="kern-table__cell kern-table__cell--numeric">@forecast.TemperatureF</td>
+                                    <td class="kern-table__cell">@forecast.Summary</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </section>
+    </div>
+</section>

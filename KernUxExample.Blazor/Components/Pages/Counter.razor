@@ -3,17 +3,31 @@
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
+<section class="kern-card kern-card--hug">
+    <div class="kern-card__container">
+        <header class="kern-card__header">
+            <p class="kern-preline">Interaktive Demo</p>
+            <h1 class="kern-heading-large">Counter</h1>
+        </header>
 
-<p role="status">Current count: @currentCount</p>
+        <section class="kern-card__body">
+            <p class="kern-body" role="status">Current count: <span class="kern-body kern-body--bold">@_currentCount</span></p>
+        </section>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+        <footer class="kern-card__footer">
+            <button class="kern-btn kern-btn--primary" @onclick="IncrementCount">
+                <span class="kern-label">Click me</span>
+            </button>
+        </footer>
+    </div>
+</section>
 
 @code {
-    private int currentCount = 0;
+    private int _currentCount;
 
-    private void IncrementCount() {
-        currentCount++;
+    private void IncrementCount()
+    {
+        _currentCount++;
     }
 
 }

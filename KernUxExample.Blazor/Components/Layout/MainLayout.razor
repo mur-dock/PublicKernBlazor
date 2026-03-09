@@ -1,16 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
+    <aside class="sidebar">
         <NavMenu/>
-    </div>
+    </aside>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+    <main class="layout-main">
+        <header class="top-row">
+            <div class="top-row__content">
+                <div>
+                    <p class="kern-preline">KERN Design System</p>
+                    <h1 class="kern-title">KernUxExample.Blazor</h1>
+                </div>
 
-        <article class="content px-4">
+                <a class="kern-link" href="https://learn.microsoft.com/aspnet/core/" target="_blank" rel="noreferrer">About</a>
+            </div>
+        </header>
+
+        <article class="content">
             @Body
         </article>
     </main>
