@@ -1,0 +1,26 @@
+﻿<section class="demo-component-section">
+    <KernTitle Size="TitleSize.Large">@Title</KernTitle>
+
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <KernBody Muted="true">@Description</KernBody>
+    }
+
+    <div class="demo-component-section__content">
+        @ChildContent
+    </div>
+
+    <KernDivider />
+</section>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
+

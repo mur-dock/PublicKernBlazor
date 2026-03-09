@@ -1,0 +1,9 @@
+﻿.demo-card-media {
+    min-height: 96px;
+    background: var(--kern-color-neutral-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--kern-color-neutral-700);
+}
+

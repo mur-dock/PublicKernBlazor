@@ -1,0 +1,9 @@
+﻿<KernRow AlignItems="AlignItems.Center" class="demo-variant-row">
+    @ChildContent
+</KernRow>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
+
