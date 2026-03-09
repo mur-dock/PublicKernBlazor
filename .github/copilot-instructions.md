@@ -401,6 +401,79 @@ private List<MyItem> _materializedItems = [];
 
 ---
 
+## CLI-Operationen & Ausgabeverwaltung
+
+### Output-Handling bei Terminal-Kommandos
+
+Bei der Ausführung von CLI-Befehlen (z.B. `dotnet build`, `dotnet test`) gilt folgende Best Practice:
+
+**Immer den Output (stdout + stderr) in eine separate Datei schreiben und aus dieser lesen:**
+
+```powershell
+# ❌ Schlecht: Output direkt auf Konsole oder abgeschnitten
+dotnet build "Project.csproj"
+
+# ✅ Gut: Output in Datei umleiten und später lesen
+dotnet build "Project.csproj" 2>&1 | Out-File -FilePath "build-output.txt" -Encoding utf8
+Get-Content "build-output.txt"
+```
+
+**Begründung:** 
+- Große Outputs können in der Terminal-Session abgeschnitten werden
+- Systematische Erfassung ermöglicht sichere Fehlerdiagnose
+- Dateibasierte Ausgabe ist zuverlässiger als Streaming
+
+---
+
+### PowerShell: UTF8-Encoding zwingend erforderlich
+
+Bei allen PowerShell-Operationen **muss explizit UTF-8 als Encoding festgelegt werden** – sowohl beim Schreiben in Dateien als auch für die Konsole:
+
+#### 1. Schreiben in Dateien
+
+```powershell
+# ❌ Schlecht: Standardencoding (Windows-1252 auf DE-Systemen)
+Get-Content "file.txt" | Out-File "output.txt"
+
+# ✅ Gut: Explizit UTF8
+Get-Content "file.txt" | Out-File -FilePath "output.txt" -Encoding utf8
+```
+
+#### 2. Konsolen-Output
+
+```powershell
+# ❌ Schlecht: Standardencoding
+Write-Output "Ü Ö Ä äöü"
+
+# ✅ Gut: UTF8 für die PowerShell-Konsole selbst
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+Write-Output "Ü Ö Ä äöü"
+```
+
+#### 3. Komplettes Beispiel
+
+```powershell
+# Setze die Konsole auf UTF8 zu Beginn der Sitzung
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
+# Führe Befehl aus und schreibe Output in Datei
+dotnet test "TestProject.csproj" 2>&1 | Out-File -FilePath "test-results.txt" -Encoding utf8
+
+# Lese Datei zur Verarbeitung
+$output = Get-Content "test-results.txt" -Encoding utf8
+if ($output -match "bestanden") {
+    Write-Output "Alle Tests bestanden"
+}
+```
+
+**Warum UTF8 so wichtig ist:**
+- Deutsch enthält Umlaute (Ä, Ö, Ü, ä, ö, ü, ß) und Sonderzeichen (–, —, « »)
+- Standardencoding auf Windows ist oft Windows-1252/CP1252 (Westeuropäisch)
+- Fehlendes UTF8-Encoding führt zu beschädigten Umlauten und unlesbarem Output
+- **Besonders kritisch** bei internationalen Build-Logs, Fehlermeldungen und Testergebnissen
+
+---
+
 ## Weitere Ressourcen
 
 - KERN-UX Website: https://www.kern-ux.de
