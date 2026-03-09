@@ -1,0 +1,25 @@
+﻿@namespace KernUx.Blazor.Components.Layout
+
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public AlignItems? AlignItems { get; set; }
+
+    [Parameter]
+    public JustifyContent? JustifyContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-row")
+        .AddClass(AlignItems is null ? null : $"kern-align-items-{AlignItems.Value.ToKebabCase()}")
+        .AddClass(JustifyContent is null ? null : $"kern-justify-content-{JustifyContent.Value.ToKebabCase()}")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
