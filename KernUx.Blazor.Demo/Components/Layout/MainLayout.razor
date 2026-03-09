@@ -1,43 +1,75 @@
 ﻿@inherits LayoutComponentBase
+@inject ThemeService ThemeService
+@inject IJSRuntime Js
+@implements IDisposable
 
-<KernKopfzeile />
+<div data-kern-theme="@ThemeService.AttributeValue">
+    <KernKopfzeile />
 
-<header class="demo-header">
+    <header class="demo-header">
+        <KernContainer>
+            <KernRow JustifyContent="JustifyContent.Between" AlignItems="AlignItems.Center">
+                <KernCol Span="9">
+                    <KernPreline>KERN Design System</KernPreline>
+                    <KernTitle Size="TitleSize.Large">KernUx.Blazor Showcase</KernTitle>
+                </KernCol>
+                <KernCol Span="3" class="demo-header__actions">
+                    <button type="button"
+                            class="kern-btn kern-btn--tertiary"
+                            title="Theme wechseln"
+                            aria-label="Theme wechseln"
+                            aria-pressed="@(ThemeService.Current == KernTheme.Dark ? "true" : "false")"
+                            @onclick="ToggleTheme">
+                        <span class="kern-icon kern-icon--brightness-medium" aria-hidden="true"></span>
+                    </button>
+                </KernCol>
+            </KernRow>
+        </KernContainer>
+    </header>
+
     <KernContainer>
-        <KernRow JustifyContent="JustifyContent.Between" AlignItems="AlignItems.Center">
-            <KernCol Span="9">
-                <KernPreline>KERN Design System</KernPreline>
-                <KernTitle Size="TitleSize.Large">KernUx.Blazor Showcase</KernTitle>
+        <KernRow>
+            <KernCol Span="12" SpanMd="3">
+                <DemoNavMenu />
             </KernCol>
-            <KernCol Span="3" class="demo-header__actions">
-                @* SSR-sicher: reiner HTML-Button mit JS-Handler statt Blazor @onclick. *@
-                <button type="button"
-                        class="kern-btn kern-btn--tertiary"
-                        title="Theme wechseln"
-                        aria-label="Theme wechseln"
-                        onclick="window.kernTheme.toggle()">
-                    <span class="kern-icon kern-icon--brightness-medium" aria-hidden="true"></span>
-                </button>
+            <KernCol Span="12" SpanMd="9">
+                <main>
+                    @Body
+                </main>
             </KernCol>
         </KernRow>
     </KernContainer>
-</header>
-
-<KernContainer>
-    <KernRow>
-        <KernCol Span="12" SpanMd="3">
-            <DemoNavMenu />
-        </KernCol>
-        <KernCol Span="12" SpanMd="9">
-            <main>
-                @Body
-            </main>
-        </KernCol>
-    </KernRow>
-</KernContainer>
+</div>
 
 <div id="blazor-error-ui" data-nosnippet>
     Ein unbehandelter Fehler ist aufgetreten.
     <a href="." class="reload">Neu laden</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // HttpContext ist nur beim SSR-Prerender befüllt.
+        // Nach der Hydration (InteractiveServer) ist er null – dann hat der
+        // ThemeService den Wert bereits aus dem Prerender-Durchlauf.
+        var stored = HttpContext?.Request.Cookies["kern-theme"];
+        ThemeService.Initialize(stored);
+        ThemeService.ThemeChanged += OnThemeChanged;
+    }
+
+    private async Task ToggleTheme()
+    {
+        ThemeService.Toggle();
+
+        // Cookie + <html data-kern-theme> via stabile JS-Funktion aus App.razor setzen.
+        await Js.InvokeVoidAsync("kernTheme.set", ThemeService.AttributeValue);
+    }
+
+    private void OnThemeChanged(KernTheme _) => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => ThemeService.ThemeChanged -= OnThemeChanged;
+}

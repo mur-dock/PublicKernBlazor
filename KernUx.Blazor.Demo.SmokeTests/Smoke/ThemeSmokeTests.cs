@@ -81,6 +81,57 @@ public sealed class ThemeSmokeTests : BaseSmokeTest
     }
 
     /// <summary>
+    /// Regressions-Test: Nach zwei Toggle-Klicks (Light→Dark→Light) und anschließender
+    /// Navigation zu einer anderen Seite darf das Theme NICHT auf "dark" zurückfallen.
+    /// Reproduziert den gemeldeten Bug: Toggle 2× schalten, dann Nav-Link klicken → Theme "dark".
+    /// </summary>
+    [Test]
+    public async Task ThemeToggle_ZweimalKlickDannNavigation_BleibLight()
+    {
+        // Given – Startseite laden, Ausgangszustand ist "light"
+        var startseite = new HomePage(Page);
+        await startseite.NavigiereAsync();
+        var toggleButton = Page.Locator("[title='Theme wechseln']");
+        var htmlElement  = Page.Locator("html");
+
+        // Ausgangszustand sicherstellen
+        await Assertions.Expect(htmlElement).ToHaveAttributeAsync("data-kern-theme", "light");
+
+        // When – Schritt 1: Toggle einmal → "dark"
+        await toggleButton.ClickAsync();
+        await Assertions.Expect(htmlElement).ToHaveAttributeAsync("data-kern-theme", "dark");
+
+        // When – Schritt 2: Toggle erneut → zurück auf "light"
+        await toggleButton.ClickAsync();
+        await Assertions.Expect(htmlElement).ToHaveAttributeAsync("data-kern-theme", "light");
+
+        // Sicherstellen, dass Cookie ebenfalls "light" zeigt
+        var cookiesVorNav = await Context.CookiesAsync();
+        var cookieVorNav  = cookiesVorNav.FirstOrDefault(c => c.Name == "kern-theme");
+        Assert.That(cookieVorNav?.Value, Is.EqualTo("light"),
+            "Cookie muss nach zweitem Toggle 'light' sein – noch vor der Navigation.");
+
+        // When – Schritt 3: Navigationslink anklicken (Blazor Enhanced Navigation)
+        // Dies ist die kritische Aktion: der Bug trat genau hier auf.
+        await startseite.LinkButtons.First.ClickAsync();
+        await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
+        // Then – Theme muss WEITERHIN "light" sein, nicht "dark"
+        await Assertions.Expect(htmlElement)
+            .ToHaveAttributeAsync("data-kern-theme", "light");
+
+        Assert.That(
+            await htmlElement.GetAttributeAsync("data-kern-theme"), Is.EqualTo("light"),
+            "Theme darf nach Navigation nicht auf 'dark' zurückfallen.");
+
+        // Cookie muss ebenfalls "light" sein
+        var cookiesNachNav = await Context.CookiesAsync();
+        var cookieNachNav  = cookiesNachNav.FirstOrDefault(c => c.Name == "kern-theme");
+        Assert.That(cookieNachNav?.Value, Is.EqualTo("light"),
+            "Cookie darf nach Navigation nicht auf 'dark' zurückfallen.");
+    }
+
+    /// <summary>
     /// Das Anti-FOUC-Script muss <c>data-kern-theme</c> bereits vor dem
     /// vollständigen Blazor-Rendering setzen (Attribut ist direkt nach DOMContentLoaded da).
     /// </summary>

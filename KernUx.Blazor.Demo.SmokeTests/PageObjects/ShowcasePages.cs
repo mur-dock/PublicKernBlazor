@@ -13,6 +13,9 @@ public sealed class HomePage(IPage page) : BasePage(page, "/")
 
     /// <summary>Link zum Dashboard.</summary>
     public ILocator LinkDashboard => Page.Locator("a[href='/examples/dashboard']");
+
+    /// <summary>Navigationslink zur Buttons-Showcase-Seite (im Demo-NavMenu).</summary>
+    public ILocator LinkButtons => Page.Locator("a[href='/components/buttons']");
 }
 
 /// <summary>Page Object für <c>/components/typography</c>.</summary>
