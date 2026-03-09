@@ -1,0 +1,129 @@
+name: Bug-Report
+description: Einen Fehler in einer KernUx.Blazor-Komponente melden
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für deinen Bug-Report! Bitte fülle alle Felder so vollständig wie möglich aus.
+        **Sicherheitslücken** bitte **nicht** hier melden – siehe [SECURITY.md](../../SECURITY.md).
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Betroffene Komponente
+      description: Welche Komponente zeigt das fehlerhafte Verhalten?
+      options:
+        - KernAccordion / KernAccordionGroup
+        - KernAlert
+        - KernBadge
+        - KernButton
+        - KernCard / KernCardMedia / KernCardContainer
+        - KernCheckbox / KernCheckboxList
+        - KernCol / KernRow / KernContainer
+        - KernDescriptionList
+        - KernDialog
+        - KernDivider
+        - KernFieldset
+        - KernHeading / KernTitle / KernBody / KernLabel / KernSubline / KernPreline
+        - KernIcon
+        - KernInputCurrency
+        - KernInputDate
+        - KernInputFile
+        - KernInputText / KernInputEmail / KernInputPassword / KernInputTel / KernInputUrl / KernInputNumber
+        - KernKopfzeile
+        - KernLink / KernList
+        - KernLoader
+        - KernProgress
+        - KernRadioGroup
+        - KernSelect
+        - KernStyles
+        - KernSummary / KernSummaryGroup
+        - KernTable
+        - KernTaskList / KernTaskListItem / KernTaskListGroup
+        - KernTextarea
+        - KernThemeProvider
+        - ThemeService / IdGeneratorService
+        - Anderes / Mehrere Komponenten
+    validations:
+      required: true
+
+  - type: dropdown
+    id: dotnet-version
+    attributes:
+      label: .NET-Version
+      options:
+        - "10.0"
+        - "9.0"
+        - "Andere"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: render-mode
+    attributes:
+      label: Blazor-Renderingmodus
+      options:
+        - Static SSR
+        - InteractiveServer
+        - InteractiveWebAssembly
+        - InteractiveAuto
+        - Unbekannt
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Fehlerbeschreibung
+      description: Eine klare und prägnante Beschreibung des Problems.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduktionsschritte
+      description: Minimales Beispiel, das den Fehler reproduziert.
+      placeholder: |
+        1. Komponente `KernXyz` mit Parameter `...` verwenden
+        2. Auf `...` klicken
+        3. Fehler tritt auf: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Erwartetes Verhalten
+      description: Was sollte passieren?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Tatsächliches Verhalten
+      description: Was passiert stattdessen?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: accessibility
+    attributes:
+      label: Barrierefreiheitsbezug
+      description: Betrifft der Fehler WCAG-Konformität, ARIA-Attribute oder Tastaturnavigation?
+      options:
+        - "Ja – betrifft Barrierefreiheit"
+        - "Nein"
+        - "Unklar"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Zusätzliche Informationen
+      description: Screenshots, Fehlermeldungen, Konsolenausgaben oder weitere Hinweise.
+

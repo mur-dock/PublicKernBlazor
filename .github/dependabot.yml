@@ -1,0 +1,64 @@
+version: 2
+updates:
+  # NuGet-Abhängigkeiten der Library
+  - package-ecosystem: "nuget"
+    directory: "/src/KernUx.Blazor"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "nuget"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # NuGet-Abhängigkeiten der Demo-App
+  - package-ecosystem: "nuget"
+    directory: "/src/KernUx.Blazor.Demo"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "nuget"
+      - "demo"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # NuGet-Abhängigkeiten der Unit-Tests
+  - package-ecosystem: "nuget"
+    directory: "/tests/KernUx.Blazor.Tests"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "nuget"
+      - "tests"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # GitHub-Actions-Versionen aktuell halten
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(ci)"
+

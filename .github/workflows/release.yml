@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    name: Build, Test & NuGet-Publish
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # für GitHub-Release erstellen
+      packages: write   # für GitHub Packages (optional)
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: .NET einrichten
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.x"
+
+      - name: NuGet-Pakete wiederherstellen
+        run: dotnet restore KernUx.Blazor.slnx
+
+      - name: Solution bauen (Release)
+        run: dotnet build KernUx.Blazor.slnx --configuration Release --no-restore
+
+      - name: Unit-Tests ausführen
+        run: >
+          dotnet test tests/KernUx.Blazor.Tests/KernUx.Blazor.Tests.csproj
+          --configuration Release
+          --no-build
+          --logger "trx;LogFileName=test-results.trx"
+          --results-directory ./test-results
+
+      - name: NuGet-Paket erstellen
+        run: >
+          dotnet pack src/KernUx.Blazor/KernUx.Blazor.csproj
+          --configuration Release
+          --no-build
+          --output ./nupkg
+
+      - name: Paketversionsnummer aus Tag ableiten
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: NuGet-Paket auf nuget.org veröffentlichen
+        run: >
+          dotnet nuget push ./nupkg/*.nupkg
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+      - name: GitHub-Release erstellen
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "v${{ steps.version.outputs.version }}"
+          body: |
+            Siehe [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
+            für alle Änderungen dieser Version.
+          files: ./nupkg/*.nupkg
+          generate_release_notes: false
+

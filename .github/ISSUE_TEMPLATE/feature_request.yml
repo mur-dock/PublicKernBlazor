@@ -1,0 +1,106 @@
+name: Feature-Request
+description: Eine neue Funktion oder Komponente vorschlagen
+title: "feat: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für deinen Vorschlag! Bitte beschreibe das gewünschte Feature so genau wie möglich.
+        Prüfe zuerst, ob das Feature bereits in den [offenen Issues](../../issues) oder
+        [Discussions](../../discussions) diskutiert wird.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Kategorie
+      description: Um was für eine Art von Feature handelt es sich?
+      options:
+        - Neue Blazor-Komponente (KERN-UX-Standard)
+        - Erweiterung einer bestehenden Komponente
+        - Neue Library-Erweiterung (über KERN-UX-Standard hinaus)
+        - Barrierefreiheits-Verbesserung
+        - Theming / Design-Token
+        - Developer-Experience (DX)
+        - Build / CI / Tooling
+        - Dokumentation
+        - Anderes
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kern-component
+    attributes:
+      label: Bezug zu KERN-UX-Komponente (falls zutreffend)
+      description: |
+        Welche offizielle KERN-UX-Komponente ist betroffen?
+        Dokumentation: https://www.kern-ux.de/komponenten
+      options:
+        - Nicht anwendbar
+        - Accordion
+        - Alert
+        - Badge
+        - Button
+        - Card
+        - Checkbox / Checkbox-List
+        - Dialog
+        - Divider
+        - Fieldset
+        - Grid (Container / Row / Col)
+        - Heading / Title / Body / Label / Subline / Preline
+        - Icon
+        - Input (Text / Email / Password / Tel / URL / Number / Date / File)
+        - Kopfzeile (Header)
+        - Link / List
+        - Loader
+        - Progress
+        - Radio-Group
+        - Select
+        - Summary
+        - Table
+        - Task-List
+        - Textarea
+        - Theme-Provider
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / Problembeschreibung
+      description: Welches Problem löst dieses Feature? Welchen Anwendungsfall deckt es ab?
+      placeholder: "Als Entwickler möchte ich ..., damit ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Gewünschte Lösung
+      description: Wie soll das Feature aussehen oder funktionieren?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Geprüfte Alternativen
+      description: Welche Alternativen hast du in Betracht gezogen?
+
+  - type: dropdown
+    id: accessibility
+    attributes:
+      label: WCAG-Relevanz
+      description: Hat das Feature Auswirkungen auf die Barrierefreiheit (WCAG 2.1 AA)?
+      options:
+        - "Ja – verbessert Barrierefreiheit"
+        - "Ja – muss auf Barrierefreiheit geprüft werden"
+        - "Nein"
+        - "Unklar"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Zusätzliche Informationen
+      description: Mockups, Links zur KERN-UX-Dokumentation, verwandte Issues oder weitere Hinweise.
+
