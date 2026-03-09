@@ -55,3 +55,26 @@ public enum BodyModifier
     Large
 }
 
+/// <summary>Größenvariante einer <c>KernCard</c>.</summary>
+public enum CardSize
+{
+    /// <summary>Standardgröße.</summary>
+    Default,
+
+    /// <summary>Kompakte Darstellung mit reduziertem Spacing.</summary>
+    Small,
+
+    /// <summary>Größere Darstellung mit mehr Whitespace.</summary>
+    Large
+}
+
+/// <summary>Layout-Variante einer <c>KernDescriptionList</c>.</summary>
+public enum DescriptionListLayout
+{
+    /// <summary>Key und Value nebeneinander (Standard).</summary>
+    Row,
+
+    /// <summary>Key und Value untereinander (<c>--col</c>).</summary>
+    Column
+}
+

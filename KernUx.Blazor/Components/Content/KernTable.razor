@@ -1,0 +1,62 @@
+﻿@namespace KernUx.Blazor.Components.Content
+
+@if (Responsive)
+{
+    <div class="kern-table-responsive" tabindex="0">
+        @* @attributes muss explizit am <table> stehen, damit alle übergebenen HTML-Attribute
+           (z.B. aria-*, data-*, role) tatsächlich gerendert werden. AddClassFromAttributes im
+           CssBuilder fusioniert nur den "class"-Key; alle anderen Attribute gehen ohne @attributes verloren. *@
+        <table class="@CssClass" @attributes="AdditionalAttributes">
+            @if (!string.IsNullOrWhiteSpace(Caption))
+            {
+                <caption class="kern-title">@Caption</caption>
+            }
+            @ChildContent
+        </table>
+    </div>
+}
+else
+{
+    <table class="@CssClass" @attributes="AdditionalAttributes">
+        @if (!string.IsNullOrWhiteSpace(Caption))
+        {
+            <caption class="kern-title">@Caption</caption>
+        }
+        @ChildContent
+    </table>
+}
+
+@code {
+    /// <summary>Optionale Tabellenbeschreibung, wird als <c>&lt;caption&gt;</c> gerendert.</summary>
+    [Parameter]
+    public string? Caption { get; set; }
+
+    /// <summary>Kompakte Darstellung (<c>kern-table--small</c>).</summary>
+    [Parameter]
+    public bool Small { get; set; }
+
+    /// <summary>Gestreifte Zeilen (<c>kern-table--striped</c>).</summary>
+    [Parameter]
+    public bool Striped { get; set; }
+
+    /// <summary>
+    /// Wenn <c>true</c>, wird die Tabelle in einen scrollbaren Wrapper
+    /// (<c>kern-table-responsive</c>) eingebettet. Standard: <c>true</c>.
+    /// </summary>
+    [Parameter]
+    public bool Responsive { get; set; } = true;
+
+    /// <summary>Inhalt der Tabelle (<c>&lt;thead&gt;</c>, <c>&lt;tbody&gt;</c>, etc.).</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das <c>&lt;table&gt;</c>-Element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-table")
+        .AddClass("kern-table--small", Small)
+        .AddClass("kern-table--striped", Striped)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}

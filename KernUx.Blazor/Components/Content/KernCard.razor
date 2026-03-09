@@ -1,0 +1,39 @@
+﻿@namespace KernUx.Blazor.Components.Content
+
+<article class="@CssClass" @attributes="AdditionalAttributes">
+    @ChildContent
+</article>
+
+@code {
+    /// <summary>Größenvariante der Card (<c>Small</c>, <c>Default</c>, <c>Large</c>).</summary>
+    [Parameter]
+    public CardSize Size { get; set; } = CardSize.Default;
+
+    /// <summary>Wenn <c>true</c>, wird <c>kern-card--hug</c> gesetzt (keine Equal Height).</summary>
+    [Parameter]
+    public bool Hug { get; set; }
+
+    /// <summary>Wenn <c>true</c>, wird <c>kern-card--active</c> gesetzt (stretched Link, interaktive Zustände).</summary>
+    [Parameter]
+    public bool Active { get; set; }
+
+    /// <summary>
+    /// Inhalt der Card – typischerweise <see cref="KernCardMedia"/> gefolgt von
+    /// <see cref="KernCardContainer"/> (mit Header, Body und Footer).
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das <c>&lt;article&gt;</c>-Element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-card")
+        .AddClass("kern-card--small", Size == CardSize.Small)
+        .AddClass("kern-card--large", Size == CardSize.Large)
+        .AddClass("kern-card--hug", Hug)
+        .AddClass("kern-card--active", Active)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+

@@ -1,0 +1,75 @@
+﻿@namespace KernUx.Blazor.Components.Content
+@inject IdGeneratorService IdGenerator
+
+<div class="kern-summary" @attributes="AdditionalAttributes">
+    <div class="kern-summary__header">
+        @if (!string.IsNullOrWhiteSpace(Number))
+        {
+            <span class="kern-number">@Number</span>
+        }
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <h3 class="kern-title kern-title--small" id="@ResolvedTitleId">@Title</h3>
+        }
+    </div>
+    <div class="kern-summary__body">
+        @ChildContent
+        @if (!string.IsNullOrWhiteSpace(EditHref))
+        {
+            <div class="kern-summary__actions">
+                <a href="@EditHref" class="kern-link" aria-describedby="@ResolvedTitleId">
+                    <KernIcon Glyph="KernIconGlyph.Edit" AriaHidden="true" />
+                    @ResolvedEditLabel
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    /// <summary>Optionale Nummer (z.B. Schritt-Nummer).</summary>
+    [Parameter]
+    public string? Number { get; set; }
+
+    /// <summary>Titel der Zusammenfassung.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Link-URL für die Bearbeiten-Aktion. Wenn gesetzt, wird ein Edit-Link gerendert.</summary>
+    [Parameter]
+    public string? EditHref { get; set; }
+
+    /// <summary>Text für den Bearbeiten-Link. Standard: <c>"Bearbeiten"</c>.</summary>
+    [Parameter]
+    public string? EditLabel { get; set; }
+
+    /// <summary>Inhalt des Summary-Body (typischerweise eine <c>KernDescriptionList</c>).</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Explizite ID für den Titel. Wird für <c>aria-describedby</c> des Edit-Links verwendet.
+    /// Wenn nicht gesetzt, wird automatisch eine eindeutige ID generiert.</summary>
+    [Parameter]
+    public string? TitleId { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    // _generatedTitleId wird einmalig in OnInitialized erzeugt.
+    // Ohne diese Generierung würde der Fallback "kern-summary-title" bei mehreren
+    // KernSummary-Instanzen auf derselben Seite zu doppelten DOM-IDs führen,
+    // was WCAG-konformes aria-describedby unterbricht.
+    private string? _generatedTitleId;
+
+    // Nutzt die explizit übergebene TitleId oder die automatisch generierte eindeutige ID.
+    // Niemals einen statischen Fallback-String verwenden – doppelte IDs brechen ARIA-Referenzen.
+    private string ResolvedTitleId => string.IsNullOrWhiteSpace(TitleId) ? _generatedTitleId! : TitleId;
+
+    private string ResolvedEditLabel => string.IsNullOrWhiteSpace(EditLabel) ? "Bearbeiten" : EditLabel;
+
+    protected override void OnInitialized()
+    {
+        _generatedTitleId = IdGenerator.Create("kern-summary-title");
+    }
+}

@@ -1,0 +1,67 @@
+﻿@namespace KernUx.Blazor.Components.Content
+
+<div class="kern-card__container" @attributes="AdditionalAttributes">
+    @if (HasHeaderContent)
+    {
+        <header class="kern-card__header">
+            @if (!string.IsNullOrWhiteSpace(Preline))
+            {
+                <p class="kern-preline">@Preline</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(Title))
+            {
+                <h2 class="kern-title">@Title</h2>
+            }
+            @if (!string.IsNullOrWhiteSpace(Subline))
+            {
+                <h3 class="kern-subline">@Subline</h3>
+            }
+        </header>
+    }
+
+    @if (ChildContent is not null)
+    {
+        <section class="kern-card__body">
+            @ChildContent
+        </section>
+    }
+
+    @if (FooterContent is not null)
+    {
+        <footer class="kern-card__footer">
+            @FooterContent
+        </footer>
+    }
+</div>
+
+@code {
+    /// <summary>Optionaler Preline-Text oberhalb des Titels.</summary>
+    [Parameter]
+    public string? Preline { get; set; }
+
+    /// <summary>Titel der Card im Header.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Optionaler Subline-Text unterhalb des Titels.</summary>
+    [Parameter]
+    public string? Subline { get; set; }
+
+    /// <summary>Inhalt des Card-Body.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Inhalt des Card-Footers (typischerweise Buttons).</summary>
+    [Parameter]
+    public RenderFragment? FooterContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das Container-<c>&lt;div&gt;</c>.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private bool HasHeaderContent =>
+        !string.IsNullOrWhiteSpace(Preline) ||
+        !string.IsNullOrWhiteSpace(Title) ||
+        !string.IsNullOrWhiteSpace(Subline);
+}
+

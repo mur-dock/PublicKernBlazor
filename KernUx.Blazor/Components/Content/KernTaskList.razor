@@ -1,0 +1,28 @@
+﻿@namespace KernUx.Blazor.Components.Content
+
+<div class="kern-task-list" @attributes="AdditionalAttributes">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <div class="kern-task-list__header">
+            <h2 class="kern-heading">@Title</h2>
+        </div>
+    }
+    <ul class="kern-task-list__list">
+        @ChildContent
+    </ul>
+</div>
+
+@code {
+    /// <summary>Optionaler Titel oberhalb der Aufgabenliste.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Enthaltene <see cref="KernTaskListItem"/>-Elemente.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+}
+
