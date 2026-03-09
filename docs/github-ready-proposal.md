@@ -420,12 +420,12 @@ Die folgende Checkliste beschreibt die empfohlene Reihenfolge der Umsetzung:
 
 ### Phase 3 – GitHub-Workflows und Vorlagen
 
-- [ ] `.github/PULL_REQUEST_TEMPLATE.md` erstellen
-- [ ] `.github/ISSUE_TEMPLATE/bug_report.yml` erstellen
-- [ ] `.github/ISSUE_TEMPLATE/feature_request.yml` erstellen
-- [ ] `.github/workflows/ci.yml` erstellen und testen
-- [ ] `.github/workflows/release.yml` erstellen
-- [ ] `.github/dependabot.yml` erstellen
+- [x] `.github/PULL_REQUEST_TEMPLATE.md` erstellen
+- [x] `.github/ISSUE_TEMPLATE/bug_report.yml` erstellen
+- [x] `.github/ISSUE_TEMPLATE/feature_request.yml` erstellen
+- [x] `.github/workflows/ci.yml` erstellen und testen
+- [x] `.github/workflows/release.yml` erstellen
+- [x] `.github/dependabot.yml` erstellen
 - [ ] `NUGET_API_KEY`-Secret in GitHub Repository Settings hinterlegen
 
 ### Phase 4 – Dokumentation vervollständigen
