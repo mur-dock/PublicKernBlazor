@@ -474,9 +474,137 @@ if ($output -match "bestanden") {
 
 ---
 
+## KERN-Grid: Klassen vs. BEM-Modifier
+
+Das KERN-Grid kennt **eigenständige Klassen** – kein BEM-Modifier-Doppelstrich:
+
+| ✅ Korrekt | ❌ Falsch |
+|---|---|
+| `kern-container` | `kern-container--default` |
+| `kern-container-fluid` | `kern-container--fluid` |
+
+In Blazor-Komponenten daher **nie** `CssBuilder` mit einem Fluid-Modifier verwenden, sondern direkt zwischen zwei Klassen wählen:
+
+```csharp
+// ✅ Gut: zwei eigenständige Klassen
+private string ContainerClass => Fluid ? "kern-container-fluid" : "kern-container";
+
+// ❌ Schlecht: BEM-Modifier existiert im KERN-Grid nicht
+private string ContainerClass => new CssBuilder("kern-container")
+    .AddClass("kern-container--fluid", Fluid)
+    .Build();
+```
+
+**Regel:** Vor dem Hinzufügen eines CSS-Modifiers immer in `Styles/core/layout/_grid.scss` und der jeweiligen Komponenten-SCSS prüfen, ob er als BEM-Modifier oder eigenständige Klasse existiert.
+
+---
+
+## DOM-IDs: Immer eindeutig pro Instanz
+
+Statische Fallback-IDs (`"kern-summary-title"`, `"kern-input"`, etc.) führen bei mehrfach verwendeten Komponenten zu **doppelten DOM-IDs** – das bricht ARIA-Referenzen (`aria-labelledby`, `aria-describedby`) und verstößt gegen WCAG 1.3.1.
+
+**Pflicht-Pattern** für jede Komponente, die eine ID nach außen exponiert oder intern auf IDs verweist:
+
+```csharp
+// ✅ Gut: eindeutige ID pro Instanz via IdGeneratorService
+@inject IdGeneratorService IdGenerator
+
+private string? _generatedId;
+
+protected override void OnInitialized()
+{
+    _generatedId = IdGenerator.Create("kern-summary-title");
+}
+
+// Explizite Parameter-ID hat Vorrang; Fallback ist die generierte ID.
+private string ResolvedId => string.IsNullOrWhiteSpace(Id) ? _generatedId! : Id;
+
+// ❌ Schlecht: statischer Fallback-String → doppelte DOM-IDs bei mehreren Instanzen
+private string ResolvedId => string.IsNullOrWhiteSpace(Id) ? "kern-summary-title" : Id;
+```
+
+---
+
+## ARIA-Attribute: Nur setzen wenn Ziel-Element existiert
+
+Ein `aria-describedby`, `aria-labelledby` oder `aria-controls`, das auf eine nicht existierende ID zeigt, ist ein **WCAG 1.3.1-Fehler** und verwirrt Screenreader.
+
+```razor
+@* ✅ Gut: aria-describedby nur wenn StatusContent gerendert wird *@
+<a aria-describedby="@(StatusContent is null ? null : ResolvedStatusId)">@Title</a>
+
+@* ❌ Schlecht: immer gesetzt, auch wenn das Ziel-Element fehlt *@
+<a aria-describedby="@ResolvedStatusId">@Title</a>
+```
+
+**Regel:** ARIA-Referenz-Attribute (`aria-describedby`, `aria-labelledby`, `aria-controls`) immer konditionieren: Nur setzen, wenn das referenzierte Element tatsächlich im DOM gerendert wird.
+
+---
+
+## AdditionalAttributes immer ans Ziel-HTML-Element weitergeben
+
+`CaptureUnmatchedValues = true` sammelt alle unbekannten Attribute – diese müssen auch **physisch ans Ziel-Element** weitergegeben werden. `AddClassFromAttributes` im `CssBuilder` fusioniert nur den `class`-Key; alle anderen Attribute (`aria-*`, `data-*`, `role`, etc.) gehen ohne `@attributes` verloren.
+
+```razor
+@* ✅ Gut: AdditionalAttributes direkt am Ziel-Element *@
+<table class="@CssClass" @attributes="AdditionalAttributes">
+
+@* ❌ Schlecht: @attributes fehlt am Element – aria-*, data-* gehen verloren *@
+<table class="@CssClass">
+```
+
+**Regel:** Jedes Element, das als primäres Host-Element einer Blazor-Komponente dient, muss `@attributes="AdditionalAttributes"` tragen – auch wenn `CssBuilder` bereits `AddClassFromAttributes` nutzt.
+
+---
+
+## JS-Interop: Stabile eigene Funktionen statt Prototype-Calls
+
+Der direkte Aufruf von `HTMLElement.prototype.METHOD.call(element)` via `InvokeVoidAsync` ist fragil – er kann je nach Browser-Umgebung und Blazor-Runtime fehlschlagen.
+
+```csharp
+// ❌ Schlecht: fragiles Prototype-Muster
+await JS.InvokeVoidAsync("HTMLDialogElement.prototype.showModal.call", _ref);
+
+// ✅ Gut: stabile eigene JS-Funktion in wwwroot/js/
+await JS.InvokeVoidAsync("kernDialog.showModal", _ref);
+```
+
+Dazugehörige JS-Datei (`wwwroot/js/kern-dialog.js`):
+```js
+window.kernDialog = {
+    showModal: el => el?.showModal(),
+    close:     el => el?.close()
+};
+```
+
+**Regel:** Für jeden JS-Interop-Bedarf eine eigene benannte Funktion unter `window.kern*` anlegen. Die Datei gehört nach `wwwroot/js/` und muss im Host-Dokument eingebunden werden:
+```html
+<script src="_content/KernUx.Blazor/js/kern-dialog.js"></script>
+```
+
+---
+
+## XML-Dokumentation: Nur existierende Typen referenzieren
+
+`<see cref="TypName"/>` in XML-Kommentaren erzeugt zur Laufzeit keine Fehler, führt aber zu kaputten Links in IntelliSense und generierter Doku, wenn der Typ nicht existiert.
+
+```csharp
+// ❌ Schlecht: KernCardHeader existiert nicht als eigener Typ
+/// <summary>Inhalt – z.B. <c>KernCardHeader</c>.</summary>
+
+// ✅ Gut: nur tatsächlich existierende Typen referenzieren
+/// <summary>Inhalt – typischerweise <see cref="KernCardMedia"/> und <see cref="KernCardContainer"/>.</summary>
+```
+
+**Regel:** Bei jeder Sub-Komponenten-Referenz in XML-Doku prüfen, ob der referenzierte Typ als eigene `.razor`-Datei existiert. Andernfalls `<c>PseudoName</c>` statt `<see cref="..."/>` verwenden.
+
+---
+
 ## Weitere Ressourcen
 
 - KERN-UX Website: https://www.kern-ux.de
 - Komponenten-Dokumentation: https://www.kern-ux.de/komponenten
 - GitLab Repository: https://gitlab.opencode.de/kern-ux/kern-ux-plain
+
+
 
