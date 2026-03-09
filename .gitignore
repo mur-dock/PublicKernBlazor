@@ -1,5 +1,64 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# .NET / MSBuild
+# ──────────────────────────────────────────────────────────────────────────────
 bin/
 obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
 /packages/
-riderModule.iml
+*.nupkg
+*.snupkg
+nuget.config
+nupkg/
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Test-Artefakte
+# ──────────────────────────────────────────────────────────────────────────────
+test-results/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage-report/
+
+# Playwright
+playwright-report/
+playwright/.auth/
+/test-results/
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Projektspezifische Skript-Ausgaben (scripts/Run-SmokeTests.ps1)
+# ──────────────────────────────────────────────────────────────────────────────
+build-output.txt
+smoke-test-results.txt
+tracked-files.txt
+demo-app-stdout.txt
+demo-app-stderr.txt
+
+# ──────────────────────────────────────────────────────────────────────────────
+# IDEs und Editoren
+# ──────────────────────────────────────────────────────────────────────────────
+
+# JetBrains Rider / ReSharper
+.idea/
 /_ReSharper.Caches/
+riderModule.iml
+*.DotSettings.user
+
+# Visual Studio
+.vs/
+*.rsuser
+
+# Visual Studio Code
+.vscode/
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Betriebssystem
+# ──────────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
