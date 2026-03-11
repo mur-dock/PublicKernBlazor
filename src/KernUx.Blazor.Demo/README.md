@@ -127,9 +127,11 @@ builder.Services.AddKernUx();
 ```razor
 @* App.razor – im <head> *@
 <KernStyles />
+<link rel="stylesheet" href="@Assets[\"css/themes/bw.css\"]" />
 ```
 
-`KernStyles` rendert das kompilierte KERN-UX-CSS aus `wwwroot/css/kern.css`.
+`KernStyles` bindet das Standard-Theme der Library aus `_content/KernUx.Blazor/css/themes/kern/index.css` ein.
+Das Showcase lädt zusätzlich `wwwroot/css/themes/bw.css` explizit als projektspezifisches Overlay für Baden-Württemberg.
 
 ### 4. Anti-FOUC (Theme-Initialisierung)
 

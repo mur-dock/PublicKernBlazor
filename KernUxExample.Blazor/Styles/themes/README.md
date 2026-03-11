@@ -2,16 +2,11 @@
 
 ## Inhalt
 
-Dieser Ordner enthält nur das Themes Verzeichnisse für KERN, weil wir nur das KERN-Theme(Default) mit unserer Lib. ausliefern.
+Dieser Ordner enthält nur das Theme-Verzeichnis für KERN, weil die Library aktuell ausschließlich das KERN-Theme als Standard-Theme ausliefert.
 
 - **[kern]** - Enthält das Theme für KERN (Dachmarke).
 
-Sollten wir später weitere Theme ausliefern, können die in der selbes Struktur angelegt werden wie KERN.
-
-Bsp.:
-- **[dataport]** - Enthält das Theme für Dataport.
-- **[bw]** - Enthält das Theme für Baden-Württemberg.
-- **[sh]** - Enthält das Theme für Schleswig-Holstein.
+Projektspezifische Zusatz-Themes werden nicht über `KernUx.Blazor` ausgeliefert. Wenn ein konsumierendes Projekt ein eigenes Theme benötigt, muss es dieses selbst als statisches Asset bereitstellen und explizit einbinden.
 
 ## Theming-Mechanismus
 KERN Design System nutzt einen robusten Theming-Mechanismus, der auf CSS Custom Properties (Variablen) und der modernen OKLCH-Farbnotation basiert.  

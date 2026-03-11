@@ -208,31 +208,31 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* brand */
-    --kern-color-accent: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+    --kern-color-accent: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
     /* brandbar-stripe */
     --kern-color-brandbar-dicing: var(--kern-metric-space-none); /* Erzeugt eine Gap zwischen Segments und einen gewürfelten Effekt. */
     /* Block 1 */
     --kern-color-brandbar-full-color: transparent; /* TO BE DELETED ... ledigilich für die aktuelle Themingdemo relevant */
-    --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
+    --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
     --kern-color-brandbar-block-1-segment-2:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-    --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
-    --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
+    --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
+    --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
     --kern-color-brandbar-block-1-segment-5:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-    --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-yellow-250-lightness) var(--kern-yellow-250-chroma) var(--kern-yellow-250-hue));
+    --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-bw-gelb-250-lightness) var(--kern-bw-gelb-250-chroma) var(--kern-bw-gelb-250-hue));
     /* Block 2 */
-    --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
-    --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
+    --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
+    --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
     --kern-color-brandbar-block-2-segment-3:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-    --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-yellow-250-lightness) var(--kern-yellow-250-chroma) var(--kern-yellow-250-hue));
-    --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-yellow-250-lightness) var(--kern-yellow-250-chroma) var(--kern-yellow-250-hue));
-    --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
+    --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-bw-gelb-250-lightness) var(--kern-bw-gelb-250-chroma) var(--kern-bw-gelb-250-hue));
+    --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-bw-gelb-250-lightness) var(--kern-bw-gelb-250-chroma) var(--kern-bw-gelb-250-hue));
+    --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
     /* Block 3 */
-    --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
+    --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
     --kern-color-brandbar-block-3-segment-2:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
     --kern-color-brandbar-block-3-segment-3:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-    --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
-    --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
-    --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
+    --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
+    --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
+    --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
     /* action */
     --kern-color-action-default: oklch(var(--kern-bw-schwarz-050-lightness) var(--kern-bw-schwarz-050-chroma) var(--kern-bw-schwarz-050-hue));
     --kern-color-action-on-default: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
@@ -264,9 +264,9 @@
     --kern-color-layout-text-inverse: oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
     --kern-color-layout-text-muted: oklch(var(--kern-bw-schwarz-300-lightness) var(--kern-bw-schwarz-300-chroma) var(--kern-bw-schwarz-300-hue));
     /* layout-background */
-    --kern-color-layout-background-default: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
+    --kern-color-layout-background-default: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
     --kern-color-layout-background-hued: oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-    --kern-color-layout-background-inverted: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
+    --kern-color-layout-background-inverted: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
     /* JUST FOR THE SHOWCASE ------------------------------------- */
     --kern-shadow-lightness: var(--kern-bw-schwarz-900-lightness);
     --kern-shadow-chroma: var(--kern-bw-schwarz-900-chroma);
@@ -277,31 +277,31 @@
 @media (prefers-color-scheme: light) {
   :root {
     /* brand */
-    --kern-color-accent: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+    --kern-color-accent: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
     /* brandbar-stripe */
     --kern-color-brandbar-dicing: var(--kern-metric-space-none); /* Erzeugt eine Gap zwischen Segments und einen gewürfelten Effekt. */
     /* Block 1 */
     --kern-color-brandbar-full-color: transparent; /* TO BE DELETED ... ledigilich für die aktuelle Themingdemo relevant */
-    --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
+    --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
     --kern-color-brandbar-block-1-segment-2:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-    --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
-    --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+    --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
+    --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
     --kern-color-brandbar-block-1-segment-5:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-    --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-yellow-050-lightness) var(--kern-yellow-050-chroma) var(--kern-yellow-050-hue));
+    --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-bw-gelb-050-lightness) var(--kern-bw-gelb-050-chroma) var(--kern-bw-gelb-050-hue));
     /* Block 2 */
-    --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
-    --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+    --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
+    --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
     --kern-color-brandbar-block-2-segment-3:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-    --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-yellow-050-lightness) var(--kern-yellow-050-chroma) var(--kern-yellow-050-hue));
-    --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-yellow-050-lightness) var(--kern-yellow-050-chroma) var(--kern-yellow-050-hue));
-    --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
+    --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-bw-gelb-050-lightness) var(--kern-bw-gelb-050-chroma) var(--kern-bw-gelb-050-hue));
+    --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-bw-gelb-050-lightness) var(--kern-bw-gelb-050-chroma) var(--kern-bw-gelb-050-hue));
+    --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
     /* Block 3 */
-    --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
+    --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
     --kern-color-brandbar-block-3-segment-2:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
     --kern-color-brandbar-block-3-segment-3:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-    --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
-    --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
-    --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+    --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
+    --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
+    --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
     /* action */
     --kern-color-action-default: oklch(var(--kern-bw-schwarz-900-lightness) var(--kern-bw-schwarz-900-chroma) var(--kern-bw-schwarz-900-hue));
     --kern-color-action-on-default: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
@@ -333,10 +333,10 @@
     --kern-color-layout-text-inverse: oklch(var(--kern-bw-schwarz-025-lightness) var(--kern-bw-schwarz-025-chroma) var(--kern-bw-schwarz-025-hue));
     --kern-color-layout-text-muted: oklch(var(--kern-bw-schwarz-700-lightness) var(--kern-bw-schwarz-700-chroma) var(--kern-bw-schwarz-700-hue));
     /* layout-background */
-    --kern-color-layout-background-default: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
+    --kern-color-layout-background-default: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
 
     --kern-color-layout-background-hued: oklch(var(--kern-bw-schwarz-025-lightness) var(--kern-bw-schwarz-025-chroma) var(--kern-bw-schwarz-025-hue));
-    --kern-color-layout-background-inverted: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
+    --kern-color-layout-background-inverted: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
     /* JUST FOR THE SHOWCASE ------------------------------------- */
     --kern-shadow-lightness: var(--kern-bw-schwarz-200-lightness);
     --kern-shadow-chroma: var(--kern-bw-schwarz-200-chroma);
@@ -347,31 +347,31 @@
 [data-kern-theme=light],
 .kern-light {
   /* brand */
-  --kern-color-accent: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+  --kern-color-accent: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
   /* brandbar-stripe */
   --kern-color-brandbar-dicing: var(--kern-metric-space-none); /* Erzeugt eine Gap zwischen Segments und einen gewürfelten Effekt. */
   /* Block 1 */
   --kern-color-brandbar-full-color: transparent; /* TO BE DELETED ... ledigilich für die aktuelle Themingdemo relevant */
-  --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
+  --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
   --kern-color-brandbar-block-1-segment-2:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-  --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
-  --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+  --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
+  --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
   --kern-color-brandbar-block-1-segment-5:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-  --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-yellow-050-lightness) var(--kern-yellow-050-chroma) var(--kern-yellow-050-hue));
+  --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-bw-gelb-050-lightness) var(--kern-bw-gelb-050-chroma) var(--kern-bw-gelb-050-hue));
   /* Block 2 */
-  --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
-  --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+  --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
+  --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
   --kern-color-brandbar-block-2-segment-3:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-  --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-yellow-050-lightness) var(--kern-yellow-050-chroma) var(--kern-yellow-050-hue));
-  --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-yellow-050-lightness) var(--kern-yellow-050-chroma) var(--kern-yellow-050-hue));
-  --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
+  --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-bw-gelb-050-lightness) var(--kern-bw-gelb-050-chroma) var(--kern-bw-gelb-050-hue));
+  --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-bw-gelb-050-lightness) var(--kern-bw-gelb-050-chroma) var(--kern-bw-gelb-050-hue));
+  --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
   /* Block 3 */
-  --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
+  --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
   --kern-color-brandbar-block-3-segment-2:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
   --kern-color-brandbar-block-3-segment-3:oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-  --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
-  --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-yellow-025-lightness) var(--kern-yellow-025-chroma) var(--kern-yellow-025-hue));
-  --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+  --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
+  --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-bw-gelb-025-lightness) var(--kern-bw-gelb-025-chroma) var(--kern-bw-gelb-025-hue));
+  --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
   /* action */
   --kern-color-action-default: oklch(var(--kern-bw-schwarz-900-lightness) var(--kern-bw-schwarz-900-chroma) var(--kern-bw-schwarz-900-hue));
   --kern-color-action-on-default: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
@@ -403,9 +403,9 @@
   --kern-color-layout-text-inverse: oklch(var(--kern-bw-schwarz-025-lightness) var(--kern-bw-schwarz-025-chroma) var(--kern-bw-schwarz-025-hue));
   --kern-color-layout-text-muted: oklch(var(--kern-bw-schwarz-700-lightness) var(--kern-bw-schwarz-700-chroma) var(--kern-bw-schwarz-700-hue));
   /* layout-background */
-    --kern-color-layout-background-default: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
+    --kern-color-layout-background-default: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
   --kern-color-layout-background-hued: oklch(var(--kern-bw-schwarz-025-lightness) var(--kern-bw-schwarz-025-chroma) var(--kern-bw-schwarz-025-hue));
-  --kern-color-layout-background-inverted: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
+  --kern-color-layout-background-inverted: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
   /* JUST FOR THE SHOWCASE ------------------------------------- */
   --kern-shadow-lightness: var(--kern-bw-schwarz-200-lightness);
   --kern-shadow-chroma: var(--kern-bw-schwarz-200-chroma);
@@ -416,31 +416,31 @@
 [data-kern-theme=dark],
 .kern-dark {
   /* brand */
-  --kern-color-accent: oklch(var(--kern-yellow-100-lightness) var(--kern-yellow-100-chroma) var(--kern-yellow-100-hue));
+  --kern-color-accent: oklch(var(--kern-bw-gelb-100-lightness) var(--kern-bw-gelb-100-chroma) var(--kern-bw-gelb-100-hue));
   /* brandbar-stripe */
   --kern-color-brandbar-dicing: var(--kern-metric-space-none); /* Erzeugt eine Gap zwischen Segments und einen gewürfelten Effekt. */
   /* Block 1 */
   --kern-color-brandbar-full-color: transparent; /* TO BE DELETED ... ledigilich für die aktuelle Themingdemo relevant */
-  --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
+  --kern-color-brandbar-block-1-segment-1: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
   --kern-color-brandbar-block-1-segment-2:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-  --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
-  --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
+  --kern-color-brandbar-block-1-segment-3: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
+  --kern-color-brandbar-block-1-segment-4: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
   --kern-color-brandbar-block-1-segment-5:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-  --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-yellow-250-lightness) var(--kern-yellow-250-chroma) var(--kern-yellow-250-hue));
+  --kern-color-brandbar-block-1-segment-6: oklch(var(--kern-bw-gelb-250-lightness) var(--kern-bw-gelb-250-chroma) var(--kern-bw-gelb-250-hue));
   /* Block 2 */
-  --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
-  --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
+  --kern-color-brandbar-block-2-segment-1: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
+  --kern-color-brandbar-block-2-segment-2: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
   --kern-color-brandbar-block-2-segment-3:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-  --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-yellow-250-lightness) var(--kern-yellow-250-chroma) var(--kern-yellow-250-hue));
-  --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-yellow-250-lightness) var(--kern-yellow-250-chroma) var(--kern-yellow-250-hue));
-  --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
+  --kern-color-brandbar-block-2-segment-4: oklch(var(--kern-bw-gelb-250-lightness) var(--kern-bw-gelb-250-chroma) var(--kern-bw-gelb-250-hue));
+  --kern-color-brandbar-block-2-segment-5: oklch(var(--kern-bw-gelb-250-lightness) var(--kern-bw-gelb-250-chroma) var(--kern-bw-gelb-250-hue));
+  --kern-color-brandbar-block-2-segment-6: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
   /* Block 3 */
-  --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
+  --kern-color-brandbar-block-3-segment-1: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
   --kern-color-brandbar-block-3-segment-2:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
   --kern-color-brandbar-block-3-segment-3:oklch(var(--kern-bw-schwarz-750-lightness) var(--kern-bw-schwarz-750-chroma) var(--kern-bw-schwarz-750-hue));
-  --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
-  --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-yellow-350-lightness) var(--kern-yellow-350-chroma) var(--kern-yellow-350-hue));
-  --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-yellow-200-lightness) var(--kern-yellow-200-chroma) var(--kern-yellow-200-hue));
+  --kern-color-brandbar-block-3-segment-4: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
+  --kern-color-brandbar-block-3-segment-5: oklch(var(--kern-bw-gelb-350-lightness) var(--kern-bw-gelb-350-chroma) var(--kern-bw-gelb-350-hue));
+  --kern-color-brandbar-block-3-segment-6: oklch(var(--kern-bw-gelb-200-lightness) var(--kern-bw-gelb-200-chroma) var(--kern-bw-gelb-200-hue));
   /* action */
   --kern-color-action-default: oklch(var(--kern-bw-schwarz-050-lightness) var(--kern-bw-schwarz-050-chroma) var(--kern-bw-schwarz-050-hue));
   --kern-color-action-on-default: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
@@ -472,12 +472,14 @@
   --kern-color-layout-text-inverse: oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
   --kern-color-layout-text-muted: oklch(var(--kern-bw-schwarz-300-lightness) var(--kern-bw-schwarz-300-chroma) var(--kern-bw-schwarz-300-hue));
   /* layout-background */
-    --kern-color-layout-background-default: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
+    --kern-color-layout-background-default: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
   --kern-color-layout-background-hued: oklch(var(--kern-bw-schwarz-950-lightness) var(--kern-bw-schwarz-950-chroma) var(--kern-bw-schwarz-950-hue));
-  --kern-color-layout-background-inverted: oklch(var(--kern-black-lightness) var(--kern-black-chroma) var(--kern-black-hue));
+  --kern-color-layout-background-inverted: oklch(var(--kern-white-lightness) var(--kern-white-chroma) var(--kern-white-hue));
   /* JUST FOR THE SHOWCASE ------------------------------------- */
   --kern-shadow-lightness: var(--kern-bw-schwarz-900-lightness);
   --kern-shadow-chroma: var(--kern-bw-schwarz-900-chroma);
   --kern-shadow-hue: var(--kern-bw-schwarz-900-hue);
   /* ----------------------------------------------------------- */
 }
+
+
