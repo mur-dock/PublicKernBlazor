@@ -7,6 +7,25 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/lang/d
 
 ## [Unreleased]
 
+## [0.2.0] – 2026-03-11
+
+### Behoben
+
+#### Komponenten-Library (`KernUx.Blazor`)
+
+- **Layout/Grid**: `KernRow` und `KernCol` filtern beim `@attributes`-Splat den Schlüssel `class` heraus,
+  damit generierte KERN-Grid-Klassen nicht überschrieben werden.
+- **AdditionalAttributes-Merge**: CSS-Klassen aus `AdditionalAttributes` werden weiterhin über
+  `AddClassFromAttributes(...)` sauber zusammengeführt.
+- **Grid-Styles**: Spaltenregeln um `max-width` ergänzt, damit Spaltenbreiten responsiv stabil bleiben.
+
+#### Demo & Tests
+
+- **Demo-Layout**: Theme-Toggle im Header in einen Wrapper verschoben, damit Grid-Spalten links/rechts
+  korrekt nebeneinander bleiben.
+- **Unit-Tests**: Neue bUnit-Tests für `KernRow`/`KernCol` sichern ab, dass `class` aus
+  `AdditionalAttributes` gemerged wird und andere Attribute (`data-*`, `aria-*`) am Host-Element erhalten bleiben.
+
 ## [0.1.0] – 2026-03-09
 
 ### Hinzugefügt
@@ -51,6 +70,7 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/lang/d
   Accessibility-Audit-Tests für alle Komponenten
 - **`KernUx.Blazor.Demo.SmokeTests`** – Playwright/NUnit-Smoke-Tests für die Demo-App
 
-[Unreleased]: https://github.com/OWNER/KernUx.Blazor/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/OWNER/KernUx.Blazor/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/OWNER/KernUx.Blazor/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/OWNER/KernUx.Blazor/releases/tag/v0.1.0
 
