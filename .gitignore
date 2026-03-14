@@ -70,8 +70,9 @@ Thumbs.db
 desktop.ini
 
 # NPM
-NpmJS/node_modules
+src/KernUx.Blazor/NpmJS/node_modules/
+src/KernUx.Blazor/NpmJS/package-lock.json
 
 # Generated
-wwwroot/assets
-wwwroot/js/*index.bundle.js*
+**/wwwroot/assets
+**/wwwroot/js/*index.bundle.js*
