@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: .NET einrichten
         uses: actions/setup-dotnet@v5
