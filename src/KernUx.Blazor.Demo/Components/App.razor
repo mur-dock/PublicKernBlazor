@@ -5,44 +5,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    @* Static <title> bewusst entfernt: PageTitle + HeadOutlet steuern Seitentitel pro Route. *@
-    @* Anti-FOUC + SSR-/Navigation-sichere Theme-Synchronisation. *@
-    <script>
-        (() => {
-            const readTheme = () => {
-                const match = document.cookie.match(/(?:^|;\s*)kern-theme=(light|dark)/);
-                // Wichtig: ohne Cookie immer LIGHT als deterministischer Default.
-                return match ? match[1] : "light";
-            };
-
-            const applyTheme = (theme) => {
-                const resolved = theme === "dark" ? "dark" : "light";
-                document.documentElement.setAttribute("data-kern-theme", resolved);
-                document.cookie = `kern-theme=${resolved}; path=/; max-age=31536000; samesite=lax`;
-                return resolved;
-            };
-
-            // Initiale Theme-Anwendung vor dem ersten Paint.
-            applyTheme(readTheme());
-
-            // Öffentliche, stabile API für Blazor/JS-Aufrufe.
-            window.kernTheme = {
-                read: () => readTheme(),
-                set: (theme) => applyTheme(theme),
-                toggle: () => {
-                    const current = document.documentElement.getAttribute("data-kern-theme") || readTheme();
-                    const next = current === "dark" ? "light" : "dark";
-                    return applyTheme(next);
-                }
-            };
-
-            // Bei Enhanced Navigation kann das <html>-Attribut verloren gehen.
-            // Danach Theme immer aus Cookie neu anwenden.
-            document.addEventListener("blazor:after-enhanced-nav", () => {
-                applyTheme(readTheme());
-            });
-        })();
-    </script>
     <ResourcePreloader />
     <KernStyles />
     <link rel="stylesheet" href="@Assets["KernUx.Blazor.Demo.styles.css"]" />
@@ -52,11 +14,17 @@
 </head>
 
 <body>
-    <Routes />
+@* <Routes /> *@
+
+    <kol-button _label="KERN Button"></kol-button>
+    <kol-input-text _label="Name" _placeholder="Ihr Name"></kol-input-text>
+    <kol-card _headline="KERN Card"> Inhalt der Karte mit KERN Styling </kol-card>
+
     <ReconnectModal />
     <script src="@Assets["_content/KernUx.Blazor/js/kern-dialog.js"]"></script>
     <script src="@Assets["_content/KernUx.Blazor/js/kern-accordion.js"]"></script>
-    <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <script src="@Assets["_framework/blazor.web.js"]" autostart="false"></script>
+    <script src="@Assets["_content/KernUx.Blazor/js/index.bundle.js"]"></script>
 </body>
 
 </html>
