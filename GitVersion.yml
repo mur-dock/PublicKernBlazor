@@ -1,0 +1,39 @@
+workflow: GitHubFlow/v1
+mode: ContinuousDelivery
+next-version: 0.1.0
+tag-prefix: '[vV]?'
+commit-message-incrementing: Disabled
+
+branches:
+  main:
+    regex: ^main$
+    label: ''
+    increment: Patch
+    track-merge-message: true
+    prevent-increment:
+      of-merged-branch: false
+      when-branch-merged: false
+      when-current-commit-tagged: true
+
+  feature:
+    regex: ^(feature|feat|chore|refactor|docs|test)[/-]
+    label: alpha
+    increment: Minor
+
+  fix:
+    regex: ^(fix|bugfix|hotfix)[/-]
+    label: beta
+    increment: Patch
+
+  release:
+    regex: ^release[/-]
+    label: rc
+    is-release-branch: true
+    increment: Patch
+
+  pull-request:
+    regex: ^(pull|pull-requests|pr)[/-]
+    label: pr
+    increment: Inherit
+
+
