@@ -1,6 +1,6 @@
-﻿# Entwicklungsumgebung einrichten
+# Entwicklungsumgebung einrichten
 
-Diese Anleitung beschreibt, wie du KernUx.Blazor lokal zum Laufen bringst –
+Diese Anleitung beschreibt, wie du PublicKernBlazor.Components lokal zum Laufen bringst –
 von der ersten Einrichtung bis zum ersten grünen Test.
 
 ---
@@ -25,8 +25,8 @@ Eine IDE ist optional. Empfohlen werden:
 ## Repository klonen
 
 ```bash
-git clone https://github.com/OWNER/KernUx.Blazor.git
-cd KernUx.Blazor
+git clone https://github.com/OWNER/PublicKernBlazor.Components.git
+cd PublicKernBlazor.Components
 ```
 
 ---
@@ -34,18 +34,18 @@ cd KernUx.Blazor
 ## Solution bauen
 
 ```bash
-dotnet build KernUx.Blazor.slnx
+dotnet build PublicKernBlazor.slnx
 ```
 
 SCSS wird beim Build automatisch über `AspNetCore.SassCompiler` nach
-`src/KernUx.Blazor/wwwroot/css/` kompiliert – kein manueller Schritt nötig.
+`src/PublicKernBlazor.Components/wwwroot/css/` kompiliert – kein manueller Schritt nötig.
 
 ---
 
 ## Unit-Tests ausführen
 
 ```bash
-dotnet test tests/KernUx.Blazor.Tests/KernUx.Blazor.Tests.csproj
+dotnet test tests/PublicKernBlazor.Components.Tests/PublicKernBlazor.Components.Tests.csproj
 ```
 
 Das Testprojekt verwendet [bUnit](https://bunit.dev/) und xUnit.
@@ -65,7 +65,7 @@ Alle Tests laufen ohne Browser oder laufenden Server.
 ## Demo-App starten
 
 ```bash
-dotnet run --project src/KernUx.Blazor.Demo/KernUx.Blazor.Demo.csproj
+dotnet run --project src/PublicKernBlazor.Demo/PublicKernBlazor.Demo.csproj
 ```
 
 Die App ist erreichbar unter:
@@ -91,8 +91,8 @@ Die Smoke-Tests verwenden [Playwright](https://playwright.dev/) und benötigen e
 ### Playwright-Browser einmalig installieren
 
 ```bash
-dotnet build tests/KernUx.Blazor.Demo.SmokeTests/KernUx.Blazor.Demo.SmokeTests.csproj
-pwsh tests/KernUx.Blazor.Demo.SmokeTests/bin/Debug/net10.0/playwright.ps1 install chromium
+dotnet build tests/PublicKernBlazor.Demo.SmokeTests/PublicKernBlazor.Demo.SmokeTests.csproj
+pwsh tests/PublicKernBlazor.Demo.SmokeTests/bin/Debug/net10.0/playwright.ps1 install chromium
 ```
 
 ### Smoke-Tests über das Hilfsskript starten
@@ -118,10 +118,10 @@ Optionale Parameter:
 ## NuGet-Paket lokal bauen
 
 ```bash
-dotnet pack src/KernUx.Blazor/KernUx.Blazor.csproj --configuration Release --output ./nupkg
+dotnet pack src/PublicKernBlazor.Components/PublicKernBlazor.Components.csproj --configuration Release --output ./nupkg
 ```
 
-Das fertige Paket liegt danach unter `nupkg/KernUx.Blazor.0.1.0.nupkg`.
+Das fertige Paket liegt danach unter `nupkg/PublicKernBlazor.Components.0.1.0.nupkg`.
 
 ### Paket lokal testen
 
@@ -132,20 +132,20 @@ Um das Paket in einem anderen Projekt zu testen, ohne es auf nuget.org zu veröf
 dotnet nuget add source ./nupkg --name KernUxLocal
 
 # Im Zielprojekt installieren
-dotnet add package KernUx.Blazor --source KernUxLocal
+dotnet add package PublicKernBlazor.Components --source KernUxLocal
 ```
 
 ---
 
 ## SCSS-Erweiterungen hinzufügen
 
-Neue, projekt-eigene Stile gehören **nicht** in `src/KernUx.Blazor/Styles/core/`
+Neue, projekt-eigene Stile gehören **nicht** in `src/PublicKernBlazor.Components/Styles/core/`
 (dieser Ordner enthält den KERN-UX-Upstream und wird bei Updates überschrieben).
 
 Stattdessen:
 
-1. Neue `.scss`-Datei unter `src/KernUx.Blazor/Styles/extensions/components/` anlegen
-2. In `src/KernUx.Blazor/Styles/extensions/index.scss` per `@use` einbinden
+1. Neue `.scss`-Datei unter `src/PublicKernBlazor.Components/Styles/extensions/components/` anlegen
+2. In `src/PublicKernBlazor.Components/Styles/extensions/index.scss` per `@use` einbinden
 3. Ausschließlich KERN-Token (`var(--kern-color-*)`, `var(--kern-metric-space-*)`) verwenden
 
 ---
@@ -153,14 +153,14 @@ Stattdessen:
 ## Neue KERN-UX-Komponente hinzufügen
 
 1. HTML-Struktur und CSS-Klassen in
-   [`src/KernUx.Blazor/Styles/COMPONENTS.MD`](../../src/KernUx.Blazor/Styles/COMPONENTS.MD)
+   [`src/PublicKernBlazor.Components/Styles/COMPONENTS.MD`](../../src/PublicKernBlazor.Components/Styles/COMPONENTS.MD)
    nachschlagen
-2. `.razor`-Datei im passenden Unterordner von `src/KernUx.Blazor/Components/` anlegen
+2. `.razor`-Datei im passenden Unterordner von `src/PublicKernBlazor.Components/Components/` anlegen
 3. Alle `[Parameter]`-Properties mit XML-Dokumentation versehen
 4. `IdGeneratorService` für DOM-IDs verwenden (niemals statische Fallback-IDs)
 5. `@attributes="AdditionalAttributes"` am Host-Element weitergeben
-6. Unit-Tests in `tests/KernUx.Blazor.Tests/Components/` hinzufügen
-7. Komponente in `src/KernUx.Blazor.Demo/` auf der passenden Showcase-Seite einbinden
+6. Unit-Tests in `tests/PublicKernBlazor.Components.Tests/Components/` hinzufügen
+7. Komponente in `src/PublicKernBlazor.Demo/` auf der passenden Showcase-Seite einbinden
 
 Die vollständigen Coding-Richtlinien sind in
 [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) dokumentiert.

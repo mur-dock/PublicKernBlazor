@@ -1,10 +1,10 @@
-# KernUx.Blazor
+# PublicKernBlazor.Components
 
 **KERN-UX Design System** als Blazor Component Library –
 typsichere, barrierefreie Komponenten für die deutsche Verwaltung (WCAG 2.1 AA).
 
-[![CI](https://github.com/mur-dock/KernUx.Blazor/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/KernUx.Blazor/actions/workflows/ci.yml)
-[![NuGet](https://img.shields.io/nuget/v/KernUx.Blazor)](https://www.nuget.org/packages/KernUx.Blazor)
+[![CI](https://github.com/mur-dock/PublicKernBlazor.Components/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/PublicKernBlazor.Components/actions/workflows/ci.yml)
+[![NuGet](https://img.shields.io/nuget/v/PublicKernBlazor.Components)](https://www.nuget.org/packages/PublicKernBlazor.Components)
 [![KERN-UX](https://img.shields.io/badge/KERN--UX-Design%20System-green)](https://www.kern-ux.de)
 [![Lizenz: EUPL-1.2](https://img.shields.io/badge/Lizenz-EUPL_1.2-yellow)](LICENSE)
 
@@ -12,7 +12,7 @@ typsichere, barrierefreie Komponenten für die deutsche Verwaltung (WCAG 2.1 AA)
 
 ## Inhalt
 
-- [Was ist KernUx.Blazor?](#was-ist-kernuxblazor)
+- [Was ist PublicKernBlazor.Components?](#was-ist-kernuxblazor)
 - [Voraussetzungen](#voraussetzungen)
 - [Installation](#installation)
 - [Schnellstart](#schnellstart)
@@ -29,16 +29,16 @@ typsichere, barrierefreie Komponenten für die deutsche Verwaltung (WCAG 2.1 AA)
 
 ---
 
-## Was ist KernUx.Blazor?
+## Was ist PublicKernBlazor.Components?
 
-`KernUx.Blazor` übersetzt das offizielle [KERN-UX Design System](https://www.kern-ux.de) in
+`PublicKernBlazor.Components` übersetzt das offizielle [KERN-UX Design System](https://www.kern-ux.de) in
 eine **Razor Class Library**. Entwicklerinnen und Entwickler können alle KERN-Komponenten
 direkt als Blazor-Komponenten verwenden – ohne KERN-CSS-Klassen manuell kennen zu müssen.
 
 **Kern-Vorteile:**
 
 - ✅ Alle 48 KERN-UX-Komponenten als typsichere Blazor-Komponenten
-- ✅ KERN-CSS als statische Assets (`_content/KernUx.Blazor/css/`) inklusive
+- ✅ KERN-CSS als statische Assets (`_content/PublicKernBlazor.Components/css/`) inklusive
 - ✅ WCAG 2.1 AA – ARIA-Attribute, semantisches HTML, Fokus-Management
 - ✅ Light- und Dark-Theme out-of-the-box
 - ✅ Kein JavaScript außer dem technisch unvermeidbaren Minimum
@@ -58,13 +58,13 @@ direkt als Blazor-Komponenten verwenden – ohne KERN-CSS-Klassen manuell kennen
 ## Installation
 
 ```bash
-dotnet add package KernUx.Blazor
+dotnet add package PublicKernBlazor.Components
 ```
 
 ### DI-Registrierung (`Program.cs`)
 
 ```csharp
-using KernUx.Blazor.Extensions;
+using PublicKernBlazor.Components.Extensions;
 
 builder.Services.AddKernUx();
 ```
@@ -77,15 +77,15 @@ builder.Services.AddKernUx();
 ### Imports (`_Imports.razor`)
 
 ```razor
-@using KernUx.Blazor.Components.Content
-@using KernUx.Blazor.Components.Feedback
-@using KernUx.Blazor.Components.Forms
-@using KernUx.Blazor.Components.Layout
-@using KernUx.Blazor.Components.Navigation
-@using KernUx.Blazor.Components.Shared
-@using KernUx.Blazor.Components.Typography
-@using KernUx.Blazor.Enums
-@using KernUx.Blazor.Services
+@using PublicKernBlazor.Components.Components.Content
+@using PublicKernBlazor.Components.Components.Feedback
+@using PublicKernBlazor.Components.Components.Forms
+@using PublicKernBlazor.Components.Components.Layout
+@using PublicKernBlazor.Components.Components.Navigation
+@using PublicKernBlazor.Components.Components.Shared
+@using PublicKernBlazor.Components.Components.Typography
+@using PublicKernBlazor.Components.Enums
+@using PublicKernBlazor.Components.Services
 ```
 
 ---
@@ -105,14 +105,14 @@ Die Komponente rendert automatisch alle notwendigen `<link>`-Elemente.
 
 ```html
 
-<link rel="stylesheet" href="_content/KernUx.Blazor/css/themes/kern/index.css"/>
+<link rel="stylesheet" href="_content/PublicKernBlazor.Components/css/themes/kern/index.css"/>
 ```
 
 ### JS-Asset für Dialog
 
 ```html
 
-<script src="_content/KernUx.Blazor/js/kern-dialog.js"></script>
+<script src="_content/PublicKernBlazor.Components/js/kern-dialog.js"></script>
 ```
 
 ---
@@ -234,7 +234,7 @@ und im Cookie `kern-theme` persistiert.
 
 ## Barrierefreiheit
 
-`KernUx.Blazor` implementiert **WCAG 2.1 AA**:
+`PublicKernBlazor.Components` implementiert **WCAG 2.1 AA**:
 
 | Anforderung         | Umsetzung                                                                        |
 |---------------------|----------------------------------------------------------------------------------|
@@ -256,16 +256,16 @@ Folgende Komponenten sind **Blazor-Library-Erweiterungen** und nicht Teil des of
 | `KernInputCurrency` | Währungseingabe optimiert für DACH (de-DE/de-CH), mit `decimal?`-Binding |
 
 Die zugehörigen SCSS-Erweiterungen liegen in `Styles/extensions/` und werden bei KERN-UX-Updates
-**nicht** überschrieben. Siehe [`Styles/extensions/README.md`](src/KernUx.Blazor/Styles/extensions/README.md).
+**nicht** überschrieben. Siehe [`Styles/extensions/README.md`](src/PublicKernBlazor.Components/Styles/extensions/README.md).
 
 ---
 
 ## Projektstruktur
 
 ```
-KernUx.Blazor/                              ← Repository-Root
+PublicKernBlazor.Components/                              ← Repository-Root
 ├── src/
-│   ├── KernUx.Blazor/                      ← Razor Class Library (NuGet-Paket)
+│   ├── PublicKernBlazor.Components/                      ← Razor Class Library (NuGet-Paket)
 │   │   ├── Components/
 │   │   │   ├── Content/                    # Accordion, Card, Dialog, Table, Summary, TaskList
 │   │   │   ├── Feedback/                   # Alert, Badge, Loader, Progress
@@ -285,10 +285,10 @@ KernUx.Blazor/                              ← Repository-Root
 │   │   └── wwwroot/
 │   │       ├── css/                        # Kompilierte CSS-Dateien
 │   │       └── js/                         # kern-dialog.js
-│   └── KernUx.Blazor.Demo/                 ← Interaktive Showcase-App
+│   └── PublicKernBlazor.Demo/                 ← Interaktive Showcase-App
 ├── tests/
-│   ├── KernUx.Blazor.Tests/                ← bUnit-Unit-Tests (Rendering, Interaktion, Accessibility)
-│   └── KernUx.Blazor.Demo.SmokeTests/      ← Playwright-Smoke-Tests
+│   ├── PublicKernBlazor.Components.Tests/                ← bUnit-Unit-Tests (Rendering, Interaktion, Accessibility)
+│   └── PublicKernBlazor.Demo.SmokeTests/      ← Playwright-Smoke-Tests
 ├── docs/
 │   ├── contributing/                       # Entwickler-Dokumentation
 │   └── internal/                           # Interne Planungsdokumente
@@ -306,7 +306,7 @@ KernUx.Blazor/                              ← Repository-Root
 ### Tests ausführen
 
 ```bash
-dotnet test tests/KernUx.Blazor.Tests/KernUx.Blazor.Tests.csproj
+dotnet test tests/PublicKernBlazor.Components.Tests/PublicKernBlazor.Components.Tests.csproj
 ```
 
 Das Testprojekt enthält:
@@ -318,7 +318,7 @@ Das Testprojekt enthält:
 ### NuGet-Paket erstellen
 
 ```bash
-dotnet pack src/KernUx.Blazor/KernUx.Blazor.csproj --configuration Release
+dotnet pack src/PublicKernBlazor.Components/PublicKernBlazor.Components.csproj --configuration Release
 ```
 
 ### SCSS-Kompilierung

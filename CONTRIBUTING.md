@@ -1,6 +1,6 @@
-# Mitwirken an KernUx.Blazor
+# Mitwirken an PublicKernBlazor.Components
 
-Vielen Dank für dein Interesse, zu **KernUx.Blazor** beizutragen!
+Vielen Dank für dein Interesse, zu **PublicKernBlazor.Components** beizutragen!
 Dieses Dokument erklärt, wie du Fehler melden, Features vorschlagen und Code beisteuern kannst.
 
 ---
@@ -54,21 +54,21 @@ Eine IDE ist optional – [Rider](https://www.jetbrains.com/rider/) oder
 ### Repository klonen und bauen
 
 ```bash
-git clone https://github.com/OWNER/KernUx.Blazor.git
-cd KernUx.Blazor
+git clone https://github.com/OWNER/PublicKernBlazor.Components.git
+cd PublicKernBlazor.Components
 dotnet build
 ```
 
 ### Unit-Tests ausführen
 
 ```bash
-dotnet test KernUx.Blazor.Tests/KernUx.Blazor.Tests.csproj
+dotnet test PublicKernBlazor.Components.Tests/PublicKernBlazor.Components.Tests.csproj
 ```
 
 ### Demo-App starten
 
 ```bash
-dotnet run --project KernUx.Blazor.Demo/KernUx.Blazor.Demo.csproj
+dotnet run --project PublicKernBlazor.Demo/PublicKernBlazor.Demo.csproj
 ```
 
 Die App ist erreichbar unter `https://localhost:7023`.
@@ -135,17 +135,17 @@ chore(deps): bump AspNetCore.SassCompiler to 1.98.0
 
 ## Neue KERN-UX-Komponente hinzufügen
 
-1. Komponentendokumentation in [`KernUx.Blazor/Styles/COMPONENTS.MD`](KernUx.Blazor/Styles/COMPONENTS.MD)
+1. Komponentendokumentation in [`PublicKernBlazor.Components/Styles/COMPONENTS.MD`](PublicKernBlazor.Components/Styles/COMPONENTS.MD)
    nachschlagen – HTML-Struktur und CSS-Klassen übernehmen.
-2. Neue `.razor`-Datei im passenden Unterordner von `KernUx.Blazor/Components/` anlegen
+2. Neue `.razor`-Datei im passenden Unterordner von `PublicKernBlazor.Components/Components/` anlegen
    (z. B. `Components/Forms/KernInputXyz.razor`).
 3. Alle öffentlichen `[Parameter]`-Properties mit XML-Dokumentation versehen.
 4. KERN-UX-Barrierefreiheitsstandards einhalten:
    - Semantisches HTML (`<button>`, `<fieldset>`, `<dialog>`, …)
    - ARIA-Attribute (`aria-describedby`, `aria-expanded`, `aria-hidden`, …)
    - `IdGeneratorService` für eindeutige DOM-IDs verwenden
-5. Unit-Tests in `KernUx.Blazor.Tests/Components/` hinzufügen (bUnit, Given/When/Then).
-6. Komponente in der Demo-App (`KernUx.Blazor.Demo/`) auf der passenden Showcase-Seite einbinden.
+5. Unit-Tests in `PublicKernBlazor.Components.Tests/Components/` hinzufügen (bUnit, Given/When/Then).
+6. Komponente in der Demo-App (`PublicKernBlazor.Demo/`) auf der passenden Showcase-Seite einbinden.
 
 ---
 

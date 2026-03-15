@@ -1,5 +1,5 @@
 name: Bug-Report
-description: Einen Fehler in einer KernUx.Blazor-Komponente melden
+description: Einen Fehler in einer PublicKernBlazor.Components-Komponente melden
 title: "bug: "
 labels: ["bug", "triage"]
 body:

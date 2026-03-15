@@ -46,7 +46,7 @@ Bei kritischen Lücken (CVSS ≥ 9.0) wird ein Hotfix priorisiert.
 
 ### Im Scope
 
-- Bibliotheks-Code in `KernUx.Blazor/` (C#, Razor-Komponenten)
+- Bibliotheks-Code in `PublicKernBlazor.Components/` (C#, Razor-Komponenten)
 - Statische Assets (`wwwroot/css/`, `wwwroot/js/`)
 - Services (`ThemeService`, `IdGeneratorService`)
 
@@ -55,8 +55,8 @@ Bei kritischen Lücken (CVSS ≥ 9.0) wird ein Hotfix priorisiert.
 - **KERN-UX-Upstream** (`Styles/core/`) – Lücken dort bitte direkt an
   [kern-ux.de](https://www.kern-ux.de) oder das
   [GitLab-Repository](https://gitlab.opencode.de/kern-ux/kern-ux-plain) melden
-- Demo-Anwendung (`KernUx.Blazor.Demo/`) – enthält keine produktiv eingesetzten Geheimnisse
-- Smoke-Tests (`KernUx.Blazor.Demo.SmokeTests/`)
+- Demo-Anwendung (`PublicKernBlazor.Demo/`) – enthält keine produktiv eingesetzten Geheimnisse
+- Smoke-Tests (`PublicKernBlazor.Demo.SmokeTests/`)
 
 ## Bekanntmachung von Sicherheitslücken
 

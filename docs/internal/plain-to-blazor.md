@@ -1,8 +1,8 @@
-﻿# Plan: KERN-UX Komponenten → Blazor Component Library
+# Plan: KERN-UX Komponenten → Blazor Component Library
 
 ## 1. Ziel
 
-Erstellung einer **wiederverwendbaren Blazor Component Library** (`KernUx.Blazor`), die alle KERN-UX-Komponenten als
+Erstellung einer **wiederverwendbaren Blazor Component Library** (`PublicKernBlazor.Components`), die alle KERN-UX-Komponenten als
 typsichere, barrierefreie Blazor-Komponenten bereitstellt. Die Library soll:
 
 - Per NuGet-Paket einbindbar sein
@@ -19,8 +19,8 @@ typsichere, barrierefreie Blazor-Komponenten bereitstellt. Die Library soll:
 
 ```
 KernUx/
-├── KernUx.Blazor/                    # Razor Class Library (die Library)
-│   ├── KernUx.Blazor.csproj
+├── PublicKernBlazor.Components/                    # Razor Class Library (die Library)
+│   ├── PublicKernBlazor.Components.csproj
 │   ├── _Imports.razor
 │   ├── wwwroot/
 │   │   └── css/                      # Kompilierte KERN-UX SCSS → CSS
@@ -37,23 +37,23 @@ KernUx/
 │   ├── Enums/                        # Enums für Varianten, Größen, etc.
 │   ├── Services/                     # ThemeService, IdGenerator
 │   └── Extensions/                   # ServiceCollection-Erweiterungen
-├── KernUx.Blazor.Demo/              # Blazor-App als Demo/Playground
-└── KernUx.Blazor.Tests/             # Unit-/bUnit-Tests
+├── PublicKernBlazor.Demo/              # Blazor-App als Demo/Playground
+└── PublicKernBlazor.Components.Tests/             # Unit-/bUnit-Tests
 ```
 
 ### 2.2 Projekt-Typ
 
 - **Razor Class Library** (`Sdk="Microsoft.NET.Sdk.Razor"`)
 - Target: `net10.0` (abwärtskompatibel ab `net8.0` über Multi-Targeting möglich)
-- Statische Assets (`wwwroot/`) werden automatisch als `_content/KernUx.Blazor/…` bereitgestellt
+- Statische Assets (`wwwroot/`) werden automatisch als `_content/PublicKernBlazor.Components/…` bereitgestellt
 
 ### 2.3 CSS-Einbindung
 
 Die kompilierten KERN-UX-CSS-Dateien werden als statische Assets mitgeliefert. Einbindung in der konsumierenden App:
 
 ```html
-<link rel="stylesheet" href="_content/KernUx.Blazor/css/kern-core.css" />
-<link rel="stylesheet" href="_content/KernUx.Blazor/css/kern-theme.css" />
+<link rel="stylesheet" href="_content/PublicKernBlazor.Components/css/kern-core.css" />
+<link rel="stylesheet" href="_content/PublicKernBlazor.Components/css/kern-theme.css" />
 ```
 
 Alternativ: Eine Blazor-Komponente `<KernStyles />`, die alle CSS-Referenzen rendert.
@@ -187,7 +187,7 @@ public enum IconPosition
 ### 5.2 Komponente (`KernButton.razor`)
 
 ```razor
-@namespace KernUx.Blazor.Components
+@namespace PublicKernBlazor.Components.Components
 
 <button type="@ButtonType"
         class="@CssClass"
@@ -580,7 +580,7 @@ Fertige Komponente mit Button, Icon-Wechsel und Screenreader-Ansage.
 
 ```xml
 <PropertyGroup>
-    <PackageId>KernUx.Blazor</PackageId>
+    <PackageId>PublicKernBlazor.Components</PackageId>
     <Description>KERN-UX Design System als Blazor Component Library</Description>
     <PackageTags>blazor;kern-ux;design-system;barrierefreiheit;accessibility</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -590,7 +590,7 @@ Fertige Komponente mit Button, Icon-Wechsel und Screenreader-Ansage.
 Einbindung durch Konsumenten:
 
 ```bash
-dotnet add package KernUx.Blazor
+dotnet add package PublicKernBlazor.Components
 ```
 
 ```csharp
@@ -600,8 +600,8 @@ builder.Services.AddKernUx();
 
 ```razor
 @* _Imports.razor *@
-@using KernUx.Blazor.Components
-@using KernUx.Blazor.Enums
+@using PublicKernBlazor.Components.Components
+@using PublicKernBlazor.Components.Enums
 ```
 
 ---

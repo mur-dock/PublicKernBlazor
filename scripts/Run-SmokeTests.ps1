@@ -1,5 +1,5 @@
-﻿# Run-SmokeTests.ps1
-# Startet die KernUx.Blazor.Demo-App, führt alle Playwright-Smoke-Tests aus,
+# Run-SmokeTests.ps1
+# Startet die PublicKernBlazor.Demo-App, führt alle Playwright-Smoke-Tests aus,
 # gibt die Ergebnisse aus und beendet sich mit dem Test-Exit-Code.
 #
 # Verwendung:
@@ -19,8 +19,8 @@ $ErrorActionPreference = "Stop"
 
 # ── Pfade ─────────────────────────────────────────────────────────────────────
 $SolutionRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
-$DemoProject  = Join-Path $SolutionRoot "src\KernUx.Blazor.Demo\KernUx.Blazor.Demo.csproj"
-$TestProject  = Join-Path $SolutionRoot "tests\KernUx.Blazor.Demo.SmokeTests\KernUx.Blazor.Demo.SmokeTests.csproj"
+$DemoProject  = Join-Path $SolutionRoot "src\PublicKernBlazor.Demo\PublicKernBlazor.Demo.csproj"
+$TestProject  = Join-Path $SolutionRoot "tests\PublicKernBlazor.Demo.SmokeTests\PublicKernBlazor.Demo.SmokeTests.csproj"
 $ResultsDir   = Join-Path $SolutionRoot "test-results"
 $ResultsFile  = Join-Path $SolutionRoot "smoke-test-results.txt"
 # HTTPS-URL für Playwright-Tests (Chromium vertraut dem Dev-Zertifikat automatisch)
@@ -41,12 +41,12 @@ try {
     # ── Schritt 1: Testprojekt prüfen ─────────────────────────────────────────
     if (-not (Test-Path $TestProject)) {
         throw "Testprojekt nicht gefunden: $TestProject`n" +
-              "Bitte zuerst 'KernUx.Blazor.Demo.SmokeTests' anlegen (siehe playwright-smoketest-options.md)."
+              "Bitte zuerst 'PublicKernBlazor.Demo.SmokeTests' anlegen (siehe playwright-smoketest-options.md)."
     }
 
     # ── Schritt 2: Solution bauen ─────────────────────────────────────────────
     Write-Step "Solution wird gebaut ($Configuration)..."
-    dotnet build "$SolutionRoot\KernUx.Blazor.slnx" `
+    dotnet build "$SolutionRoot\PublicKernBlazor.slnx" `
         --configuration $Configuration `
         --nologo -q 2>&1 | Out-File -FilePath (Join-Path $SolutionRoot "build-output.txt") -Encoding utf8
     if ($LASTEXITCODE -ne 0) {
@@ -58,7 +58,7 @@ try {
     # ── Schritt 3: Playwright-Browser installieren ────────────────────────────
     Write-Step "Playwright-Browser prüfen / installieren..."
     $PlaywrightScript = Join-Path $SolutionRoot `
-        "tests\KernUx.Blazor.Demo.SmokeTests\bin\$Configuration\net10.0\playwright.ps1"
+        "tests\PublicKernBlazor.Demo.SmokeTests\bin\$Configuration\net10.0\playwright.ps1"
 
     if (Test-Path $PlaywrightScript) {
         # Playwright gibt über Node.js Deprecation-Warnungen auf stderr aus

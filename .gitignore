@@ -33,7 +33,7 @@ playwright/.auth/
 # ──────────────────────────────────────────────────────────────────────────────
 # SASS-Compiler-Output (wwwroot/css wird aus Styles/ generiert, nicht committen)
 # ──────────────────────────────────────────────────────────────────────────────
-src/KernUx.Blazor/wwwroot/css/
+src/PublicKernBlazor.Components/wwwroot/css/
 KernUxExample.Blazor/wwwroot/css/
 
 # ──────────────────────────────────────────────────────────────────────────────

@@ -1,0 +1,200 @@
+@namespace PublicKernBlazor.Components.Components.Forms
+@using System.Globalization
+
+@* KernInputCurrency ist keine eigenständige KERN-UX-Komponente, orientiert sich aber
+   vollständig am KERN-Formular-Pattern (KernFormField + Input-Wrapper).
+   Das Feld ist für den DACH-Raum optimiert: Währungssymbol rechts, Dezimaltrenner
+   als Komma, Tausendertrennzeichen als Punkt (z.B. "1.234,56 €"). *@
+
+<KernFormField Label="@Label"
+               InputId="@Id"
+               Hint="@Hint"
+               Error="@Error"
+               Optional="@Optional"
+               OptionalText="@OptionalText"
+               Disabled="@Disabled"
+               ReadOnly="@ReadOnly"
+               AdditionalAttributes="@AdditionalAttributes"
+               FieldContent="@RenderInput" />
+
+@code {
+    /// <summary>Beschriftung des Währungsfeldes.</summary>
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Aktueller Betrag als <see cref="decimal"/>? (Two-Way-Binding mit <see cref="ValueChanged"/>).
+    /// <c>null</c> entspricht einem leeren Feld.
+    /// </summary>
+    [Parameter]
+    public decimal? Value { get; set; }
+
+    /// <summary>Wird ausgelöst, wenn der Nutzer den Betrag ändert. Liefert <c>null</c> bei leerem Feld oder ungültiger Eingabe.</summary>
+    [Parameter]
+    public EventCallback<decimal?> ValueChanged { get; set; }
+
+    /// <summary>Optionaler Hinweistext unterhalb des Labels.</summary>
+    [Parameter]
+    public string? Hint { get; set; }
+
+    /// <summary>Fehlermeldung. Wenn gesetzt, wird der Fehlerzustand aktiviert.</summary>
+    [Parameter]
+    public string? Error { get; set; }
+
+    /// <summary>Markiert das Feld als optional.</summary>
+    [Parameter]
+    public bool Optional { get; set; }
+
+    /// <summary>Text für die optionale Kennzeichnung. Standard: <c>"- Optional"</c>.</summary>
+    [Parameter]
+    public string? OptionalText { get; set; } = "- Optional";
+
+    /// <summary>Deaktiviert das Eingabeelement.</summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>Setzt das Eingabeelement auf schreibgeschützt.</summary>
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    /// <summary>Explizite HTML-ID für das Eingabeelement.</summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>HTML-<c>name</c>-Attribut für Formularübermittlung.</summary>
+    [Parameter]
+    public string? Name { get; set; }
+
+    /// <summary>
+    /// Anzeigebares Währungssymbol links neben dem Eingabefeld. Standard: <c>"€"</c>.
+    /// Kann auf andere Symbole gesetzt werden, z.B. <c>"CHF"</c> oder <c>"$"</c>.
+    /// </summary>
+    [Parameter]
+    public string CurrencySymbol { get; set; } = "€";
+
+    /// <summary>
+    /// Kultur für Formatierung und Parsing. Standard: <c>de-DE</c> (Komma als Dezimaltrenner).
+    /// Für die Schweiz z.B. <c>de-CH</c> verwenden.
+    /// </summary>
+    [Parameter]
+    public string CultureName { get; set; } = "de-DE";
+
+    /// <summary>Zusätzliche HTML-Attribute für das Wrapper-Element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute direkt für das <c>&lt;input&gt;</c>-Element.</summary>
+    [Parameter]
+    public IReadOnlyDictionary<string, object>? InputAttributes { get; set; }
+
+    // _culture wird einmalig in OnParametersSet materialisiert,
+    // damit CultureInfo.GetCultureInfo nicht bei jedem Render aufgerufen wird.
+    private CultureInfo _culture = CultureInfo.GetCultureInfo("de-DE");
+
+    // _displayValue hält den zuletzt vom Nutzer eingetippten Text, solange das Feld fokussiert ist.
+    // Erst beim Verlassen (blur) wird er in einen decimal? geparst und normalisiert formatiert.
+    private string _displayValue = string.Empty;
+
+    // _isEditing verhindert, dass OnParametersSet den Eingabetext während der Tipp-Phase überschreibt.
+    private bool _isEditing;
+
+    protected override void OnParametersSet()
+    {
+        _culture = CultureInfo.GetCultureInfo(CultureName);
+
+        // Nur synchronisieren, wenn das Feld nicht aktiv bearbeitet wird.
+        // _displayValue bleibt beim Tippen unverändert, damit z.B. "1.2" → "1,20 €"
+        // nicht mitten in der Eingabe stört.
+        if (!_isEditing)
+        {
+            _displayValue = FormatValue(Value);
+        }
+    }
+
+    private RenderFragment<KernFormFieldContext> RenderInput => context => @<div class="kern-form-input__currency-wrapper">
+        <span class="kern-form-input__currency-symbol" aria-hidden="true">@CurrencySymbol</span>
+        <input id="@context.InputId"
+               name="@Name"
+               class="@InputCssClass(context)"
+               type="text"
+               inputmode="decimal"
+               value="@_displayValue"
+               aria-describedby="@context.AriaDescribedBy"
+               aria-label="@($"{Label} ({CurrencySymbol})")"
+               disabled="@context.Disabled"
+               readonly="@context.ReadOnly"
+               @attributes="InputAttributes"
+               @oninput="HandleInput"
+               @onfocus="HandleFocus"
+               @onblur="HandleBlur" />
+    </div>;
+
+    private static string InputCssClass(KernFormFieldContext context) => new CssBuilder("kern-form-input__input")
+        .AddClass("kern-form-input__input--error", context.HasError)
+        .Build();
+
+    /// <summary>Formatiert einen <see cref="decimal"/>?-Wert nach der konfigurierten Kultur.</summary>
+    private string FormatValue(decimal? value) =>
+        value.HasValue
+            ? value.Value.ToString("N2", _culture)
+            : string.Empty;
+
+    private void HandleFocus()
+    {
+        // Beim Fokussieren: Tausendertrennzeichen entfernen, damit der Nutzer nur Ziffern sieht.
+        // Aus "1.234,56" wird "1234,56" (de-DE) – einfacher zu bearbeiten.
+        _isEditing = true;
+        if (Value.HasValue)
+        {
+            _displayValue = Value.Value.ToString("F2", _culture);
+        }
+    }
+
+    private async Task HandleBlur()
+    {
+        _isEditing = false;
+
+        // Beim Verlassen des Feldes: Eingabe parsen und normalisiert formatieren (z.B. "1234,5" → "1.234,50").
+        var parsed = TryParseDecimal(_displayValue);
+        _displayValue = FormatValue(parsed);
+        await ValueChanged.InvokeAsync(parsed);
+    }
+
+    private async Task HandleInput(ChangeEventArgs args)
+    {
+        // Roheingabe speichern – kein Parsen während des Tippens, um Cursor-Sprünge zu vermeiden.
+        _displayValue = Convert.ToString(args.Value, CultureInfo.InvariantCulture) ?? string.Empty;
+        var parsed = TryParseDecimal(_displayValue);
+        await ValueChanged.InvokeAsync(parsed);
+    }
+
+    /// <summary>
+    /// Parst einen lokalisierten Dezimalwert nach der konfigurierten Kultur.
+    /// Akzeptiert sowohl Komma als auch Punkt als Dezimaltrenner für Nutzerfreundlichkeit.
+    /// Gibt <c>null</c> zurück, wenn die Eingabe leer oder nicht parsebar ist.
+    /// </summary>
+    private decimal? TryParseDecimal(string? raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            return null;
+        }
+
+        // Primär: Parse mit der konfigurierten Kultur (de-DE: Komma = Dezimal).
+        if (decimal.TryParse(raw, NumberStyles.Number, _culture, out var result))
+        {
+            return result;
+        }
+
+        // Fallback: Komma gegen Punkt tauschen und mit InvariantCulture versuchen.
+        // Ermöglicht z.B. die Eingabe "1234.56" auch im de-DE-Kontext.
+        var normalized = raw.Replace(",", ".");
+        if (decimal.TryParse(normalized, NumberStyles.Number, CultureInfo.InvariantCulture, out var fallback))
+        {
+            return fallback;
+        }
+
+        return null;
+    }
+}
+

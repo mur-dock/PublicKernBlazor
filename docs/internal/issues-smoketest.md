@@ -1,4 +1,4 @@
-﻿# Smoke-Test Issues – Analyse der fehlgeschlagenen Tests
+# Smoke-Test Issues – Analyse der fehlgeschlagenen Tests
 
 **Testlauf (initial):** 27 Tests gesamt, 8 bestanden, 19 fehlgeschlagen  
 **Testlauf (aktuell):** 27 Tests gesamt, 27 bestanden, 0 fehlgeschlagen  
@@ -25,15 +25,15 @@
 **Tests betroffen:** 11 (alle Routen außer `/`)
 
 **Symptom:**  
-Alle Seiten zeigen den Titel `"KernUx.Blazor Showcase"` (aus `App.razor` `<title>`) statt
-des seitenspezifischen Titels (z.B. `"Typografie - KernUx.Blazor Showcase"`).
+Alle Seiten zeigen den Titel `"PublicKernBlazor.Components Showcase"` (aus `App.razor` `<title>`) statt
+des seitenspezifischen Titels (z.B. `"Typografie - PublicKernBlazor.Components Showcase"`).
 
 **Ursache:**  
 Die `<PageTitle>`-Komponente in Blazor aktualisiert den Browser-Titel erst, wenn die Seite als
 **InteractiveServer** oder **InteractiveWebAssembly** gerendert wird. Bei Static SSR-Seiten
 (ohne `@rendermode`) wird `<PageTitle>` serverseitig in die `<head>`-Sektion gestreamt, aber:
 
-1. `App.razor` enthält ein statisches `<title>KernUx.Blazor Showcase</title>` (Zeile 8)
+1. `App.razor` enthält ein statisches `<title>PublicKernBlazor.Components Showcase</title>` (Zeile 8)
 2. `<HeadOutlet />` steht **nach** dem `<title>`-Tag
 3. Playwright wartet auf `NetworkIdle`, liest dann den Titel – aber der Browser verwendet
    den statischen `<title>`, weil `<HeadOutlet>` bei SSR die Aktualisierung über JS-Interop

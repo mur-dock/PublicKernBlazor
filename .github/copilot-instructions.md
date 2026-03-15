@@ -630,7 +630,7 @@ window.kernDialog = {
 
 **Regel:** Für jeden JS-Interop-Bedarf eine eigene benannte Funktion unter `window.kern*` anlegen. Die Datei gehört nach `wwwroot/js/` und muss im Host-Dokument eingebunden werden:
 ```html
-<script src="_content/KernUx.Blazor/js/kern-dialog.js"></script>
+<script src="_content/PublicKernBlazor.Components/js/kern-dialog.js"></script>
 ```
 
 ---

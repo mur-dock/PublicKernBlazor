@@ -1,0 +1,22 @@
+@namespace PublicKernBlazor.Components.Components.Layout
+@using PublicKernBlazor.Components.Utilities
+
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Fluid { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder(Fluid ? "kern-container-fluid" : "kern-container")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+

@@ -1,0 +1,41 @@
+@namespace PublicKernBlazor.Components.Components.Forms
+
+<KernFormField Label="@Label"
+               InputId="@Id"
+               Hint="@Hint"
+               Error="@Error"
+               Optional="@Optional"
+               OptionalText="@OptionalText"
+               Disabled="@Disabled"
+               AdditionalAttributes="@AdditionalAttributes"
+               FieldContent="@RenderInput" />
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public string? Hint { get; set; }
+    [Parameter] public string? Error { get; set; }
+    [Parameter] public bool Optional { get; set; }
+    [Parameter] public string? OptionalText { get; set; } = "- Optional";
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Accept { get; set; }
+    [Parameter] public EventCallback<InputFileChangeEventArgs> OnFileSelected { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private RenderFragment<KernFormFieldContext> RenderInput => context => @<InputFile id="@context.InputId"
+        class="@InputCssClass(context)"
+        aria-describedby="@context.AriaDescribedBy"
+        disabled="@context.Disabled"
+        accept="@Accept"
+        OnChange="HandleFileSelected" />;
+
+    private static string InputCssClass(KernFormFieldContext context) => new CssBuilder("kern-form-input__input")
+        .AddClass("kern-form-input__input--error", context.HasError)
+        .Build();
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs args)
+    {
+        await OnFileSelected.InvokeAsync(args);
+    }
+}
+

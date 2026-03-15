@@ -1,0 +1,23 @@
+@namespace PublicKernBlazor.Components.Components.Typography
+@using PublicKernBlazor.Components.Enums
+@using PublicKernBlazor.Components.Utilities
+
+<p class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</p>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Default;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-preline")
+        .AddClass("kern-preline--small", Size == Size.Small)
+        .AddClass("kern-preline--large", Size == Size.Large)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+

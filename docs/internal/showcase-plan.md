@@ -1,10 +1,10 @@
-﻿# Showcase-Plan – KernUx.Blazor.Demo
+# Showcase-Plan – PublicKernBlazor.Demo
 
 ## 1. Ist-Analyse
 
 ### Demo-App (aktueller Zustand)
 
-Die `KernUx.Blazor.Demo`-App ist eine **unveränderte Blazor-Projektvorlage**:
+Die `PublicKernBlazor.Demo`-App ist eine **unveränderte Blazor-Projektvorlage**:
 
 | Aspekt                     | Ist-Zustand                                                        | Problem                                                |
 |----------------------------|--------------------------------------------------------------------|--------------------------------------------------------|
@@ -13,11 +13,11 @@ Die `KernUx.Blazor.Demo`-App ist eine **unveränderte Blazor-Projektvorlage**:
 | **Pages**                  | Home (leer), Counter (Bootstrap-Button), Weather (Bootstrap-Table) | Zeigt keine Library-Funktionalität                     |
 | **Navigation**             | `NavMenu.razor` mit Bootstrap-Klassen (`navbar`, `nav-link`)       | Kein `KernKopfzeile`, kein KERN-Styling                |
 | **Theming**                | Nicht vorhanden                                                    | Kein `KernThemeProvider`, kein `ThemeService`          |
-| **KernUx.Blazor-Referenz** | Fehlt komplett (kein `<ProjectReference>`)                         | Library wird gar nicht eingebunden                     |
+| **PublicKernBlazor.Components-Referenz** | Fehlt komplett (kein `<ProjectReference>`)                         | Library wird gar nicht eingebunden                     |
 | **`AddKernUx()`**          | Nicht aufgerufen                                                   | Services nicht registriert                             |
 | **`KernStyles`**           | Nicht eingebunden                                                  | KERN-CSS fehlt                                         |
 
-### Library (KernUx.Blazor)
+### Library (PublicKernBlazor.Components)
 
 Die Library ist **vollständig implementiert** mit 48+ Komponenten:
 
@@ -82,14 +82,14 @@ Die Demo bekommt eine **eigene KERN-basierte Navigation** (kein Bootstrap-Sideba
 
 ## 4. Änderungen im Detail
 
-### 4.1 `KernUx.Blazor.Demo.csproj` – Projektdatei
+### 4.1 `PublicKernBlazor.Demo.csproj` – Projektdatei
 
 **Erforderliche Änderungen:**
 
 ```xml
 <!-- NEU: Projektreferenz auf die Library -->
 <ItemGroup>
-  <ProjectReference Include="..\KernUx.Blazor\KernUx.Blazor.csproj" />
+  <ProjectReference Include="..\PublicKernBlazor.Components\PublicKernBlazor.Components.csproj" />
 </ItemGroup>
 ```
 
@@ -102,7 +102,7 @@ Bootstrap-Referenz wird nicht im `.csproj` entfernt, sondern in den Razor-/CSS-D
 **Erforderliche Änderung:**
 
 ```csharp
-using KernUx.Blazor.Extensions;
+using PublicKernBlazor.Components.Extensions;
 
 // Nach AddRazorComponents():
 builder.Services.AddKernUx();
@@ -134,7 +134,7 @@ builder.Services.AddKernUx();
     <base href="/" />
     <ResourcePreloader />
     <KernStyles />
-    <link rel="stylesheet" href="@Assets["KernUx.Blazor.Demo.styles.css"]" />
+    <link rel="stylesheet" href="@Assets["PublicKernBlazor.Demo.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet />
@@ -142,7 +142,7 @@ builder.Services.AddKernUx();
 <body>
     <script>/* Anti-FOUC: Theme aus Cookie laden */</script>
     <Routes />
-    <script src="_content/KernUx.Blazor/js/kern-dialog.js"></script>
+    <script src="_content/PublicKernBlazor.Components/js/kern-dialog.js"></script>
     <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 </html>
@@ -155,16 +155,16 @@ builder.Services.AddKernUx();
 **Hinzuzufügen:**
 
 ```razor
-@using KernUx.Blazor.Components
-@using KernUx.Blazor.Components.Content
-@using KernUx.Blazor.Components.Feedback
-@using KernUx.Blazor.Components.Forms
-@using KernUx.Blazor.Components.Layout
-@using KernUx.Blazor.Components.Navigation
-@using KernUx.Blazor.Components.Shared
-@using KernUx.Blazor.Components.Typography
-@using KernUx.Blazor.Enums
-@using KernUx.Blazor.Services
+@using PublicKernBlazor.Components.Components
+@using PublicKernBlazor.Components.Components.Content
+@using PublicKernBlazor.Components.Components.Feedback
+@using PublicKernBlazor.Components.Components.Forms
+@using PublicKernBlazor.Components.Components.Layout
+@using PublicKernBlazor.Components.Components.Navigation
+@using PublicKernBlazor.Components.Components.Shared
+@using PublicKernBlazor.Components.Components.Typography
+@using PublicKernBlazor.Components.Enums
+@using PublicKernBlazor.Components.Services
 ```
 
 ---
@@ -184,7 +184,7 @@ builder.Services.AddKernUx();
         <KernContainer>
             <KernRow JustifyContent="JustifyContent.Between" AlignItems="AlignItems.Center">
                 <KernCol>
-                    <KernTitle Size="TitleSize.Large">KernUx.Blazor – Komponentenbibliothek</KernTitle>
+                    <KernTitle Size="TitleSize.Large">PublicKernBlazor.Components – Komponentenbibliothek</KernTitle>
                 </KernCol>
                 <KernCol>
                     <KernButton Variant="ButtonVariant.Tertiary"
@@ -576,10 +576,10 @@ Komponente für nebeneinander dargestellte Varianten (z.B. 3 Button-Varianten in
 
 | Datei                                    | Art der Änderung                                  |
 |------------------------------------------|---------------------------------------------------|
-| `KernUx.Blazor.Demo.csproj`              | `<ProjectReference>` auf Library hinzufügen       |
+| `PublicKernBlazor.Demo.csproj`              | `<ProjectReference>` auf Library hinzufügen       |
 | `Program.cs`                             | `AddKernUx()` hinzufügen                          |
 | `Components/App.razor`                   | Bootstrap → KERN-CSS, Anti-FOUC, `kern-dialog.js` |
-| `Components/_Imports.razor`              | KernUx.Blazor-Namespaces hinzufügen               |
+| `Components/_Imports.razor`              | PublicKernBlazor.Components-Namespaces hinzufügen               |
 | `Components/Layout/MainLayout.razor`     | Komplett auf KERN-Layout umstellen                |
 | `Components/Layout/NavMenu.razor`        | Entfernen (wird durch `DemoNavMenu` ersetzt)      |
 | `Components/Layout/NavMenu.razor.css`    | Entfernen                                         |
@@ -616,7 +616,7 @@ Komponente für nebeneinander dargestellte Varianten (z.B. 3 Button-Varianten in
 
 ### Phase A – Grundgerüst (Pflicht zuerst)
 
-1. **`KernUx.Blazor.Demo.csproj`**: ProjectReference hinzufügen
+1. **`PublicKernBlazor.Demo.csproj`**: ProjectReference hinzufügen
 2. **`Program.cs`**: `AddKernUx()` aufrufen
 3. **`_Imports.razor`**: Namespaces ergänzen
 4. **`App.razor`**: Bootstrap entfernen, KERN einbinden
@@ -683,7 +683,7 @@ Komponente für nebeneinander dargestellte Varianten (z.B. 3 Button-Varianten in
 
 #### 23.2 Optionale Automatisierung mit Playwright (.NET / C#)
 
-**Empfehlung:** Smoke-Suite mit `Microsoft.Playwright` als separates Testprojekt, z.B. `KernUx.Blazor.Demo.SmokeTests`.
+**Empfehlung:** Smoke-Suite mit `Microsoft.Playwright` als separates Testprojekt, z.B. `PublicKernBlazor.Demo.SmokeTests`.
 
 **Vorgeschlagene Struktur:**
 - `Smoke/NavigationSmokeTests.cs`: Route-Liste aufrufbar, Titel/Grundlayout prüfen

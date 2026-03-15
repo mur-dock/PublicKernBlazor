@@ -1,0 +1,25 @@
+@namespace PublicKernBlazor.Components.Components.Content
+
+<dl class="@CssClass" @attributes="AdditionalAttributes">
+    @ChildContent
+</dl>
+
+@code {
+    /// <summary>Layout-Variante: <c>Row</c> (nebeneinander) oder <c>Column</c> (untereinander).</summary>
+    [Parameter]
+    public DescriptionListLayout Layout { get; set; } = DescriptionListLayout.Row;
+
+    /// <summary>Inhalt – typischerweise <c>KernDescriptionItem</c>-Elemente.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das <c>&lt;dl&gt;</c>-Element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-description-list")
+        .AddClass("kern-description-list--col", Layout == DescriptionListLayout.Column)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+

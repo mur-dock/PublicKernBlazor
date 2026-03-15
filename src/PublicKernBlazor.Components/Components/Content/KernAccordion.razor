@@ -1,0 +1,114 @@
+@using Microsoft.JSInterop
+@namespace PublicKernBlazor.Components.Components.Content
+@inject IJSRuntime Js
+
+@* open wird NICHT als Blazor-Attribut gesetzt, damit der Browser den nativen
+   Öffnungszustand selbst verwaltet. Blazor würde bei jedem Re-Render das Attribut
+   überschreiben und dabei ein ontoggle-Ereignis auslösen → Endlosschleife.
+   Stattdessen setzt OnAfterRenderAsync das open-Attribut einmalig direkt im DOM
+   via kernAccordion.open/close (wwwroot/js/kern-accordion.js). *@
+<details @ref="_detailsRef"
+         class="@CssClass"
+         @attributes="AdditionalAttributes">
+    <summary class="kern-accordion__header"
+             @onclick="HandleClick"
+             @onclick:preventDefault="true">
+        @if (HeaderContent is not null)
+        {
+            @HeaderContent
+        }
+        else if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <span class="kern-title">@Title</span>
+        }
+    </summary>
+    <section class="kern-accordion__body">
+        @ChildContent
+    </section>
+</details>
+
+@code {
+    private ElementReference _detailsRef;
+
+    // _isOpen spiegelt den logischen Zustand wider und steuert JS-Aufrufe.
+    // open wird NICHT deklarativ als Razor-Attribut gesetzt (kein open="@_isOpen"),
+    // weil jede Attributmutation ein natives ontoggle-Ereignis auslöst und mit
+    // Blazors Re-Render-Zyklus eine Endlosschleife erzeugt.
+    private bool _isOpen;
+
+    // Merkt, ob der Open-Parameter sich seit dem letzten Rendern geändert hat,
+    // damit OnAfterRenderAsync das DOM-Attribut nur bei tatsächlichen Änderungen setzt.
+    private bool _pendingDomSync;
+    private bool _lastOpenParameter;
+
+    /// <summary>Optionaler Titeltext im Akkordeon-Header (Fallback wenn <see cref="HeaderContent"/> nicht gesetzt).</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Benutzerdefinierter Renderinhalt für den Akkordeon-Header (überschreibt <see cref="Title"/>).</summary>
+    [Parameter]
+    public RenderFragment? HeaderContent { get; set; }
+
+    /// <summary>Inhalt des Akkordeon-Körpers.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Steuert den initialen Öffnungszustand. Externe Änderungen dieses Parameters
+    /// werden erkannt und übernommen; lokale Toggles bleiben davon unberührt.</summary>
+    [Parameter]
+    public bool Open { get; set; }
+
+    /// <summary>Wird ausgelöst, wenn der Nutzer das Akkordeon öffnet oder schließt.
+    /// Der Wert gibt den neuen Zustand an (<c>true</c> = geöffnet).</summary>
+    [Parameter]
+    public EventCallback<bool> OnToggle { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das <c>&lt;details&gt;</c>-Element weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-accordion")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    protected override void OnParametersSet()
+    {
+        if (Open != _lastOpenParameter)
+        {
+            _isOpen = Open;
+            _lastOpenParameter = Open;
+            // DOM-Synchronisation nach dem nächsten Render markieren.
+            _pendingDomSync = true;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Beim ersten Render immer synchronisieren (initialer Open-Zustand),
+        // danach nur wenn sich der Parameter von außen geändert hat.
+        // Lokale Nutzerklicks landen in HandleClick und setzen das DOM sofort selbst –
+        // sie müssen OnAfterRenderAsync NICHT durchlaufen.
+        if (firstRender || _pendingDomSync)
+        {
+            _pendingDomSync = false;
+            await ApplyOpenStateAsync();
+        }
+    }
+
+    private async Task HandleClick()
+    {
+        _isOpen = !_isOpen;
+        // DOM direkt setzen, kein StateHasChanged nötig – Blazor-Rendering
+        // wird nicht ausgelöst, damit kein ontoggle durch Attributmutation entsteht.
+        await ApplyOpenStateAsync();
+        await OnToggle.InvokeAsync(_isOpen);
+    }
+
+    private async Task ApplyOpenStateAsync()
+    {
+        // kernAccordion.open/close setzen el.open als JS-Property direkt,
+        // ohne das Blazor-Attribut zu berühren → kein spurious ontoggle.
+        var fn = _isOpen ? "kernAccordion.open" : "kernAccordion.close";
+        await Js.InvokeVoidAsync(fn, _detailsRef);
+    }
+}

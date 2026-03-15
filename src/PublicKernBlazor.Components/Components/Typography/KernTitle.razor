@@ -1,0 +1,23 @@
+@namespace PublicKernBlazor.Components.Components.Typography
+@using PublicKernBlazor.Components.Enums
+@using PublicKernBlazor.Components.Utilities
+
+<p class="@CssClass" @attributes="AdditionalAttributes">@ChildContent</p>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public TitleSize Size { get; set; } = TitleSize.Default;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-title")
+        .AddClass("kern-title--small", Size == TitleSize.Small)
+        .AddClass("kern-title--large", Size == TitleSize.Large)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+

@@ -1,0 +1,16 @@
+@namespace PublicKernBlazor.Components.Components.Content
+
+<div class="kern-summary-group" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Enthaltene <see cref="KernSummary"/>-Elemente.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+}
+
