@@ -3,7 +3,7 @@
 **KERN-UX Design System** als Blazor Component Library –
 typsichere, barrierefreie Komponenten für die deutsche Verwaltung (WCAG 2.1 AA).
 
-[![CI](https://github.com/mur-dock/PublicKernBlazor.Components/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/PublicKernBlazor.Components/actions/workflows/ci.yml)
+[![CI](https://github.com/mur-dock/PublicKernBlazor/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/PublicKernBlazor.Components/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/PublicKernBlazor.Components)](https://www.nuget.org/packages/PublicKernBlazor.Components)
 [![KERN-UX](https://img.shields.io/badge/KERN--UX-Design%20System-green)](https://www.kern-ux.de)
 [![Lizenz: EUPL-1.2](https://img.shields.io/badge/Lizenz-EUPL_1.2-yellow)](LICENSE)
