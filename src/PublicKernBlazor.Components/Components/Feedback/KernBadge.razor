@@ -1,0 +1,32 @@
+@namespace PublicKernBlazor.Components.Components.Feedback
+
+<span class="@CssClass" @attributes="AdditionalAttributes">
+    @if (Icon.HasValue)
+    {
+        <KernIcon Glyph="@Icon.Value" AriaHidden="true" />
+    }
+    <span class="kern-label kern-label--small">@ChildContent</span>
+</span>
+
+@code {
+    /// <summary>Beschriftungstext des Badges als Razor-Inhalt.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Semantische Variante des Badges; bestimmt Farbe und CSS-Modifier.</summary>
+    [Parameter]
+    public BadgeVariant Variant { get; set; } = BadgeVariant.Info;
+
+    /// <summary>Optionales dekoratives Icon links vom Label.</summary>
+    [Parameter]
+    public KernIconGlyph? Icon { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das Badge-<c>&lt;span&gt;</c> weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-badge")
+        .AddClass($"kern-badge--{Variant.ToKebabCase()}")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}

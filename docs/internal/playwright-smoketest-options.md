@@ -1,4 +1,4 @@
-﻿# Playwright Smoke-Tests – Optionen für KernUx.Blazor.Demo
+# Playwright Smoke-Tests – Optionen für PublicKernBlazor.Demo
 
 Dieses Dokument beschreibt die Alternativen zur Automatisierung der Smoke-Tests
 (Punkt 23.2 im `showcase-plan.md`) mit [Microsoft Playwright für .NET](https://playwright.dev/dotnet/).
@@ -10,7 +10,7 @@ Dieses Dokument beschreibt die Alternativen zur Automatisierung der Smoke-Tests
 Alle Optionen teilen dieselben NuGet-Pakete und denselben Browser-Installationsschritt:
 
 ```xml
-<!-- KernUx.Blazor.Demo.SmokeTests.csproj -->
+<!-- PublicKernBlazor.Demo.SmokeTests.csproj -->
 <PackageReference Include="Microsoft.Playwright" Version="*" />
 
 <!-- je nach gewähltem Test-Framework -->
@@ -44,8 +44,8 @@ Aufräumen) automatisch. Jede Testklasse erbt von `PageTest` und erhält direkt 
 ### Projektstruktur
 
 ```
-KernUx.Blazor.Demo.SmokeTests/
-├── KernUx.Blazor.Demo.SmokeTests.csproj
+PublicKernBlazor.Demo.SmokeTests/
+├── PublicKernBlazor.Demo.SmokeTests.csproj
 └── Smoke/
     ├── NavigationSmokeTests.cs
     ├── ThemeSmokeTests.cs
@@ -91,7 +91,7 @@ public class NavigationSmokeTests : PageTest   // PageTest aus Microsoft.Playwri
 | Nähe zu Playwright | 🟢 Sehr hoch – `PageTest` ist die offizielle Integration |
 | Parallelisierung | 🟢 Direkt über `[Parallelizable]` konfigurierbar |
 | Offizielle Unterstützung durch Microsoft | 🟢 Ja |
-| Konsistenz mit `KernUx.Blazor.Tests` (xUnit) | 🟡 Anderes Framework, aber separates Projekt |
+| Konsistenz mit `PublicKernBlazor.Components.Tests` (xUnit) | 🟡 Anderes Framework, aber separates Projekt |
 | Geeignet als Einstieg | ✅ **Empfohlen** |
 
 ---
@@ -104,7 +104,7 @@ public class NavigationSmokeTests : PageTest   // PageTest aus Microsoft.Playwri
 
 ### Beschreibung
 
-xUnit ist das Test-Framework des bestehenden Projekts (`KernUx.Blazor.Tests`). Da es kein
+xUnit ist das Test-Framework des bestehenden Projekts (`PublicKernBlazor.Components.Tests`). Da es kein
 offizielles `Microsoft.Playwright.XUnit`-Paket gibt, wird der Browser-Lifecycle über
 `IAsyncLifetime` vollständig selbst verwaltet. Das GWT-Pattern aus den Coding-Guidelines lässt
 sich direkt anwenden – allerdings auf Kosten von mehr Boilerplate je Testklasse und ohne die
@@ -113,8 +113,8 @@ Playwright-nahen Hilfsfunktionen (z.B. `Expect`, `ContextOptions`), die `PageTes
 ### Projektstruktur
 
 ```
-KernUx.Blazor.Demo.SmokeTests/
-├── KernUx.Blazor.Demo.SmokeTests.csproj
+PublicKernBlazor.Demo.SmokeTests/
+├── PublicKernBlazor.Demo.SmokeTests.csproj
 └── Smoke/
     ├── NavigationSmokeTests.cs
     ├── ThemeSmokeTests.cs
@@ -168,7 +168,7 @@ public class ThemeSmokeTests : IAsyncLifetime
 |---|---|
 | Einstiegshürde | 🟡 Mittel – kein Basisklassen-Scaffolding, mehr Boilerplate |
 | Nähe zu Playwright | 🔴 Gering – kein offizielles `Playwright.XUnit`-Paket |
-| Konsistenz mit Bestandsprojekt (`KernUx.Blazor.Tests`) | 🟢 Ja – xUnit + GWT-Pattern direkt verwendbar |
+| Konsistenz mit Bestandsprojekt (`PublicKernBlazor.Components.Tests`) | 🟢 Ja – xUnit + GWT-Pattern direkt verwendbar |
 | Parallelisierung | 🟡 Über `[Collection]`-Isolation steuerbar |
 | Boilerplate für Setup/Teardown | 🔴 Höher als Option 1 |
 | Geeignet als Einstieg | 🟡 Nur wenn Konsistenz zu xUnit explizit gewünscht |
@@ -195,8 +195,8 @@ in CI-Umgebungen werden vermieden.
 ### Projektstruktur
 
 ```
-KernUx.Blazor.Demo.SmokeTests/
-├── KernUx.Blazor.Demo.SmokeTests.csproj
+PublicKernBlazor.Demo.SmokeTests/
+├── PublicKernBlazor.Demo.SmokeTests.csproj
 ├── Infrastructure/
 │   └── DemoAppFixture.cs          ← startet die App, stellt BaseUrl bereit
 └── Smoke/
@@ -292,8 +292,8 @@ Methoden auf. Das erhöht die Wartbarkeit erheblich, sobald die Suite wächst.
 ### Projektstruktur
 
 ```
-KernUx.Blazor.Demo.SmokeTests/
-├── KernUx.Blazor.Demo.SmokeTests.csproj
+PublicKernBlazor.Demo.SmokeTests/
+├── PublicKernBlazor.Demo.SmokeTests.csproj
 ├── Infrastructure/
 │   └── PlaywrightFixture.cs       ← Browser-Lifecycle (SetUpFixture)
 ├── PageObjects/
@@ -394,8 +394,8 @@ hochgeladen und ermöglichen Post-mortem-Debugging ohne erneuten Testlauf.
 ### Projektstruktur
 
 ```
-KernUx.Blazor.Demo.SmokeTests/
-├── KernUx.Blazor.Demo.SmokeTests.csproj
+PublicKernBlazor.Demo.SmokeTests/
+├── PublicKernBlazor.Demo.SmokeTests.csproj
 ├── Infrastructure/
 │   ├── PlaywrightSetup.cs         ← Browser-Installation via [OneTimeSetUp]
 │   └── BaseSmokeTest.cs           ← Screenshot + Trace bei Fehler
@@ -479,10 +479,10 @@ public class NavigationSmokeTests : BaseSmokeTest
 {
     private const string BaseUrl = "https://localhost:7023";
 
-    [TestCase("/", "KernUx.Blazor Showcase")]
-    [TestCase("/components/typography", "Typografie - KernUx.Blazor Showcase")]
-    [TestCase("/examples/antrag", "Antragsstrecke - KernUx.Blazor Showcase")]
-    [TestCase("/not-found", "Seite nicht gefunden - KernUx.Blazor Showcase")]
+    [TestCase("/", "PublicKernBlazor.Components Showcase")]
+    [TestCase("/components/typography", "Typografie - PublicKernBlazor.Components Showcase")]
+    [TestCase("/examples/antrag", "Antragsstrecke - PublicKernBlazor.Components Showcase")]
+    [TestCase("/not-found", "Seite nicht gefunden - PublicKernBlazor.Components Showcase")]
     public async Task Seite_HatKorrektenPageTitle(string route, string erwartetterTitel)
     {
         await Page.GotoAsync(BaseUrl + route);
@@ -498,7 +498,7 @@ public class NavigationSmokeTests : BaseSmokeTest
 ```yaml
 # .github/workflows/smoke-tests.yml
 - name: Smoke-Tests ausführen
-  run: dotnet test KernUx.Blazor.Demo.SmokeTests --no-build
+  run: dotnet test PublicKernBlazor.Demo.SmokeTests --no-build
 
 - name: Test-Artefakte hochladen
   if: failure()
@@ -529,7 +529,7 @@ public class NavigationSmokeTests : BaseSmokeTest
 |---|:---:|:---:|:---:|:---:|:---:|
 | Einstiegshürde | 🟢 Niedrig | 🟡 Mittel | 🔴 Hoch | 🟡 Mittel | 🟡 Mittel |
 | Nähe zu Playwright (offizielle Integration) | 🟢 | 🔴 | 🟢 | 🟢 | 🟢 |
-| Konsistenz mit `KernUx.Blazor.Tests` (xUnit) | 🟡 | 🟢 | 🟢 | 🟡 | 🟡 |
+| Konsistenz mit `PublicKernBlazor.Components.Tests` (xUnit) | 🟡 | 🟢 | 🟢 | 🟡 | 🟡 |
 | CI-Tauglichkeit | 🟡 | 🟡 | 🟢 | 🟡 | 🟢 |
 | Wartbarkeit bei Wachstum | 🟡 | 🟡 | 🟡 | 🟢 | 🟢 |
 | Kein externer App-Prozess | ❌ | ❌ | ✅ | ❌ | ❌ |
@@ -542,7 +542,7 @@ public class NavigationSmokeTests : BaseSmokeTest
 **Einstieg:** **Option 1** (NUnit + `PageTest`) – die offizielle Playwright-Integration bietet
 den geringsten Aufwand und den vollen Funktionsumfang: automatischer Browser-Lifecycle,
 `Expect`-Assertions, `ContextOptions`-Overrides, `[Parallelizable]`-Support. Konsistenz zu
-`KernUx.Blazor.Tests` (xUnit) ist kein zwingendes Kriterium, da die Smoke-Suite als eigenes,
+`PublicKernBlazor.Components.Tests` (xUnit) ist kein zwingendes Kriterium, da die Smoke-Suite als eigenes,
 separates Projekt geführt wird.
 
 **Mittelfristig:** **Option 4** (POM) auf Basis von Option 1 – sobald mehr als ~15 Tests
@@ -631,8 +631,8 @@ Das Skript gehört in das Stammverzeichnis der Solution neben `KernUxExample.sln
 KernUxExample/
 ├── KernUxExample.slnx
 ├── Run-SmokeTests.ps1          ← hier ablegen
-├── KernUx.Blazor/
-├── KernUx.Blazor.Demo/
-└── KernUx.Blazor.Demo.SmokeTests/   ← noch zu erstellen (Phase E oder CI-Setup)
+├── PublicKernBlazor.Components/
+├── PublicKernBlazor.Demo/
+└── PublicKernBlazor.Demo.SmokeTests/   ← noch zu erstellen (Phase E oder CI-Setup)
 ```
 

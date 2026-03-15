@@ -1,0 +1,49 @@
+@namespace PublicKernBlazor.Components.Components.Forms
+
+<KernFormField Label="@Label"
+               InputId="@Id"
+               Hint="@Hint"
+               Error="@Error"
+               Optional="@Optional"
+               OptionalText="@OptionalText"
+               Disabled="@Disabled"
+               ReadOnly="@ReadOnly"
+               AdditionalAttributes="@AdditionalAttributes"
+               FieldContent="@RenderInput" />
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public string? Hint { get; set; }
+    [Parameter] public string? Error { get; set; }
+    [Parameter] public bool Optional { get; set; }
+    [Parameter] public string? OptionalText { get; set; } = "- Optional";
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Name { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+    [Parameter] public IReadOnlyDictionary<string, object>? InputAttributes { get; set; }
+
+    private RenderFragment<KernFormFieldContext> RenderInput => context => @<input id="@context.InputId"
+        name="@Name"
+        class="@InputCssClass(context)"
+        type="text"
+        inputmode="numeric"
+        value="@Value"
+        aria-describedby="@context.AriaDescribedBy"
+        disabled="@context.Disabled"
+        readonly="@context.ReadOnly"
+        @attributes="InputAttributes"
+        @oninput="HandleInput" />;
+
+    private static string InputCssClass(KernFormFieldContext context) => new CssBuilder("kern-form-input__input")
+        .AddClass("kern-form-input__input--error", context.HasError)
+        .Build();
+
+    private async Task HandleInput(ChangeEventArgs args)
+    {
+        await ValueChanged.InvokeAsync(Convert.ToString(args.Value, System.Globalization.CultureInfo.InvariantCulture));
+    }
+}

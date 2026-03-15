@@ -1,17 +1,17 @@
 ---
 name: kern-blazor-page
 description: >
-  Implementiert Blazor-Pages und -Komponenten mit der KernUx.Blazor-Bibliothek
+  Implementiert Blazor-Pages und -Komponenten mit der PublicKernBlazor.Components-Bibliothek
   (KERN Design System). Verwende diesen Skill, wenn du eine neue Blazor-Page,
   eine neue Komponente oder ein Layout mit KERN-UX-Komponenten erstellen,
   erweitern oder überarbeiten sollst – inklusive Projekteinbindung,
   Namespaces, Enums, Formular-Pattern, Barrierefreiheit und Theming.
 ---
 
-# Skill: Blazor-Pages mit KernUx.Blazor implementieren
+# Skill: Blazor-Pages mit PublicKernBlazor.Components implementieren
 
 Dieser Skill beschreibt, wie Blazor-Pages und -Komponenten unter Verwendung
-der `KernUx.Blazor`-Bibliothek korrekt implementiert werden.
+der `PublicKernBlazor.Components`-Bibliothek korrekt implementiert werden.
 
 ---
 
@@ -22,19 +22,19 @@ der `KernUx.Blazor`-Bibliothek korrekt implementiert werden.
 **NuGet-Paket** (konsumierendes Projekt):
 
 ```xml
-<PackageReference Include="KernUx.Blazor" Version="..." />
+<PackageReference Include="PublicKernBlazor.Components" Version="..." />
 ```
 
 **Projektreferenz** (innerhalb der Solution):
 
 ```xml
-<ProjectReference Include="..\KernUx.Blazor\KernUx.Blazor.csproj" />
+<ProjectReference Include="..\PublicKernBlazor.Components\PublicKernBlazor.Components.csproj" />
 ```
 
 ### 1.2 Services registrieren (`Program.cs`)
 
 ```csharp
-using KernUx.Blazor.Extensions;
+using PublicKernBlazor.Components.Extensions;
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -60,7 +60,7 @@ selbst via `<HeadContent>`:
 
 | Parameter           | Standard               | Beschreibung                                   |
 |---------------------|------------------------|------------------------------------------------|
-| `BasePath`          | `_content/KernUx.Blazor` | Pfad zu den statischen Assets               |
+| `BasePath`          | `_content/PublicKernBlazor.Components` | Pfad zu den statischen Assets               |
 | `ThemeName`         | `kern`                 | Name des aktiven Themes                        |
 | `IncludeExtensions` | `true`                 | Extensions-Stylesheet (`css/extensions/`) einbinden |
 
@@ -103,16 +103,16 @@ ersten Laden und stellt nach Enhanced-Navigation das Theme wieder her:
 Füge in `Components/_Imports.razor` alle KERN-Namespaces ein:
 
 ```razor
-@using KernUx.Blazor.Components
-@using KernUx.Blazor.Components.Content
-@using KernUx.Blazor.Components.Feedback
-@using KernUx.Blazor.Components.Forms
-@using KernUx.Blazor.Components.Layout
-@using KernUx.Blazor.Components.Navigation
-@using KernUx.Blazor.Components.Shared
-@using KernUx.Blazor.Components.Typography
-@using KernUx.Blazor.Enums
-@using KernUx.Blazor.Services
+@using PublicKernBlazor.Components.Components
+@using PublicKernBlazor.Components.Components.Content
+@using PublicKernBlazor.Components.Components.Feedback
+@using PublicKernBlazor.Components.Components.Forms
+@using PublicKernBlazor.Components.Components.Layout
+@using PublicKernBlazor.Components.Components.Navigation
+@using PublicKernBlazor.Components.Components.Shared
+@using PublicKernBlazor.Components.Components.Typography
+@using PublicKernBlazor.Components.Enums
+@using PublicKernBlazor.Components.Services
 ```
 
 ---

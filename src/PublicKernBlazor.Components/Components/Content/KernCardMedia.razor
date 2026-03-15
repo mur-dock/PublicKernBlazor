@@ -1,0 +1,16 @@
+@namespace PublicKernBlazor.Components.Components.Content
+
+<div class="kern-card__media" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Medieninhalt (z.B. <c>&lt;img&gt;</c>-Element).</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das Media-<c>&lt;div&gt;</c>.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+}
+

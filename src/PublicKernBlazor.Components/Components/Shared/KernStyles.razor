@@ -1,0 +1,40 @@
+@namespace PublicKernBlazor.Components.Components.Shared
+
+<HeadContent>
+    <link rel="stylesheet" href="@ThemeStylesheetPath" />
+    @if (IncludeExtensions)
+    {
+        <link rel="stylesheet" href="@ExtensionsStylesheetPath" />
+    }
+</HeadContent>
+
+@code {
+    /// <summary>Basis-Pfad zu den statischen Assets der Library (Standard: <c>_content/PublicKernBlazor.Components</c>).</summary>
+    [Parameter]
+    public string? BasePath { get; set; } = "_content/PublicKernBlazor.Components";
+
+    /// <summary>Name des KERN-Themes (Standard: <c>kern</c>). Steuert den Pfad zum Theme-Stylesheet.</summary>
+    [Parameter]
+    public string? ThemeName { get; set; } = "kern";
+
+    /// <summary>
+    /// Bindet zusätzlich das Extensions-Stylesheet ein (<c>css/extensions/index.css</c>).
+    /// Standard: <c>true</c>. Die Extensions liegen bewusst außerhalb von <c>core/</c> und <c>themes/</c>,
+    /// damit sie bei KERN-UX-Updates nicht überschrieben werden.
+    /// </summary>
+    [Parameter]
+    public bool IncludeExtensions { get; set; } = true;
+
+    private string ResolvedBasePath => string.IsNullOrWhiteSpace(BasePath) ? "_content/PublicKernBlazor.Components" : BasePath.TrimEnd('/');
+
+    private string ThemeStylesheetPath
+    {
+        get
+        {
+            var themeName = string.IsNullOrWhiteSpace(ThemeName) ? "kern" : ThemeName;
+            return $"{ResolvedBasePath}/css/themes/{themeName}/index.css";
+        }
+    }
+
+    private string ExtensionsStylesheetPath => $"{ResolvedBasePath}/css/extensions/index.css";
+}

@@ -1,0 +1,99 @@
+@namespace PublicKernBlazor.Components.Components.Forms
+@using System.Globalization
+
+<KernFormField Label="@Label"
+               InputId="@Id"
+               Hint="@Hint"
+               Error="@Error"
+               Optional="@Optional"
+               OptionalText="@OptionalText"
+               Disabled="@Disabled"
+               ReadOnly="@ReadOnly"
+               AdditionalAttributes="@AdditionalAttributes"
+               FieldContent="@RenderInput" />
+
+@code {
+    /// <summary>Beschriftung des Eingabefeldes.</summary>
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>Aktueller Wert des Eingabefeldes (Two-Way-Binding mit <see cref="ValueChanged"/>).</summary>
+    [Parameter]
+    public string? Value { get; set; }
+
+    /// <summary>Callback für Wertänderungen (Two-Way-Binding).</summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>Optionaler Hinweistext unterhalb des Labels.</summary>
+    [Parameter]
+    public string? Hint { get; set; }
+
+    /// <summary>Fehlermeldung. Wenn gesetzt, wird der Fehlerzustand aktiviert.</summary>
+    [Parameter]
+    public string? Error { get; set; }
+
+    /// <summary>Markiert das Feld als optional.</summary>
+    [Parameter]
+    public bool Optional { get; set; }
+
+    /// <summary>Text für die optionale Kennzeichnung. Standard: <c>"- Optional"</c>.</summary>
+    [Parameter]
+    public string? OptionalText { get; set; } = "- Optional";
+
+    /// <summary>Deaktiviert das Eingabeelement.</summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>Setzt das Eingabeelement auf schreibgeschützt.</summary>
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    /// <summary>Explizite HTML-ID für das Eingabeelement.</summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>HTML-<c>name</c>-Attribut für Formularübermittlung.</summary>
+    [Parameter]
+    public string? Name { get; set; }
+
+    /// <summary>HTML-<c>type</c>-Attribut. Standard: <c>"text"</c>.</summary>
+    [Parameter]
+    public string? Type { get; set; } = "text";
+
+    /// <summary>HTML-<c>autocomplete</c>-Attribut für Browser-Autovervollständigung.</summary>
+    [Parameter]
+    public string? Autocomplete { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das Wrapper-Element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das <c>&lt;input&gt;</c>-Element selbst.</summary>
+    [Parameter]
+    public IReadOnlyDictionary<string, object>? InputAttributes { get; set; }
+
+    private string ResolvedType => string.IsNullOrWhiteSpace(Type) ? "text" : Type;
+
+    private RenderFragment<KernFormFieldContext> RenderInput => context => @<input id="@context.InputId"
+        name="@Name"
+        class="@InputCssClass(context)"
+        type="@ResolvedType"
+        value="@Value"
+        autocomplete="@Autocomplete"
+        aria-describedby="@context.AriaDescribedBy"
+        disabled="@context.Disabled"
+        readonly="@context.ReadOnly"
+        @attributes="InputAttributes"
+        @oninput="HandleInput" />;
+
+    private static string InputCssClass(KernFormFieldContext context) => new CssBuilder("kern-form-input__input")
+        .AddClass("kern-form-input__input--error", context.HasError)
+        .Build();
+
+    private async Task HandleInput(ChangeEventArgs args)
+    {
+        await ValueChanged.InvokeAsync(Convert.ToString(args.Value, CultureInfo.InvariantCulture));
+    }
+}
+

@@ -1,0 +1,39 @@
+@namespace PublicKernBlazor.Components.Components.Navigation
+
+<div class="kern-kopfzeile" @attributes="AdditionalAttributes">
+    <div class="@ContainerClass">
+        <div class="kern-kopfzeile__content">
+            <span class="kern-kopfzeile__flagge" aria-hidden="true">
+                @* Flagge wird via CSS (Background-Image) dargestellt *@
+            </span>
+            <span class="kern-kopfzeile__label">@ResolvedLabel</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    /// <summary>
+    /// Beschriftungstext der Kopfzeile.
+    /// Standard: <c>"Offizielle Website – Bundesrepublik Deutschland"</c>.
+    /// </summary>
+    [Parameter]
+    public string? Label { get; set; }
+
+    /// <summary>Wenn <c>true</c>, wird der Container über die volle Breite gestreckt.</summary>
+    [Parameter]
+    public bool Fluid { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute für das äußere <c>&lt;div&gt;</c>.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string ResolvedLabel => string.IsNullOrWhiteSpace(Label)
+        ? "Offizielle Website \u2013 Bundesrepublik Deutschland"
+        : Label;
+
+    // kern-container-fluid ist eine eigenständige CSS-Klasse im KERN-Grid (_grid.scss),
+    // KEIN BEM-Modifier (also nicht kern-container--fluid). Ein CssBuilder mit bedingtem
+    // Modifier wäre hier falsch – stattdessen wird direkt zwischen zwei Klassen gewählt.
+    private string ContainerClass => Fluid ? "kern-container-fluid" : "kern-container";
+}
+

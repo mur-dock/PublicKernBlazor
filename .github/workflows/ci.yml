@@ -28,14 +28,14 @@ jobs:
           dotnet-version: ${{ matrix.dotnet }}
 
       - name: NuGet-Pakete wiederherstellen
-        run: dotnet restore KernUx.Blazor.slnx
+        run: dotnet restore PublicKernBlazor.slnx
 
       - name: Solution bauen
-        run: dotnet build KernUx.Blazor.slnx --configuration Release --no-restore
+        run: dotnet build PublicKernBlazor.slnx --configuration Release --no-restore
 
       - name: Unit-Tests ausführen
         run: >
-          dotnet test tests/KernUx.Blazor.Tests/KernUx.Blazor.Tests.csproj
+          dotnet test tests/PublicKernBlazor.Components.Tests/PublicKernBlazor.Components.Tests.csproj
           --configuration Release
           --no-build
           --logger "trx;LogFileName=test-results.trx"
@@ -51,7 +51,7 @@ jobs:
 
       - name: NuGet-Paket erstellen (Smoke-Check)
         run: >
-          dotnet pack src/KernUx.Blazor/KernUx.Blazor.csproj
+          dotnet pack src/PublicKernBlazor.Components/PublicKernBlazor.Components.csproj
           --configuration Release
           --no-build
           --output ./nupkg

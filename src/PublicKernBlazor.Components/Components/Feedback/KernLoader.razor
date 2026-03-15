@@ -1,0 +1,38 @@
+@namespace PublicKernBlazor.Components.Components.Feedback
+
+<div class="@CssClass"
+     role="status"
+     aria-live="polite"
+     @attributes="AdditionalAttributes">
+    <span class="kern-sr-only">@ResolvedScreenReaderText</span>
+</div>
+
+@code {
+    /// <summary>
+    /// Steuert die Sichtbarkeit des Spinners. Wenn <c>true</c>, wird der
+    /// Modifier <c>kern-loader--visible</c> gesetzt.
+    /// </summary>
+    [Parameter]
+    public bool Visible { get; set; }
+
+    /// <summary>
+    /// Text für Screenreader, der den Ladezustand beschreibt.
+    /// Wird in einer <c>kern-sr-only</c>-Span ausgegeben, die visuell verborgen ist.
+    /// Standard: <c>"Wird geladen..."</c>.
+    /// </summary>
+    [Parameter]
+    public string? ScreenReaderText { get; set; } = "Wird geladen...";
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das Loader-<c>&lt;div&gt;</c> weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string ResolvedScreenReaderText => string.IsNullOrWhiteSpace(ScreenReaderText)
+        ? "Wird geladen..."
+        : ScreenReaderText;
+
+    private string CssClass => new CssBuilder("kern-loader")
+        .AddClass("kern-loader--visible", Visible)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}

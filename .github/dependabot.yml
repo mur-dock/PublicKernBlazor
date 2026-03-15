@@ -2,7 +2,7 @@ version: 2
 updates:
   # NuGet-Abhängigkeiten der Library
   - package-ecosystem: "nuget"
-    directory: "/src/KernUx.Blazor"
+    directory: "/src/PublicKernBlazor.Components"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -17,7 +17,7 @@ updates:
 
   # NuGet-Abhängigkeiten der Demo-App
   - package-ecosystem: "nuget"
-    directory: "/src/KernUx.Blazor.Demo"
+    directory: "/src/PublicKernBlazor.Demo"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -33,7 +33,7 @@ updates:
 
   # NuGet-Abhängigkeiten der Unit-Tests
   - package-ecosystem: "nuget"
-    directory: "/tests/KernUx.Blazor.Tests"
+    directory: "/tests/PublicKernBlazor.Components.Tests"
     schedule:
       interval: "weekly"
       day: "monday"

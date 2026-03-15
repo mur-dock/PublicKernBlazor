@@ -1,0 +1,48 @@
+@page "/Error"
+@using System.Diagnostics
+
+<PageTitle>Fehler - PublicKernBlazor.Components Showcase</PageTitle>
+
+<KernContainer>
+    <KernRow>
+        <KernCol>
+            <KernHeading Level="HeadingLevel.Large" Element="h1">Ein Fehler ist aufgetreten</KernHeading>
+            <KernBody>
+                Beim Verarbeiten Ihrer Anfrage ist ein unerwarteter Fehler aufgetreten.
+            </KernBody>
+
+            <KernAlert Type="AlertType.Danger" Title="Anfrage konnte nicht verarbeitet werden">
+                Bitte laden Sie die Seite neu oder versuchen Sie es später erneut.
+            </KernAlert>
+
+            @if (ShowRequestId)
+            {
+                <KernBody Size="Size.Small" Muted="true">
+                    <strong>Request-ID:</strong> <code>@RequestId</code>
+                </KernBody>
+            }
+
+            <KernDivider />
+
+            <KernTitle Size="TitleSize.Small">Hinweis für die Entwicklung</KernTitle>
+            <KernBody>
+                Detaillierte Fehlerinformationen werden nur im Entwicklungsmodus angezeigt.
+                Aktivieren Sie lokal die Umgebungsvariable <strong>ASPNETCORE_ENVIRONMENT=Development</strong>
+                und starten Sie die Anwendung neu.
+            </KernBody>
+        </KernCol>
+    </KernRow>
+</KernContainer>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? RequestId { get; set; }
+    private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+    protected override void OnInitialized()
+    {
+        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+    }
+}

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="tests/PublicKernBlazor.Demo.SmokeTests/PublicKernBlazor.Demo.SmokeTests.csproj" />
+  <Project Path="src/PublicKernBlazor.Demo/PublicKernBlazor.Demo.csproj" />
+  <Project Path="tests/PublicKernBlazor.Components.Tests/PublicKernBlazor.Components.Tests.csproj" />
+  <Project Path="src/PublicKernBlazor.Components/PublicKernBlazor.Components.csproj" />
+  <Project Path="KernUxExample.Blazor/KernUxExample.Blazor.csproj" />
+</Solution>

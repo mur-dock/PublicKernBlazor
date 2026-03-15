@@ -11,7 +11,7 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/lang/d
 
 ### Behoben
 
-#### Komponenten-Library (`KernUx.Blazor`)
+#### Komponenten-Library (`PublicKernBlazor.Components`)
 
 - **Layout/Grid**: `KernRow` und `KernCol` filtern beim `@attributes`-Splat den Schlüssel `class` heraus,
   damit generierte KERN-Grid-Klassen nicht überschrieben werden.
@@ -30,7 +30,7 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/lang/d
 
 ### Hinzugefügt
 
-#### Komponenten-Library (`KernUx.Blazor`)
+#### Komponenten-Library (`PublicKernBlazor.Components`)
 
 - **Layout**: `KernContainer`, `KernRow`, `KernCol`, `KernThemeProvider`
 - **Typografie**: `KernHeading`, `KernTitle`, `KernBody`, `KernLabel`, `KernSubline`, `KernPreline`
@@ -58,19 +58,19 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/lang/d
 - **`AddKernUx()`** – DI-Erweiterungsmethode registriert alle Services in einem Aufruf
 - **Typsichere Enums** für alle Komponenten-Parameter (`ButtonVariant`, `AlertType`,
   `KernIconGlyph`, `HeadingLevel`, `Size`, u. v. m.)
-- **KERN-UX-CSS** als statische Assets unter `_content/KernUx.Blazor/css/`
-- **`kern-dialog.js`** als statisches Asset unter `_content/KernUx.Blazor/js/`
+- **KERN-UX-CSS** als statische Assets unter `_content/PublicKernBlazor.Components/css/`
+- **`kern-dialog.js`** als statisches Asset unter `_content/PublicKernBlazor.Components/js/`
 - **WCAG 2.1 AA** – ARIA-Attribute, semantisches HTML, Fokus-Management, Kontrast
 
 #### Demo-App & Tests
 
-- **`KernUx.Blazor.Demo`** – interaktive Showcase-App mit Beispielen für alle Komponenten,
+- **`PublicKernBlazor.Demo`** – interaktive Showcase-App mit Beispielen für alle Komponenten,
   Antragsstrecke und Theme-Toggle
-- **`KernUx.Blazor.Tests`** – bUnit-Testprojekt mit Rendering-, Interaktions- und
+- **`PublicKernBlazor.Components.Tests`** – bUnit-Testprojekt mit Rendering-, Interaktions- und
   Accessibility-Audit-Tests für alle Komponenten
-- **`KernUx.Blazor.Demo.SmokeTests`** – Playwright/NUnit-Smoke-Tests für die Demo-App
+- **`PublicKernBlazor.Demo.SmokeTests`** – Playwright/NUnit-Smoke-Tests für die Demo-App
 
-[Unreleased]: https://github.com/OWNER/KernUx.Blazor/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/OWNER/KernUx.Blazor/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/OWNER/KernUx.Blazor/releases/tag/v0.1.0
+[Unreleased]: https://github.com/OWNER/PublicKernBlazor.Components/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/OWNER/PublicKernBlazor.Components/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/OWNER/PublicKernBlazor.Components/releases/tag/v0.1.0
 

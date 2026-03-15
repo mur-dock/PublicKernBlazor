@@ -1,0 +1,43 @@
+@namespace PublicKernBlazor.Components.Components.Navigation
+@using PublicKernBlazor.Components.Enums
+@using PublicKernBlazor.Components.Utilities
+
+@if (Variant == KernListVariant.Number)
+{
+    <ol class="@CssClass" @attributes="AdditionalAttributes">
+        @ChildContent
+    </ol>
+}
+else
+{
+    <ul class="@CssClass" @attributes="AdditionalAttributes">
+        @ChildContent
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public KernListVariant Variant { get; set; } = KernListVariant.Default;
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Default;
+
+    [Parameter]
+    public bool Horizontal { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-list")
+        .AddClass("kern-list--bullet", Variant == KernListVariant.Bullet)
+        .AddClass("kern-list--number", Variant == KernListVariant.Number)
+        .AddClass("kern-list--small", Size == Size.Small)
+        .AddClass("kern-list--large", Size == Size.Large)
+        .AddClass("kern-list--horizontal", Horizontal)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+

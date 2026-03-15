@@ -1,0 +1,218 @@
+@page "/examples/dashboard"
+
+
+
+<PageTitle>Dashboard - PublicKernBlazor.Components Showcase</PageTitle>
+
+<KernContainer>
+    <KernHeading Level="HeadingLevel.Large" Element="h1">Praxisbeispiel: Sachbearbeiter-Dashboard</KernHeading>
+    <KernBody Muted="true">
+        Status-Tracking und Aufgabenübersicht für Sachbearbeiter.
+        Demonstriert Datenvisualisierung mit KERN-Komponenten.
+    </KernBody>
+
+    <ComponentSection Title="Statistik-Übersicht" Description="Aktuelle Antragszahlen auf einen Blick.">
+        <KernRow>
+            <KernCol Span="12" SpanMd="4">
+                <KernCard>
+                    <KernCardContainer Preline="Offene Anträge" Title="@_offeneAntraege.ToString()">
+                        <KernBadge Variant="BadgeVariant.Warning" Icon="KernIconGlyph.Warning">Bearbeitung erforderlich</KernBadge>
+                    </KernCardContainer>
+                </KernCard>
+            </KernCol>
+            <KernCol Span="12" SpanMd="4">
+                <KernCard>
+                    <KernCardContainer Preline="In Bearbeitung" Title="@_inBearbeitung.ToString()">
+                        <KernBadge Variant="BadgeVariant.Info" Icon="KernIconGlyph.Autorenew">Läuft</KernBadge>
+                    </KernCardContainer>
+                </KernCard>
+            </KernCol>
+            <KernCol Span="12" SpanMd="4">
+                <KernCard>
+                    <KernCardContainer Preline="Abgeschlossen" Title="@_abgeschlossen.ToString()">
+                        <KernBadge Variant="BadgeVariant.Success" Icon="KernIconGlyph.Success">Erledigt</KernBadge>
+                    </KernCardContainer>
+                </KernCard>
+            </KernCol>
+        </KernRow>
+    </ComponentSection>
+
+    <ComponentSection Title="Aufgabenliste" Description="Priorisierte Aufgaben nach Dringlichkeit.">
+        <KernTaskListGroup Title="Hohe Priorität">
+            <KernTaskList>
+                @foreach (var task in _highPriorityTasks)
+                {
+                    <KernTaskListItem Number="@task.Number"
+                                      Title="@task.Title"
+                                      Href="#"
+                                      StatusContent="@GetTaskStatusBadge(task.Status)" />
+                }
+            </KernTaskList>
+        </KernTaskListGroup>
+
+        <KernTaskListGroup Title="Normale Priorität">
+            <KernTaskList>
+                @foreach (var task in _normalPriorityTasks)
+                {
+                    <KernTaskListItem Number="@task.Number"
+                                      Title="@task.Title"
+                                      Href="#"
+                                      StatusContent="@GetTaskStatusBadge(task.Status)" />
+                }
+            </KernTaskList>
+        </KernTaskListGroup>
+    </ComponentSection>
+
+    <ComponentSection Title="Letzte Aktivitäten" Description="Chronologische Übersicht der letzten Bearbeitungen.">
+        <KernTable Caption="Letzte 10 Aktivitäten" Small="true" Striped="true" Responsive="true">
+            <thead>
+                <tr>
+                    <th scope="col">Datum</th>
+                    <th scope="col">Antragsteller</th>
+                    <th scope="col">Aktion</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var activity in _recentActivities)
+                {
+                    <tr>
+                        <td>@activity.Datum</td>
+                        <td>@activity.Antragsteller</td>
+                        <td>@activity.Aktion</td>
+                        <td>@activity.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </KernTable>
+    </ComponentSection>
+
+    <ComponentSection Title="Quartals-Zielerreichung" Description="Fortschritt bis zum Quartalsziel.">
+        <KernProgress Value="@_quarterProgress"
+                      Max="100"
+                      Label="@($"Zielerreichung Q1/2026: {_quarterProgress}%")"
+                      LabelBelow="true" />
+
+        <KernRow class="demo-progress-controls">
+            <KernCol Span="12" SpanMd="8">
+                <KernBody>
+                    <strong>@_processedCases</strong> von <strong>@_targetCases</strong> Fällen bearbeitet
+                    (@(_targetCases - _processedCases) verbleibend)
+                </KernBody>
+            </KernCol>
+            <KernCol Span="12" SpanMd="4">
+                <KernButton Variant="ButtonVariant.Secondary" OnClick="SimulateProgress" Block="true">
+                    <KernIcon Glyph="KernIconGlyph.Autorenew" AriaHidden="true" />
+                    Simulieren
+                </KernButton>
+            </KernCol>
+        </KernRow>
+    </ComponentSection>
+
+    <ComponentSection Title="Hilfe & FAQ" Description="Häufig gestellte Fragen zur Antragsbearbeitung.">
+        <KernAccordionGroup>
+            <KernAccordion Title="Wie priorisiere ich dringende Anträge?">
+                Verwenden Sie den Filter „Hohe Priorität" in der Aufgabenliste.
+                Anträge mit rotem Badge sollten innerhalb von 24 Stunden bearbeitet werden.
+            </KernAccordion>
+            <KernAccordion Title="Wie ändere ich den Status eines Antrags?">
+                Öffnen Sie den Antrag und wählen Sie im Kontextmenü die Option „Status ändern".
+                Verfügbare Status: Offen, In Bearbeitung, Rückfrage, Abgeschlossen, Abgelehnt.
+            </KernAccordion>
+            <KernAccordion Title="Was bedeutet der Badge-Status 'Rückfrage offen'?">
+                Der Antragsteller wurde kontaktiert und muss zusätzliche Informationen bereitstellen.
+                Der Antrag bleibt in diesem Status, bis die Rückmeldung eingegangen ist.
+            </KernAccordion>
+        </KernAccordionGroup>
+    </ComponentSection>
+</KernContainer>
+
+@code {
+    private int _offeneAntraege = 12;
+    private int _inBearbeitung = 5;
+    private int _abgeschlossen = 87;
+
+    private int _processedCases = 72;
+    private int _targetCases = 100;
+    private int _quarterProgress = 72;
+
+    private readonly List<TaskItem> _highPriorityTasks =
+    [
+        new("1", "Antrag WG-2026-4512 prüfen", TaskStatus.Offen),
+        new("2", "Rückfrage zu ANT-2026-1234 bearbeiten", TaskStatus.InBearbeitung),
+        new("3", "Unterlagen für ELT-2026-8765 nachfordern", TaskStatus.Offen)
+    ];
+
+    private readonly List<TaskItem> _normalPriorityTasks =
+    [
+        new("4", "Antrag BAU-2026-5521 abschließen", TaskStatus.InBearbeitung),
+        new("5", "Dokumente für KFZ-2026-9988 sichten", TaskStatus.Offen),
+        new("6", "Bestätigung für ANT-2026-3344 versenden", TaskStatus.Erledigt)
+    ];
+
+    private readonly List<ActivityItem> _recentActivities =
+    [
+        new("08.03.2026", "Max Mustermann", "Antrag eingereicht", "Offen"),
+        new("08.03.2026", "Erika Musterfrau", "Unterlagen hochgeladen", "In Bearbeitung"),
+        new("07.03.2026", "Hans Schmidt", "Rückfrage beantwortet", "In Bearbeitung"),
+        new("07.03.2026", "Lisa Müller", "Antrag genehmigt", "Abgeschlossen"),
+        new("06.03.2026", "Peter Wagner", "Antrag abgelehnt", "Abgeschlossen"),
+        new("06.03.2026", "Anna Becker", "Unterlagen nachgefordert", "Rückfrage offen"),
+        new("05.03.2026", "Tom Fischer", "Antrag geprüft", "In Bearbeitung"),
+        new("05.03.2026", "Julia Weber", "Antrag eingereicht", "Offen"),
+        new("04.03.2026", "Michael Klein", "Bestätigung versendet", "Abgeschlossen"),
+        new("04.03.2026", "Sandra Hoffmann", "Antrag zurückgezogen", "Abgeschlossen")
+    ];
+
+    private Task SimulateProgress(MouseEventArgs _)
+    {
+        if (_processedCases < _targetCases)
+        {
+            _processedCases += 5;
+            if (_processedCases > _targetCases)
+            {
+                _processedCases = _targetCases;
+            }
+
+            _quarterProgress = (_processedCases * 100) / _targetCases;
+
+            // Simuliere Statusänderungen
+            if (_offeneAntraege > 0 && _processedCases % 10 == 0)
+            {
+                _offeneAntraege--;
+                _inBearbeitung++;
+            }
+
+            if (_inBearbeitung > 0 && _processedCases % 15 == 0)
+            {
+                _inBearbeitung--;
+                _abgeschlossen++;
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private RenderFragment GetTaskStatusBadge(TaskStatus status)
+    {
+        return status switch
+        {
+            TaskStatus.Offen => @<KernBadge Variant="BadgeVariant.Warning" Icon="KernIconGlyph.Warning">Offen</KernBadge>,
+            TaskStatus.InBearbeitung => @<KernBadge Variant="BadgeVariant.Info" Icon="KernIconGlyph.Autorenew">In Bearbeitung</KernBadge>,
+            TaskStatus.Erledigt => @<KernBadge Variant="BadgeVariant.Success" Icon="KernIconGlyph.Success">Erledigt</KernBadge>,
+            _ => @<KernBadge Variant="BadgeVariant.Info">Unbekannt</KernBadge>
+        };
+    }
+
+    private record TaskItem(string Number, string Title, TaskStatus Status);
+
+    private record ActivityItem(string Datum, string Antragsteller, string Aktion, string Status);
+
+    private enum TaskStatus
+    {
+        Offen,
+        InBearbeitung,
+        Erledigt
+    }
+}
+

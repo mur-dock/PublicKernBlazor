@@ -1,7 +1,7 @@
-﻿# GitHub-Ready: Vorschläge zur Repository-Umstrukturierung
+# GitHub-Ready: Vorschläge zur Repository-Umstrukturierung
 
 **Erstellt:** 2026-03-09  
-**Bezug:** KernUx.Blazor – KERN-UX Design System als Blazor Component Library
+**Bezug:** PublicKernBlazor.Components – KERN-UX Design System als Blazor Component Library
 
 ---
 
@@ -34,7 +34,7 @@ Ziele sind:
 ### 2.1 Übersicht
 
 ```
-KernUx.Blazor/                          ← Repository-Root
+PublicKernBlazor.Components/                          ← Repository-Root
 │
 ├── .github/                            ← GitHub-Metadaten (bereits vorhanden, erweitern)
 │   ├── ISSUE_TEMPLATE/
@@ -60,12 +60,12 @@ KernUx.Blazor/                          ← Repository-Root
 │       └── 001-keine-js-interop.md
 │
 ├── src/                                ← NEU: alle Quellcode-Projekte
-│   ├── KernUx.Blazor/                  ← verschoben
-│   └── KernUx.Blazor.Demo/            ← verschoben
+│   ├── PublicKernBlazor.Components/                  ← verschoben
+│   └── PublicKernBlazor.Demo/            ← verschoben
 │
 ├── tests/                              ← NEU: alle Test-Projekte
-│   ├── KernUx.Blazor.Tests/            ← verschoben
-│   └── KernUx.Blazor.Demo.SmokeTests/ ← verschoben
+│   ├── PublicKernBlazor.Components.Tests/            ← verschoben
+│   └── PublicKernBlazor.Demo.SmokeTests/ ← verschoben
 │
 ├── scripts/                            ← NEU (optional): Shell-Skripte
 │   ├── Fix-SassIfDeprecation.ps1       ← verschoben aus Root
@@ -78,7 +78,7 @@ KernUx.Blazor/                          ← Repository-Root
 ├── LICENSE                             ← bereits referenziert, muss existieren
 ├── README.md                           ← bereits vorhanden, ggf. anpassen
 ├── SECURITY.md                         ← NEU
-└── KernUx.Blazor.slnx                 ← bereits vorhanden, Pfade aktualisieren
+└── PublicKernBlazor.slnx                 ← bereits vorhanden, Pfade aktualisieren
 ```
 
 ### 2.2 Begründung der Struktur
@@ -269,9 +269,9 @@ jobs:
         with:
           dotnet-version: '10.x'
       - name: Build
-        run: dotnet build src/KernUx.Blazor/KernUx.Blazor.csproj --configuration Release
+        run: dotnet build src/PublicKernBlazor.Components/PublicKernBlazor.Components.csproj --configuration Release
       - name: Unit-Tests
-        run: dotnet test tests/KernUx.Blazor.Tests/KernUx.Blazor.Tests.csproj --configuration Release --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test tests/PublicKernBlazor.Components.Tests/PublicKernBlazor.Components.Tests.csproj --configuration Release --logger "trx;LogFileName=test-results.trx"
       - name: Test-Ergebnisse hochladen
         uses: actions/upload-artifact@v4
         if: always()
@@ -299,7 +299,7 @@ Schritte: Build → Test → `dotnet pack` → NuGet-Publish mit `NUGET_API_KEY`
 version: 2
 updates:
   - package-ecosystem: "nuget"
-    directory: "/src/KernUx.Blazor"
+    directory: "/src/PublicKernBlazor.Components"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
@@ -321,7 +321,7 @@ Ausführliche Anleitung:
 - .NET 10 SDK installieren
 - SCSS-Kompilierung (SassCompiler läuft automatisch beim Build)
 - Unit-Tests ausführen (`dotnet test`)
-- Demo-App starten (`dotnet run --project src/KernUx.Blazor.Demo`)
+- Demo-App starten (`dotnet run --project src/PublicKernBlazor.Demo`)
 - Smoke-Tests einrichten (Playwright-Installation)
 - NuGet-Paket lokal bauen und testen
 
@@ -342,7 +342,7 @@ da sie keine Nutzer- oder Contributor-Relevanz haben:
 
 > **Hinweis:** `KernUxExample.Blazor/` (das ältere Beispielprojekt) sollte evaluiert werden –
 > entweder als `examples/KernUxExample.Blazor/` integrieren oder entfernen, falls es durch
-> `KernUx.Blazor.Demo/` vollständig ersetzt wurde.
+> `PublicKernBlazor.Demo/` vollständig ersetzt wurde.
 
 ---
 
@@ -369,8 +369,8 @@ Das bestehende `README.md` ist bereits sehr gut. Folgende Ergänzungen werden em
 
 Contributions sind willkommen! Bitte lies zuerst [CONTRIBUTING.md](CONTRIBUTING.md).
 
-[![CI](https://github.com/OWNER/KernUx.Blazor/actions/workflows/ci.yml/badge.svg)](...)
-[![NuGet](https://img.shields.io/nuget/v/KernUx.Blazor)](...)
+[![CI](https://github.com/OWNER/PublicKernBlazor.Components/actions/workflows/ci.yml/badge.svg)](...)
+[![NuGet](https://img.shields.io/nuget/v/PublicKernBlazor.Components)](...)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-yellow)](LICENSE)
 ```
 
@@ -409,11 +409,11 @@ Die folgende Checkliste beschreibt die empfohlene Reihenfolge der Umsetzung:
 ### Phase 2 – Verzeichnisstruktur
 
 - [x] Verzeichnisse `src/`, `tests/`, `docs/`, `docs/internal/`, `scripts/` anlegen
-- [x] Projekte verschieben: `KernUx.Blazor/` → `src/KernUx.Blazor/`
-- [x] Projekte verschieben: `KernUx.Blazor.Demo/` → `src/KernUx.Blazor.Demo/`
-- [x] Projekte verschieben: `KernUx.Blazor.Tests/` → `tests/KernUx.Blazor.Tests/`
-- [x] Projekte verschieben: `KernUx.Blazor.Demo.SmokeTests/` → `tests/KernUx.Blazor.Demo.SmokeTests/`
-- [x] `KernUx.Blazor.slnx` – alle Projekt-Pfade aktualisieren
+- [x] Projekte verschieben: `PublicKernBlazor.Components/` → `src/PublicKernBlazor.Components/`
+- [x] Projekte verschieben: `PublicKernBlazor.Demo/` → `src/PublicKernBlazor.Demo/`
+- [x] Projekte verschieben: `PublicKernBlazor.Components.Tests/` → `tests/PublicKernBlazor.Components.Tests/`
+- [x] Projekte verschieben: `PublicKernBlazor.Demo.SmokeTests/` → `tests/PublicKernBlazor.Demo.SmokeTests/`
+- [x] `PublicKernBlazor.slnx` – alle Projekt-Pfade aktualisieren
 - [x] `.csproj`-Referenzen (z.B. `../README.md`) auf neue Pfade anpassen
 - [x] Interne Planungsdateien nach `docs/internal/` verschieben
 - [x] Skripte nach `scripts/` verschieben

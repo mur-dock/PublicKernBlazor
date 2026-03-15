@@ -1,0 +1,55 @@
+@using System.Globalization
+@namespace PublicKernBlazor.Components.Components.Forms
+
+<KernFormField Label="@Label"
+               InputId="@Id"
+               Hint="@Hint"
+               Error="@Error"
+               Optional="@Optional"
+               OptionalText="@OptionalText"
+               Disabled="@Disabled"
+               AdditionalAttributes="@AdditionalAttributes"
+               FieldContent="@RenderSelect" />
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public IEnumerable<KernSelectOption> Options { get; set; } = [];
+    [Parameter] public string? Hint { get; set; }
+    [Parameter] public string? Error { get; set; }
+    [Parameter] public bool Optional { get; set; }
+    [Parameter] public string? OptionalText { get; set; } = "- Optional";
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Name { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+    [Parameter] public IReadOnlyDictionary<string, object>? InputAttributes { get; set; }
+
+    private RenderFragment<KernFormFieldContext> RenderSelect => context => @<div class="kern-form-input__select-wrapper">
+        <select id="@context.InputId"
+                name="@Name"
+                class="@SelectCssClass(context)"
+                aria-describedby="@context.AriaDescribedBy"
+                disabled="@context.Disabled"
+                @attributes="InputAttributes"
+                @onchange="HandleChange">
+            @foreach (var option in Options)
+            {
+                <option value="@option.Value" selected="@IsSelected(option.Value)" disabled="@option.Disabled">@option.Label</option>
+            }
+        </select>
+    </div>;
+
+    private static string SelectCssClass(KernFormFieldContext context) => new CssBuilder("kern-form-input__select")
+        .AddClass("kern-form-input__select--error", context.HasError)
+        .Build();
+
+    private bool IsSelected(string optionValue) => string.Equals(optionValue, Value, StringComparison.Ordinal);
+
+    private async Task HandleChange(ChangeEventArgs args)
+    {
+        await ValueChanged.InvokeAsync(Convert.ToString(args.Value, CultureInfo.InvariantCulture));
+    }
+}
+

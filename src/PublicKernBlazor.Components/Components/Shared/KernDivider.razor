@@ -1,0 +1,19 @@
+@namespace PublicKernBlazor.Components.Components.Shared
+@using PublicKernBlazor.Components.Utilities
+
+<hr class="@CssClass"
+    aria-hidden="@AriaHidden.ToString().ToLowerInvariant()"
+    @attributes="AdditionalAttributes" />
+
+@code {
+    [Parameter]
+    public bool AriaHidden { get; set; } = true;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass => new CssBuilder("kern-divider")
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+}
+

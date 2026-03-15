@@ -1,0 +1,93 @@
+@namespace PublicKernBlazor.Components.Components.Forms
+@inject IdGeneratorService IdGenerator
+
+<fieldset class="@CssClass"
+          aria-describedby="@ResolvedAriaDescribedBy"
+          @attributes="AdditionalAttributes">
+    @if (!string.IsNullOrWhiteSpace(Legend))
+    {
+        <legend class="kern-label">@Legend</legend>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Hint))
+    {
+        <div class="kern-hint" id="@ResolvedHintId">@Hint</div>
+    }
+
+    <div class="@BodyClass">
+        @ChildContent
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Error))
+    {
+        <p class="kern-error" id="@ResolvedErrorId" role="alert">
+            <KernIcon Glyph="KernIconGlyph.Danger" AriaHidden="true" />
+            <span class="kern-body">@Error</span>
+        </p>
+    }
+</fieldset>
+
+@code {
+    private string? _generatedId;
+
+    [Parameter]
+    public string? Legend { get; set; }
+
+    [Parameter]
+    public string? Hint { get; set; }
+
+    [Parameter]
+    public string? Error { get; set; }
+
+    [Parameter]
+    public bool Horizontal { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string ResolvedId => string.IsNullOrWhiteSpace(Id) ? _generatedId ?? "kern-fieldset" : Id;
+
+    private string? ResolvedHintId => string.IsNullOrWhiteSpace(Hint) ? null : $"{ResolvedId}-hint";
+
+    private string? ResolvedErrorId => string.IsNullOrWhiteSpace(Error) ? null : $"{ResolvedId}-error";
+
+    private string? ResolvedAriaDescribedBy
+    {
+        get
+        {
+            var ids = new List<string>(2);
+            if (!string.IsNullOrWhiteSpace(ResolvedHintId))
+            {
+                ids.Add(ResolvedHintId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ResolvedErrorId))
+            {
+                ids.Add(ResolvedErrorId);
+            }
+
+            return ids.Count == 0 ? null : string.Join(" ", ids);
+        }
+    }
+
+    private string CssClass => new CssBuilder("kern-fieldset")
+        .AddClass("kern-fieldset--error", !string.IsNullOrWhiteSpace(Error))
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    private string BodyClass => new CssBuilder("kern-fieldset__body")
+        .AddClass("kern-fieldset__body--horizontal", Horizontal)
+        .Build();
+
+    protected override void OnInitialized()
+    {
+        _generatedId = IdGenerator.Create("kern-fieldset");
+    }
+}
+

@@ -1,0 +1,132 @@
+@namespace PublicKernBlazor.Components.Components.Forms
+@inject IdGeneratorService IdGenerator
+
+<div class="@CssClass" @attributes="AdditionalAttributes">
+    <label class="kern-label" for="@ResolvedInputId">
+        @Label
+        @if (Optional)
+        {
+            <span class="kern-label__optional">@ResolvedOptionalText</span>
+        }
+    </label>
+
+    @if (!string.IsNullOrWhiteSpace(Hint))
+    {
+        <div class="kern-hint" id="@ResolvedHintId">@Hint</div>
+    }
+
+    @if (FieldContent is not null)
+    {
+        @FieldContent(Context)
+    }
+
+    @if (HasError)
+    {
+        <p class="kern-error" id="@ResolvedErrorId" role="alert">
+            <KernIcon Glyph="KernIconGlyph.Danger" AriaHidden="true" />
+            <span class="kern-body">@Error</span>
+        </p>
+    }
+</div>
+
+@code {
+    private string? _generatedInputId;
+
+    /// <summary>Beschriftung des Formularfeldes, wird als <c>&lt;label&gt;</c> gerendert.</summary>
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>Explizite HTML-ID für das Eingabeelement. Wird automatisch generiert, wenn nicht angegeben.</summary>
+    [Parameter]
+    public string? InputId { get; set; }
+
+    /// <summary>Optionaler Hinweistext unterhalb des Labels (<c>kern-hint</c>).</summary>
+    [Parameter]
+    public string? Hint { get; set; }
+
+    /// <summary>Fehlermeldung. Wenn gesetzt, wird der Fehlerzustand aktiviert (<c>kern-form-input--error</c>).</summary>
+    [Parameter]
+    public string? Error { get; set; }
+
+    /// <summary>Markiert das Feld als optional und zeigt den <see cref="OptionalText"/> an.</summary>
+    [Parameter]
+    public bool Optional { get; set; }
+
+    /// <summary>Text für die optionale Kennzeichnung. Standard: <c>"- Optional"</c>.</summary>
+    [Parameter]
+    public string? OptionalText { get; set; } = "- Optional";
+
+    /// <summary>Deaktiviert das Eingabeelement visuell und funktional.</summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>Setzt das Eingabeelement auf schreibgeschützt.</summary>
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    /// <summary>
+    /// RenderFragment für das eigentliche Eingabeelement. Erhält einen <see cref="KernFormFieldContext"/>
+    /// mit berechneten IDs, ARIA-Attributen und Zustandsflags.
+    /// </summary>
+    [Parameter]
+    public RenderFragment<KernFormFieldContext>? FieldContent { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute, die auf das Wrapper-<c>&lt;div&gt;</c> angewendet werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private bool HasError => !string.IsNullOrWhiteSpace(Error);
+
+    private string CssClass => new CssBuilder("kern-form-input")
+        .AddClass("kern-form-input--error", HasError)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
+
+    private string ResolvedInputId => string.IsNullOrWhiteSpace(InputId)
+        ? _generatedInputId ?? "kern-input"
+        : InputId;
+
+    private string? ResolvedHintId => string.IsNullOrWhiteSpace(Hint)
+        ? null
+        : $"{ResolvedInputId}-hint";
+
+    private string? ResolvedErrorId => HasError
+        ? $"{ResolvedInputId}-error"
+        : null;
+
+    private string? ResolvedAriaDescribedBy
+    {
+        get
+        {
+            var ids = new List<string>(2);
+            if (!string.IsNullOrWhiteSpace(ResolvedHintId))
+            {
+                ids.Add(ResolvedHintId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ResolvedErrorId))
+            {
+                ids.Add(ResolvedErrorId);
+            }
+
+            return ids.Count == 0 ? null : string.Join(" ", ids);
+        }
+    }
+
+    private string ResolvedOptionalText => string.IsNullOrWhiteSpace(OptionalText) ? "- Optional" : OptionalText;
+
+    private KernFormFieldContext Context => new(
+        ResolvedInputId,
+        ResolvedHintId,
+        ResolvedErrorId,
+        ResolvedAriaDescribedBy,
+        HasError,
+        Disabled,
+        ReadOnly
+    );
+
+    protected override void OnInitialized()
+    {
+        _generatedInputId = IdGenerator.Create("kern-input");
+    }
+}

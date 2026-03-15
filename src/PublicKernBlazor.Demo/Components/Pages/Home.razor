@@ -1,0 +1,85 @@
+@page "/"
+
+<PageTitle>PublicKernBlazor.Components Showcase</PageTitle>
+
+<KernContainer>
+    <KernRow>
+        <KernCol>
+            <KernHeading Level="HeadingLevel.Display" Element="h1">PublicKernBlazor.Components Showcase</KernHeading>
+            <KernBody Modifier="BodyModifier.Large">
+                Die Demo-App zeigt die PublicKernBlazor.Components Komponentenbibliothek als praxisnahes, barrierefreies Referenzprojekt.
+            </KernBody>
+
+            <KernAlert Type="AlertType.Info" Title="Phase A gestartet">
+                Das Grundgerüst ist nun auf KERN-UX umgestellt. In den folgenden Phasen werden alle Komponenten als Showcase ausgebaut.
+            </KernAlert>
+
+            <KernDivider />
+
+            <KernRow>
+                <KernCol Span="4">
+                    <KernCard>
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Barrierefreiheit</KernTitle>
+                            <KernBody>Semantisches HTML, ARIA und Tastaturbedienung sind zentraler Bestandteil jeder Komponente.</KernBody>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+                <KernCol Span="4">
+                    <KernCard>
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Typsicherheit</KernTitle>
+                            <KernBody>Varianten und Optionen werden über C#-Enums statt magischer Strings gesteuert.</KernBody>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+                <KernCol Span="4">
+                    <KernCard>
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Theming</KernTitle>
+                            <KernBody>Light und Dark Theme sind im KERN-System verankert und per Service steuerbar.</KernBody>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+            </KernRow>
+
+            <KernDivider />
+
+            <KernTitle Size="TitleSize.Default">Praxisbeispiele</KernTitle>
+            <KernBody>
+                Komplexe Szenarien aus dem Verwaltungsalltag als vollständige Implementierungen:
+            </KernBody>
+            <KernRow>
+                <KernCol Span="6">
+                    <KernCard Active="true">
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Antragsstrecke</KernTitle>
+                            <KernBody Size="Size.Small">
+                                Mehrstufiger Antrag mit Validierung, Zusammenfassung und Bestätigung.
+                                Demonstriert State-Management über mehrere Schritte.
+                            </KernBody>
+                            <KernLink Href="/examples/antrag" Stretched="true">Zur Antragsstrecke</KernLink>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+                <KernCol Span="6">
+                    <KernCard Active="true">
+                        <KernCardContainer>
+                            <KernTitle Size="TitleSize.Small">Sachbearbeiter-Dashboard</KernTitle>
+                            <KernBody Size="Size.Small">
+                                Status-Tracking und Aufgabenübersicht mit Statistiken, Tabellen und Fortschrittsanzeige.
+                            </KernBody>
+                            <KernLink Href="/examples/dashboard" Stretched="true">Zum Dashboard</KernLink>
+                        </KernCardContainer>
+                    </KernCard>
+                </KernCol>
+            </KernRow>
+
+            <KernDivider />
+
+            <KernTitle Size="TitleSize.Default">Schnellstart</KernTitle>
+            <KernBody Modifier="BodyModifier.Muted">Navigiere links zu den Showcase-Seiten und prüfe die Varianten direkt in der Demo.</KernBody>
+            <KernLink Href="https://www.kern-ux.de" Target="_blank">Mehr zu KERN-UX</KernLink>
+        </KernCol>
+    </KernRow>
+</KernContainer>

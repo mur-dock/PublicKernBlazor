@@ -4,7 +4,7 @@ Dieses Repository verwendet `GitVersion`, um SemVer-Versionen automatisch aus Gi
 
 ## Was ist umgesetzt?
 
-- In `src/KernUx.Blazor/KernUx.Blazor.csproj` ist `GitVersion.MsBuild` eingebunden.
+- In `src/PublicKernBlazor.Components/PublicKernBlazor.Components.csproj` ist `GitVersion.MsBuild` eingebunden.
 - Die feste `<Version>` im Projekt wurde entfernt, damit die Version zur Build-/Pack-Zeit von GitVersion berechnet wird.
 - Im Repository-Root liegt jetzt `GitVersion.yml` als zentrale Versionierungs-Konfiguration.
 

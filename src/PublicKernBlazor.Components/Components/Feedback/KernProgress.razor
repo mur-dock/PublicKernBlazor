@@ -1,0 +1,58 @@
+@namespace PublicKernBlazor.Components.Components.Feedback
+@inject IdGeneratorService IdGenerator
+
+<div class="kern-progress" @attributes="AdditionalAttributes">
+    @if (!string.IsNullOrWhiteSpace(Label) && !LabelBelow)
+    {
+        <label class="kern-label" for="@ResolvedId">@Label</label>
+    }
+
+    <progress id="@ResolvedId" value="@ResolvedValue" max="@ResolvedMax"></progress>
+
+    @if (!string.IsNullOrWhiteSpace(Label) && LabelBelow)
+    {
+        <label class="kern-label" for="@ResolvedId">@Label</label>
+    }
+</div>
+
+@code {
+    private string? _generatedId;
+
+    /// <summary>Aktueller Fortschrittswert. Wird automatisch auf den Bereich [0, <see cref="Max"/>] begrenzt.</summary>
+    [Parameter]
+    public int Value { get; set; }
+
+    /// <summary>Maximaler Fortschrittswert. Muss größer 0 sein; bei ungültigen Werten wird intern auf 1 gesetzt.</summary>
+    [Parameter]
+    public int Max { get; set; } = 100;
+
+    /// <summary>Optionaler Beschriftungstext über (Standard) oder unter (<see cref="LabelBelow"/>) dem Fortschrittsbalken.</summary>
+    [Parameter]
+    public string? Label { get; set; }
+
+    /// <summary>Wenn <c>true</c>, wird <see cref="Label"/> unterhalb des Fortschrittsbalkens gerendert.</summary>
+    [Parameter]
+    public bool LabelBelow { get; set; }
+
+    /// <summary>
+    /// Explizite HTML-ID für das <c>&lt;progress&gt;</c>-Element und die zugehörige <c>&lt;label&gt;</c>-Verknüpfung.
+    /// Wird kein Wert angegeben, generiert <see cref="IdGeneratorService"/> automatisch eine eindeutige ID.
+    /// </summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>Zusätzliche HTML-Attribute, die direkt auf das Wrapper-<c>&lt;div&gt;</c> weitergegeben werden.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _generatedId = IdGenerator.Create("kern-progress");
+    }
+
+    private int ResolvedMax => Max <= 0 ? 1 : Max;
+
+    private int ResolvedValue => Math.Clamp(Value, 0, ResolvedMax);
+
+    private string ResolvedId => string.IsNullOrWhiteSpace(Id) ? _generatedId ?? "kern-progress" : Id;
+}

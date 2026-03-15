@@ -1,0 +1,79 @@
+@inherits LayoutComponentBase
+@inject ThemeService ThemeService
+@inject IJSRuntime Js
+@implements IDisposable
+
+<div data-kern-theme="@ThemeService.AttributeValue" class="demo-shell">
+    <div class="demo-shell__top">
+        <KernKopfzeile />
+
+        <header class="demo-header">
+            <KernContainer>
+                <KernRow JustifyContent="JustifyContent.Between" AlignItems="AlignItems.Center">
+                    <KernCol Span="9">
+                        <KernPreline>KERN Design System</KernPreline>
+                        <KernTitle Size="TitleSize.Large">PublicKernBlazor.Components Showcase</KernTitle>
+                    </KernCol>
+                    <KernCol Span="3">
+                        <div class="demo-header__actions">
+                            @* Toggle bleibt über aria-pressed als Schalterzustand für Assistive Technologien erkennbar. *@
+                            <KernButton Variant="ButtonVariant.Tertiary"
+                                        Title="Theme wechseln"
+                                        AriaLabel="Theme wechseln"
+                                        Icon="KernIconGlyph.BrightnessMedium"
+                                        IconOnly="true"
+                                        aria-pressed="@(ThemeService.Current == KernTheme.Dark ? "true" : "false")"
+                                        OnClick="ToggleTheme" />
+                        </div>
+                    </KernCol>
+                </KernRow>
+            </KernContainer>
+        </header>
+    </div>
+
+    <KernContainer class="demo-shell__content">
+        <KernRow>
+            <KernCol Span="12" SpanMd="3">
+                <NavMenu />
+            </KernCol>
+            <KernCol Span="12" SpanMd="9">
+                <main>
+                    @Body
+                </main>
+            </KernCol>
+        </KernRow>
+    </KernContainer>
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    Ein unbehandelter Fehler ist aufgetreten.
+    <a href="." class="reload">Neu laden</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // HttpContext ist nur beim SSR-Prerender befüllt.
+        // Nach der Hydration (InteractiveServer) ist er null – dann hat der
+        // ThemeService den Wert bereits aus dem Prerender-Durchlauf.
+        var stored = HttpContext?.Request.Cookies["kern-theme"];
+        ThemeService.Initialize(stored);
+        ThemeService.ThemeChanged += OnThemeChanged;
+    }
+
+    private async Task ToggleTheme()
+    {
+        ThemeService.Toggle();
+
+        // Cookie + <html data-kern-theme> via stabile JS-Funktion aus App.razor setzen.
+        await Js.InvokeVoidAsync("kernTheme.set", ThemeService.AttributeValue);
+    }
+
+    private void OnThemeChanged(KernTheme _) => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => ThemeService.ThemeChanged -= OnThemeChanged;
+}
